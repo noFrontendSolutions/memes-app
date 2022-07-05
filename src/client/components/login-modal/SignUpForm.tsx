@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react"
 
 interface Credentials {
-  firstName: string
-  lastName: string
+  first_name: string
+  last_name: string
   email: string
   password: string
-  confirmedPassword: string
+  password_confirmation: string
 }
 
 const signUp = async (url: string, credentials: Credentials) => {
+  console.log(credentials)
   const response = await fetch(url, {
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
     method: "POST",
@@ -32,7 +34,7 @@ const SignUpForm = () => {
         placeholder="First Name..."
         className="rounded w-full mb-4 mt-2  py-2 px-3 ring-2 ring-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         onChange={(e) =>
-          setCredentials({ ...credentials, firstName: e.target.value })
+          setCredentials({ ...credentials, first_name: e.target.value })
         }
       />
       <label htmlFor="last-name">Last Name:</label>
@@ -42,7 +44,7 @@ const SignUpForm = () => {
         placeholder="Last Name..."
         className="rounded w-full mb-4 mt-2 py-2 px-3 ring-2 ring-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         onChange={(e) =>
-          setCredentials({ ...credentials, lastName: e.target.value })
+          setCredentials({ ...credentials, last_name: e.target.value })
         }
       />
       <label htmlFor="email">Email:</label>
@@ -72,7 +74,10 @@ const SignUpForm = () => {
         placeholder="Confirm-Password..."
         className="rounded w-full mb-4 mt-2 py-2 px-3 ring-2 ring-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         onChange={(e) =>
-          setCredentials({ ...credentials, confirmedPassword: e.target.value })
+          setCredentials({
+            ...credentials,
+            password_confirmation: e.target.value,
+          })
         }
       />
       <button
@@ -80,7 +85,7 @@ const SignUpForm = () => {
         className="bg-blue-600 rounded-lg hover:bg-blue-700 font-bold text-white text-xl h-14 mt-8"
         onClick={(e) => {
           e.preventDefault()
-          signUp("http://localhost:8000/api/sign-up", credentials)
+          signUp("http://127.0.0.1:8000/api/sign-up", credentials)
         }}
       >
         Sign Up
