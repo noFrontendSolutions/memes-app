@@ -1,0 +1,13 @@
+{
+    "plugins": ["@babel/plugin-transform-runtime", "react-hot-loader/babel"],
+    "presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-typescript"]
+}
+//react-hot-loader/babel enables hot-module reloads, using the hot() function when exporting the main App component ("import 'react hot loader'" at the top of the page and by "export default hot(App)" at the bottom of the page).
+
+//@babel/preset-env is a smart preset that allows you to use the latest JavaScript without needing to micromanage which syntax transforms (and optionally, browser polyfills) are needed by your target environment(s). 
+//@babel/preset-react and @babel/preset-typescript are recommended if you use Typescript / React
+
+//@babel/plugin-transform-runtime: without this plugin I can't use the async keyword on top of the express "get/post" functions in express.
+//Below is an explanation from stackoverflow:
+// Async functions are abstraction on top of generators.
+//If you are using a transpiler (such as babel) for backwards compatibility, you would need an extra "layer" that transforms generators. This implies transforming ES6 into ES5 at runtime since their syntax isn't backwards compatible. 
