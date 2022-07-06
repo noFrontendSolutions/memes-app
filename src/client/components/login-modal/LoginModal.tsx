@@ -4,7 +4,8 @@ import LoginForm from "./LoginForm"
 import SignUpForm from "./SignUpForm"
 
 const LoginModal = () => {
-  const { loginModalIsOpen, setLoginModalIsOpen } = useContext(UserContext)
+  const { loginModalIsOpen, setLoginModalIsOpen, setCredentials } =
+    useContext(UserContext)
   const [chooseLogin, setChooseLogin] = useState(true)
 
   return (
@@ -17,7 +18,10 @@ const LoginModal = () => {
         <div className="h-full border-2 border-blue-700 rounded p-4 flex flex-col">
           <div className="w-full flex flex-row justify-between items-center">
             <button
-              onClick={() => setChooseLogin(true)}
+              onClick={() => {
+                setChooseLogin(true)
+                setCredentials(null)
+              }}
               className={
                 chooseLogin
                   ? "font-bold border-b-2 border-blue-700 text-blue-600 text-lg transition transform hover:translate-x-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
@@ -28,7 +32,10 @@ const LoginModal = () => {
             </button>
             <span className="text-gray-700 font-bold">OR</span>
             <button
-              onClick={() => setChooseLogin(false)}
+              onClick={() => {
+                setChooseLogin(false)
+                setCredentials(null)
+              }}
               className={
                 !chooseLogin
                   ? "font-bold border-b-2 border-blue-700 text-blue-600 text-lg transition transform hover:-translate-x-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
