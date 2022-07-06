@@ -2,11 +2,14 @@ import React, {
   createContext,
   ReactChild,
   ReactChildren,
+  useEffect,
   useState,
 } from "react"
 
 export const UserContext = createContext<UserContextState>({
   loggedIn: false,
+  bearerToken: "",
+  setBearerToken: null,
   setLoggedIn: null,
   loginModalIsOpen: false,
   setLoginModalIsOpen: null,
@@ -20,15 +23,32 @@ export const UserContext = createContext<UserContextState>({
 
 const UserContextProvider = ({ children }: ChildrenProps) => {
   const [loggedIn, setLoggedIn] = useState(false)
+  const [bearerToken, setBearerToken] = useState("")
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false)
   const [credentials, setCredentials] = useState<Credentials | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<any>(null)
 
+  useEffect(() => {
+    if (localStorage.getItem("bearerToken")) {
+      setBearerToken(localStorage.getItem("bearerToken"))
+      setCredentials({
+        ...credentials,
+        id: localStorage.getItem("id"),
+        first_name: localStorage.getItem("first_name"),
+        last_name: localStorage.getItem("last_name"),
+        email: localStorage.getItem("email"),
+      })
+      setLoggedIn(true)
+    }
+  }, [])
+
   return (
     <UserContext.Provider
       value={{
         loggedIn,
+        bearerToken,
+        setBearerToken,
         setLoggedIn,
         loginModalIsOpen,
         setLoginModalIsOpen,
@@ -62,9 +82,12 @@ interface UserContextState {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>> | null
   error: any
   setError: React.Dispatch<React.SetStateAction<any>> | null
+  bearerToken: string | null
+  setBearerToken: React.Dispatch<React.SetStateAction<string>> | null
 }
 
 interface Credentials {
+  id: string
   first_name: string
   last_name: string
   email: string

@@ -7,8 +7,13 @@ interface NavBarProps {
 }
 
 const NavBar = ({ children }: NavBarProps) => {
-  const { loginModalIsOpen, setLoginModalIsOpen, loggedIn, credentials } =
-    useContext(UserContext)
+  const {
+    loginModalIsOpen,
+    setLoginModalIsOpen,
+    loggedIn,
+    credentials,
+    bearerToken,
+  } = useContext(UserContext)
 
   return (
     <>
@@ -35,6 +40,32 @@ const NavBar = ({ children }: NavBarProps) => {
       {children}
     </>
   )
+}
+
+const logout = async (
+  url: string,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  setIsLoading(true)
+  const token = window.localStorage.getItem("bearerToken")
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`, // notice the Bearer before your token
+      },
+    })
+    if (response.ok) {
+      window.localStorage.clear()
+    } else {
+      throw new Error("Oops")
+    }
+  } catch (error) {
+    console.log(error)
+  } finally {
+    setIsLoading(false)
+  }
 }
 
 export default NavBar
