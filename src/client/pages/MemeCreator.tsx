@@ -19,6 +19,11 @@ const MemeCreator = () => {
 
   useEffect(() => {
     if (editor) {
+      //This is for Textcolor and fill color for shaped
+      editor.setFillColor("#FF0000")
+      editor.setStrokeColor("#FF0000")
+
+      // this is to create background image
       let imgObj = new Image()
       imgObj.src =
         "https://cdn.shopify.com/s/files/1/0405/3041/1672/products/smiling-woman-poses_925x_856ee098-fd4f-4876-9a04-f773f5b83d4e_1024x1024@2x.jpg?v=1591045694"
@@ -36,12 +41,18 @@ const MemeCreator = () => {
             scaleY: editor.canvas.height / imgObj.height,
           }
         )
+
+        // USe this for movale Image
         //image.set({
         //scaleX: editor.canvas.width / imgObj.width,
         //scaleY: editor.canvas.height / imgObj.height,
         //})
-        //editor.canvas.centerObject(image) //centers image in Canvas
-        //editor.canvas.add(image) // Adds image to canvas
+
+        //**** Centers image in Canvas*****
+        //editor.canvas.centerObject(image)
+
+        //****** Adds image to canvas *****
+        //editor.canvas.add(image)
         editor.canvas.renderAll()
       }
     }
