@@ -17,6 +17,8 @@
     "author": "",
     "license": "",
     "dependencies": {
+        "fabric": "^4.6.0",
+        "fabricjs-react": "^1.0.8",
         "node-fetch": "^2.6.7",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
@@ -30,6 +32,7 @@
         "@babel/preset-typescript": "^7.16.7",
         "@types/cors": "^2.8.12",
         "@types/express": "^4.17.13",
+        "@types/fabric": "^4.5.9",
         "@types/node": "^17.0.17",
         "@types/react": "^17.0.39",
         "@types/react-dom": "^17.0.11",

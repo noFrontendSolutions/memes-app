@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom"
 import Home from "./pages/Home"
 import NavBar from "./components/NavBar"
 import UserContextProvider from "./context/UserContext"
+import MemeCreator from "./pages/MemeCreator"
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <NavBar>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="meme-creator" element={<MemeCreator />} />
           </Routes>
         </NavBar>
       </BrowserRouter>

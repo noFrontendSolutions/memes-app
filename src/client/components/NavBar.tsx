@@ -1,4 +1,5 @@
 import React, { ReactChild, ReactChildren, useContext } from "react"
+import { Link } from "react-router-dom"
 import { UserContext } from "../context/UserContext"
 import LoginModal from "./login-modal/LoginModal"
 
@@ -24,11 +25,19 @@ const NavBar = ({ children }: NavBarProps) => {
     <>
       {loginModalIsOpen && <LoginModal />}
       <div className="h-20 px-4 flex flex-row justify-end items-center bg-blue-100">
+        <div className="flex flex-row items-center justify-between h-full w-full mr-8">
+          <Link to="/" className="border-b-2 ">
+            Home
+          </Link>
+          <Link to="/meme-creator" className="border-b-2">
+            Create Meme
+          </Link>
+        </div>
         {loggedIn && <div className="mr-4">{credentials?.email}</div>}
         {!loggedIn && (
           <button
             onClick={() => setLoginModalIsOpen(!loginModalIsOpen)}
-            className="h-14 w-36 bg-blue-500 border-8 border-blue-400 rounded-lg text-blue-50 font-bold hover:bg-blue-600 hover:text-white flex justify-center items-center"
+            className="h-14 w-44 bg-blue-500 border-8 border-blue-400 rounded-lg text-blue-50 font-bold hover:bg-blue-600 hover:text-white flex justify-center items-center"
           >
             {!isLoading && <span>Login / Sign Up</span>}
             {isLoading && (
@@ -64,7 +73,7 @@ const NavBar = ({ children }: NavBarProps) => {
                 setLoggedIn
               )
             }}
-            className="h-14 w-36 bg-blue-500 border-8 border-blue-400 rounded-lg text-blue-50 font-bold hover:bg-blue-600 hover:text-white flex justify-center items-center"
+            className="h-14 w-44 bg-blue-500 border-8 border-blue-400 rounded-lg text-blue-50 font-bold hover:bg-blue-600 hover:text-white flex justify-center items-center"
           >
             {!isLoading && <span>Logout</span>}
             {isLoading && (
