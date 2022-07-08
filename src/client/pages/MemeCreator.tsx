@@ -1,67 +1,34 @@
 import React, { useEffect, useState, useRef } from "react"
 import { fabric } from "fabric" // this also installed on your project
-import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react"
+import {
+  FabricJSCanvas,
+  FabricJSEditor,
+  useFabricJSEditor,
+} from "fabricjs-react"
 import landscape from "../../../static-assets/landscape.png"
-import landscapeBorderless from "../../../static-assets/landscape-borderless.png"
-import landscapeCrop from "../../../static-assets/landscape-crop.png"
-
-const img =
-  "https://cdn.shopify.com/s/files/1/0405/3041/1672/products/smiling-woman-poses_925x_856ee098-fd4f-4876-9a04-f773f5b83d4e_1024x1024@2x.jpg?v=1591045694"
+import landscapeStretch from "../../../static-assets/landscape-stretch.png"
+import landscapeFit from "../../../static-assets/landscape-fit.png"
 
 type CanvasLayout = "vertical" | "horizontal" | "squared"
+type ObjectType = "none" | "stretch" | "fit"
+
+//***********Main Component********************************
 
 const MemeCreator = () => {
-  const [text, setText] = useState("")
   const { editor, onReady } = useFabricJSEditor()
+  const [text, setText] = useState("")
+  const frameRef = useRef<HTMLDivElement>()
+  const [objectType, setObjectType] = useState<ObjectType>("none")
+  const [canvasLayout, setCanvasLayout] = useState<CanvasLayout>("vertical")
+  const [backgroundUrl, setBackgroundUrl] = useState("")
+
   const [imgWidth, setImgWidth] = useState(0)
   const [imgHeight, setImgHeight] = useState(0)
-  const frameRef = useRef<HTMLDivElement>()
 
   const cropCanvas = (e: React.MouseEvent<HTMLButtonElement>) => {
     frameRef.current.style.height = `${imgHeight}px`
     frameRef.current.style.width = `${imgWidth}px`
   }
-
-  useEffect(() => {
-    if (editor) {
-      //This is for Textcolor and fill color for shaped
-      editor.setFillColor("#FF0000")
-      editor.setStrokeColor("#FF0000")
-
-      // this is to create background image
-      let imgObj = new Image()
-      imgObj.src =
-        "https://cdn.shopify.com/s/files/1/0405/3041/1672/products/smiling-woman-poses_925x_856ee098-fd4f-4876-9a04-f773f5b83d4e_1024x1024@2x.jpg?v=1591045694"
-      imgObj.onload = () => {
-        let image = new fabric.Image(imgObj)
-        setImgHeight(imgObj.height)
-        setImgWidth(imgObj.width)
-        //add background image (not moveable)
-        editor.canvas.setBackgroundImage(
-          img,
-          editor.canvas.renderAll.bind(editor.canvas),
-          {
-            crossOrigin: "anonymous",
-            scaleX: editor.canvas.width / imgObj.width,
-            scaleY: editor.canvas.height / imgObj.height,
-          }
-        )
-
-        // USe this for movale Image
-        //image.set({
-        //scaleX: editor.canvas.width / imgObj.width,
-        //scaleY: editor.canvas.height / imgObj.height,
-        //})
-
-        //**** Centers image in Canvas*****
-        //editor.canvas.centerObject(image)
-
-        //****** Adds image to canvas *****
-        //editor.canvas.add(image)
-        editor.canvas.renderAll()
-      }
-    }
-  }, [editor])
 
   const onExport = () => {
     let image = new Image()
@@ -98,7 +65,14 @@ const MemeCreator = () => {
         </button>
         <label htmlFor="file-upload" className="cursor-pointer border-2">
           Upload File
-          <input id="file-upload" type="file" className="hidden" />
+          <input
+            id="file-upload"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onAddBackground(e, setBackgroundUrl, editor, objectType)
+            }
+            type="file"
+            className="hidden"
+          />
         </label>
       </fieldset>
       <label htmlFor="layout-field"></label>
@@ -126,21 +100,24 @@ const MemeCreator = () => {
       <fieldset id="object-layout" className="m-4 flex">
         <button
           className="m-2 border-4 object-fill w-16 h-16"
-          title="Object Scale-Down"
+          title="Object None"
+          onClick={() => onObjectNone(editor, backgroundUrl, setObjectType)}
         >
-          <img src={landscape} className="" />
+          <img src={landscape} />
+        </button>
+        <button
+          className="m-2 border-4 object-fill w-16 h-16"
+          title="Object Fit"
+          onClick={() => onObjectFit(editor, backgroundUrl, setObjectType)}
+        >
+          <img src={landscapeFit} />
         </button>
         <button
           className="m-2 border-4 object-fill w-16 h-16"
           title="Object Stretch"
+          onClick={() => onObjectStretch(editor, backgroundUrl, setObjectType)}
         >
-          <img src={landscapeBorderless} className="w-20 h-14" />
-        </button>
-        <button
-          className="m-2 border-4 object-fill w-16 h-16"
-          title="Object Crop"
-        >
-          <img src={landscapeCrop} />
+          <img src={landscapeStretch} className="w-20 h-14" />
         </button>
       </fieldset>
       <div ref={frameRef} className="h-1/2 w-1/2 border-2 bg-slate-400">
@@ -151,3 +128,130 @@ const MemeCreator = () => {
 }
 
 export default MemeCreator
+
+/******************************************
+ *****************Functions*****************
+ *******************************************/
+
+const onObjectNone = (
+  editor: FabricJSEditor,
+  background: string,
+  setObjectFit: React.Dispatch<React.SetStateAction<ObjectType>>
+) => {
+  setObjectFit("none")
+  fabric.Image.fromURL(background, (img) => {
+    const widthRatio = editor.canvas.width / img.width
+    const heightRatio = editor.canvas.width / img.height
+    const ratio = Math.min(widthRatio, heightRatio)
+    {
+      editor.canvas.setBackgroundImage(
+        img,
+        editor.canvas.renderAll.bind(editor.canvas),
+        {
+          crossOrigin: "anonymous",
+        }
+      )
+    }
+    editor.canvas.centerObject(img)
+    editor.canvas.renderAll()
+  })
+}
+
+const onObjectFit = (
+  editor: FabricJSEditor,
+  background: string,
+  setObjectFit: React.Dispatch<React.SetStateAction<ObjectType>>
+) => {
+  setObjectFit("fit")
+  fabric.Image.fromURL(background, (img) => {
+    const widthRatio = editor.canvas.width / img.width
+    const heightRatio = editor.canvas.width / img.height
+    const ratio = Math.min(widthRatio, heightRatio)
+    {
+      editor.canvas.setBackgroundImage(
+        img,
+        editor.canvas.renderAll.bind(editor.canvas),
+        {
+          crossOrigin: "anonymous",
+          scaleX: ratio,
+          scaleY: ratio,
+        }
+      )
+    }
+    editor.canvas.centerObject(img)
+    editor.canvas.renderAll()
+  })
+}
+
+const onObjectStretch = (
+  editor: FabricJSEditor,
+  background: string,
+  setObjectFit: React.Dispatch<React.SetStateAction<ObjectType>>
+) => {
+  setObjectFit("stretch")
+  fabric.Image.fromURL(background, (img) => {
+    const widthRatio = editor.canvas.width / img.width
+    const heightRatio = editor.canvas.width / img.height
+    const ratio = Math.min(widthRatio, heightRatio)
+    {
+      editor.canvas.setBackgroundImage(
+        img,
+        editor.canvas.renderAll.bind(editor.canvas),
+        {
+          crossOrigin: "anonymous",
+          scaleX: editor.canvas.width / img.width,
+          scaleY: editor.canvas.height / img.height,
+        }
+      )
+    }
+    editor.canvas.centerObject(img)
+    editor.canvas.renderAll()
+  })
+}
+
+const onAddBackground = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  setBackground: React.Dispatch<React.SetStateAction<string>>,
+  editor: FabricJSEditor,
+  objectType: ObjectType
+) => {
+  const imageFile = e.target.files[0]
+  setBackground(URL.createObjectURL(imageFile))
+  fabric.Image.fromURL(URL.createObjectURL(imageFile), (img) => {
+    const widthRatio = editor.canvas.width / img.width
+    const heightRatio = editor.canvas.width / img.height
+    const ratio = Math.min(widthRatio, heightRatio)
+    if (objectType === "fit") {
+      editor.canvas.setBackgroundImage(
+        img,
+        editor.canvas.renderAll.bind(editor.canvas),
+        {
+          crossOrigin: "anonymous",
+          scaleX: ratio,
+          scaleY: ratio,
+        }
+      )
+    } else if (objectType === "stretch") {
+      editor.canvas.setBackgroundImage(
+        img,
+        editor.canvas.renderAll.bind(editor.canvas),
+        {
+          crossOrigin: "anonymous",
+          scaleX: editor.canvas.width / img.width,
+          scaleY: editor.canvas.height / img.height,
+        }
+      )
+    } else {
+      editor.canvas.setBackgroundImage(
+        img,
+        editor.canvas.renderAll.bind(editor.canvas),
+        {
+          crossOrigin: "anonymous",
+        }
+      )
+    }
+
+    editor.canvas.centerObject(img)
+    editor.canvas.renderAll()
+  })
+}
