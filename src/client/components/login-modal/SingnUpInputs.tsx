@@ -19,7 +19,7 @@ const SignUpInputs = ({
         name="first-name"
         placeholder="First Name..."
         value={credentials?.first_name ? credentials?.first_name : ""}
-        className="rounded w-full mb-4 mt-2  py-2 px-3 ring-2 ring-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-500"
+        className="custom-input"
         onChange={(e) =>
           setCredentials({ ...credentials, first_name: e.target.value })
         }
@@ -35,7 +35,7 @@ const SignUpInputs = ({
         name="last-name"
         placeholder="Last Name..."
         value={credentials?.last_name ? credentials?.last_name : ""}
-        className="rounded w-full mb-4 mt-2 py-2 px-3 ring-2 ring-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-500"
+        className="custom-input"
         onChange={(e) =>
           setCredentials({ ...credentials, last_name: e.target.value })
         }
@@ -51,7 +51,7 @@ const SignUpInputs = ({
         name="email"
         placeholder="Email..."
         value={credentials?.email ? credentials?.email : ""}
-        className="rounded w-full mb-4 mt-2 py-2 px-3 ring-2 ring-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-500"
+        className="custom-input"
         onChange={(e) =>
           setCredentials({ ...credentials, email: e.target.value })
         }
@@ -67,7 +67,7 @@ const SignUpInputs = ({
         name="first-name"
         placeholder="Password..."
         value={credentials?.password ? credentials?.password : ""}
-        className="rounded w-full mb-4 mt-2 py-2 px-3 ring-2 ring-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-500"
+        className="custom-input"
         onChange={(e) =>
           setCredentials({ ...credentials, password: e.target.value })
         }
@@ -87,7 +87,7 @@ const SignUpInputs = ({
             ? credentials?.password_confirmation
             : ""
         }
-        className="rounded w-full mb-4 mt-2 py-2 px-3 ring-2 ring-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-500"
+        className="custom-input"
         onChange={(e) =>
           setCredentials({
             ...credentials,

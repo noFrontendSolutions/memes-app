@@ -1,7 +1,7 @@
 import React, { ReactChild, ReactChildren, useContext } from "react"
 import { Link } from "react-router-dom"
 import { UserContext } from "../context/UserContext"
-import LoginModal from "./login-modal/LoginModal"
+import Modal from "./login-modal/Modal"
 
 interface NavBarProps {
   children: ReactChild | ReactChildren
@@ -23,7 +23,7 @@ const NavBar = ({ children }: NavBarProps) => {
 
   return (
     <>
-      {loginModalIsOpen && <LoginModal />}
+      {loginModalIsOpen && <Modal />}
       <div className="h-20 px-4 flex flex-row justify-end items-center bg-blue-100">
         <div className="flex flex-row items-center justify-between h-full w-full mr-8">
           <Link to="/" className="border-b-2 ">

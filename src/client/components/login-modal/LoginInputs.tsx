@@ -20,7 +20,7 @@ const LoginInputs = ({
         name="email"
         placeholder="Email..."
         value={credentials?.email ? credentials?.email : ""}
-        className="rounded w-full mb-4 mt-2 py-2 px-3 ring-2 ring-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-500"
+        className="custom-input"
         onChange={(e) =>
           setCredentials({ ...credentials, email: e.target.value })
         }
@@ -36,7 +36,7 @@ const LoginInputs = ({
         name="first-name"
         placeholder="Password..."
         value={credentials?.password ? credentials?.password : ""}
-        className="rounded w-full mb-4 mt-2 py-2 px-3 ring-2 ring-gray-400 focus:outline-none focus:ring-4 focus:ring-blue-500"
+        className="custom-input"
         onChange={(e) =>
           setCredentials({ ...credentials, password: e.target.value })
         }
