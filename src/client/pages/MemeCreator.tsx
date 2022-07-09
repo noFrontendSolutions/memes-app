@@ -8,8 +8,10 @@ import {
 import landscape from "../../../static-assets/landscape.png"
 import landscapeStretch from "../../../static-assets/landscape-stretch.png"
 import landscapeFit from "../../../static-assets/landscape-fit.png"
+import AspectRatio from "../components/meme-creator-components/AspectRatio"
+import CanvasLayout from "../components/meme-creator-components/CanvasLayout"
 
-type CanvasLayout = "vertical" | "horizontal" | "squared"
+type CanvasLayoutType = "vertical" | "horizontal" | "squared"
 type ObjectType = "none" | "stretch" | "fit"
 
 //***********Main Component********************************
@@ -19,7 +21,7 @@ const MemeCreator = () => {
   const [text, setText] = useState("")
   const frameRef = useRef<HTMLDivElement>()
   const [objectType, setObjectType] = useState<ObjectType>("none")
-  const [canvasLayout, setCanvasLayout] = useState<CanvasLayout>("vertical")
+  const [canvasLayout, setCanvasLayout] = useState<CanvasLayoutType>("vertical")
   const [backgroundUrl, setBackgroundUrl] = useState("")
 
   const [imgWidth, setImgWidth] = useState(0)
@@ -44,84 +46,65 @@ const MemeCreator = () => {
   }
 
   return (
-    <div className="h-screen font-titillium bg-slate-700 text-slate-400">
-      <h1>FabricJS React Sample</h1>
-      <fieldset className="border-2 p-2">
-        <input
-          className="border m-2"
-          name={`text`}
-          type={`text`}
-          value={text}
-          onChange={(event) => setText(event.target.value)}
-        />
-        <button className="border-2 m-2 p-2" onClick={onAddText}>
-          Add Text
-        </button>
-        <button className="border-2 m-2 p-2" onClick={cropCanvas}>
-          Crop Canvas
-        </button>
-        <button onClick={onExport} className="border-2 m-2 p-2">
-          Export
-        </button>
-        <label htmlFor="file-upload" className="cursor-pointer border-2">
-          Upload File
+    <div className="h-screen bg-slate-700">
+      <div className="font-titillium bg-slate-700 text-slate-400 flex justify-center items-center">
+        <h1>FabricJS React Sample</h1>
+        <fieldset className="border-2 p-2">
           <input
-            id="file-upload"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              onAddBackground(e, setBackgroundUrl, editor, objectType)
-            }
-            type="file"
-            className="hidden"
+            className="border m-2"
+            name={`text`}
+            type={`text`}
+            value={text}
+            onChange={(event) => setText(event.target.value)}
           />
-        </label>
-      </fieldset>
-      <label htmlFor="layout-field"></label>
-      <fieldset id="layout-field" className="m-4 flex">
-        <button
-          className="m-2 w-[60px] h-[60px] border-slate-700 border-2 bg-slate-200 flex justify-center items-center"
-          title="Squared"
-        >
-          <div className="w-[40px] h-[40px] border-2 border-slate-400 bg-slate-200"></div>
-        </button>
-        <button
-          className="m-2 w-[60px] h-[60px] border-slate-700 border-2 bg-slate-200 flex justify-center items-center"
-          title="Vertical"
-        >
-          <div className="w-[20px] h-[40px] border-2 border-slate-400 bg-slate-200"></div>
-        </button>
-        <button
-          className="m-2 w-[60px] h-[60px] border-slate-700 border-2 bg-slate-200 flex justify-center items-center"
-          title="Horizontal"
-        >
-          <div className="w-[40px] h-[20px] border-2 border-slate-400 bg-slate-200"></div>
-        </button>
-      </fieldset>
-      <label htmlFor="object-layout"></label>
-      <fieldset id="object-layout" className="m-4 flex">
-        <button
-          className="m-2 border-4 object-fill w-16 h-16"
-          title="Object None"
-          onClick={() => onObjectNone(editor, backgroundUrl, setObjectType)}
-        >
-          <img src={landscape} />
-        </button>
-        <button
-          className="m-2 border-4 object-fill w-16 h-16"
-          title="Object Fit"
-          onClick={() => onObjectFit(editor, backgroundUrl, setObjectType)}
-        >
-          <img src={landscapeFit} />
-        </button>
-        <button
-          className="m-2 border-4 object-fill w-16 h-16"
-          title="Object Stretch"
-          onClick={() => onObjectStretch(editor, backgroundUrl, setObjectType)}
-        >
-          <img src={landscapeStretch} className="w-20 h-14" />
-        </button>
-      </fieldset>
-      <div ref={frameRef} className="h-1/2 w-1/2 border-2 bg-slate-400">
-        <FabricJSCanvas onReady={onReady} className="h-full w-full" />
+          <button className="border-2 m-2 p-2" onClick={onAddText}>
+            Add Text
+          </button>
+          <button className="border-2 m-2 p-2" onClick={cropCanvas}>
+            Crop Canvas
+          </button>
+          <button onClick={onExport} className="border-2 m-2 p-2">
+            Export
+          </button>
+          <label htmlFor="file-upload" className="cursor-pointer border-2">
+            Upload File
+            <input
+              id="file-upload"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onAddBackground(e, setBackgroundUrl, editor, objectType)
+              }
+              type="file"
+              className="hidden"
+            />
+          </label>
+        </fieldset>
+        <label htmlFor="canvas-layout"></label>
+        <CanvasLayout
+          canvasLayout={canvasLayout}
+          setCanvasLayout={setCanvasLayout}
+        />
+        <label htmlFor="ratio-layout"></label>
+        <AspectRatio
+          editor={editor}
+          setObjectType={setObjectType}
+          backgroundUrl={backgroundUrl}
+        />
+      </div>
+
+      <div
+        className="mt-16 h-full flex justify-center items-center bg-slate-700"
+        ref={frameRef}
+      >
+        <FabricJSCanvas
+          onReady={onReady}
+          className={
+            canvasLayout === "vertical"
+              ? "h-3/5 w-2/3 border border-emerald-500 bg-slate-800"
+              : canvasLayout === "horizontal"
+              ? "h-[95%] w-1/3 border border-emerald-500  bg-slate-800"
+              : "h-4/5 w-1/2 border border-emerald-500  bg-slate-800"
+          }
+        />
       </div>
     </div>
   )
@@ -132,82 +115,6 @@ export default MemeCreator
 /******************************************
  *****************Functions*****************
  *******************************************/
-
-const onObjectNone = (
-  editor: FabricJSEditor,
-  background: string,
-  setObjectFit: React.Dispatch<React.SetStateAction<ObjectType>>
-) => {
-  setObjectFit("none")
-  fabric.Image.fromURL(background, (img) => {
-    const widthRatio = editor.canvas.width / img.width
-    const heightRatio = editor.canvas.width / img.height
-    const ratio = Math.min(widthRatio, heightRatio)
-    {
-      editor.canvas.setBackgroundImage(
-        img,
-        editor.canvas.renderAll.bind(editor.canvas),
-        {
-          crossOrigin: "anonymous",
-        }
-      )
-    }
-    editor.canvas.centerObject(img)
-    editor.canvas.renderAll()
-  })
-}
-
-const onObjectFit = (
-  editor: FabricJSEditor,
-  background: string,
-  setObjectFit: React.Dispatch<React.SetStateAction<ObjectType>>
-) => {
-  setObjectFit("fit")
-  fabric.Image.fromURL(background, (img) => {
-    const widthRatio = editor.canvas.width / img.width
-    const heightRatio = editor.canvas.width / img.height
-    const ratio = Math.min(widthRatio, heightRatio)
-    {
-      editor.canvas.setBackgroundImage(
-        img,
-        editor.canvas.renderAll.bind(editor.canvas),
-        {
-          crossOrigin: "anonymous",
-          scaleX: ratio,
-          scaleY: ratio,
-        }
-      )
-    }
-    editor.canvas.centerObject(img)
-    editor.canvas.renderAll()
-  })
-}
-
-const onObjectStretch = (
-  editor: FabricJSEditor,
-  background: string,
-  setObjectFit: React.Dispatch<React.SetStateAction<ObjectType>>
-) => {
-  setObjectFit("stretch")
-  fabric.Image.fromURL(background, (img) => {
-    const widthRatio = editor.canvas.width / img.width
-    const heightRatio = editor.canvas.width / img.height
-    const ratio = Math.min(widthRatio, heightRatio)
-    {
-      editor.canvas.setBackgroundImage(
-        img,
-        editor.canvas.renderAll.bind(editor.canvas),
-        {
-          crossOrigin: "anonymous",
-          scaleX: editor.canvas.width / img.width,
-          scaleY: editor.canvas.height / img.height,
-        }
-      )
-    }
-    editor.canvas.centerObject(img)
-    editor.canvas.renderAll()
-  })
-}
 
 const onAddBackground = (
   e: React.ChangeEvent<HTMLInputElement>,

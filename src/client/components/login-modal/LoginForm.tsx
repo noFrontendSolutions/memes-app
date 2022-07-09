@@ -44,7 +44,7 @@ const LoginForm = () => {
           <span>
             <svg
               role="status"
-              className="w-8 h-8 mr-2 text-slate-400 animate-spin  fill-emerald-600"
+              className="w-8 h-8 mr-2 text-red-700 animate-spin  fill-red-900"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
