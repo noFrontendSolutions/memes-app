@@ -1,6 +1,7 @@
-import React, { ReactChild, ReactChildren, useContext } from "react"
+import React, { ReactChild, ReactChildren, useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { UserContext } from "../context/UserContext"
+import { useLocation } from "react-router-dom"
 import Modal from "./login-modal/Modal"
 
 interface NavBarProps {
@@ -8,6 +9,8 @@ interface NavBarProps {
 }
 
 const NavBar = ({ children }: NavBarProps) => {
+  const location = useLocation()
+
   const {
     loginModalIsOpen,
     setLoginModalIsOpen,
@@ -21,30 +24,57 @@ const NavBar = ({ children }: NavBarProps) => {
     setLoggedIn,
   } = useContext(UserContext)
 
+  useEffect(() => {
+    console.log(location.pathname)
+  }, [])
+
   return (
     <>
       {loginModalIsOpen && <Modal />}
-      <div className="h-20 px-4 flex flex-row justify-end items-center bg-blue-100">
-        <div className="flex flex-row items-center justify-between h-full w-full mr-8">
-          <Link to="/" className="border-b-2 ">
+      <div className="h-20 px-8 flex flex-row justify-end items-center bg-slate-800 font-titillium text-slate-400 font-semibold">
+        <div className="flex flex-row items-center justify-start h-full w-full mr-8">
+          <Link
+            to="/"
+            className={
+              location.pathname === "/"
+                ? "mr-14 border-b-2 border-slate-400 transition transform hover:translate-x-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
+                : "mr-14 text-slate-400 font-semibold transition transform hover:translate-x-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
+            }
+          >
             Home
           </Link>
-          <Link to="/meme-creator" className="border-b-2">
+          <Link
+            to="/meme-creator"
+            className={
+              location.pathname === "/meme-creator"
+                ? "mr-14 border-b-2 border-slate-400 transition transform hover:translate-x-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
+                : "mr-14 text-slate-400 font-semibold transition transform hover:translate-x-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
+            }
+          >
             Create Meme
           </Link>
         </div>
-        {loggedIn && <div className="mr-4">{credentials?.email}</div>}
+        {loggedIn && (
+          <>
+            <span className="mr-4 w-36 text-right text-slate-400">
+              Logged in as:
+            </span>
+            <div className="mr-16 p-4 h-10 bg-slate-900 rounded-lg text-emerald-400 flex justify-center items-center">
+              {credentials?.email}
+            </div>
+          </>
+        )}
         {!loggedIn && (
           <button
             onClick={() => setLoginModalIsOpen(!loginModalIsOpen)}
-            className="h-14 w-44 bg-blue-500 border-8 border-blue-400 rounded-lg text-blue-50 font-bold hover:bg-blue-600 hover:text-white flex justify-center items-center"
+            className="h-14 w-44 text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300 flex justify-center items-center"
           >
             {!isLoading && <span>Login / Sign Up</span>}
             {isLoading && (
               <span>
                 <svg
                   role="status"
-                  className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                  className="w-8 h-8 mr-2 text-emerald-400 animate-spin fill-emerald-600"
                   viewBox="0 0 100 101"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -73,14 +103,14 @@ const NavBar = ({ children }: NavBarProps) => {
                 setLoggedIn
               )
             }}
-            className="h-14 w-44 bg-blue-500 border-8 border-blue-400 rounded-lg text-blue-50 font-bold hover:bg-blue-600 hover:text-white flex justify-center items-center"
+            className="h-14 w-44 text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300 flex justify-center items-center"
           >
             {!isLoading && <span>Logout</span>}
             {isLoading && (
               <span>
                 <svg
                   role="status"
-                  className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                  className="w-8 h-8 mr-2 text-emerald-400 animate-spin fill-emerald-600"
                   viewBox="0 0 100 101"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"

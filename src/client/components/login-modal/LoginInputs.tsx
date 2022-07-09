@@ -12,9 +12,7 @@ const LoginInputs = ({
   return (
     <>
       {" "}
-      <label htmlFor="email" className="font-bold">
-        Email:
-      </label>
+      <label htmlFor="email">Email:</label>
       <input
         type="text"
         name="email"
@@ -25,12 +23,8 @@ const LoginInputs = ({
           setCredentials({ ...credentials, email: e.target.value })
         }
       />
-      {error?.email && (
-        <p className="mb-2 text-red-500 font-bold">{error?.email}</p>
-      )}
-      <label htmlFor="password" className="font-bold">
-        Password:
-      </label>
+      {error?.email && <p className="mb-2 text-red-400">{error?.email}</p>}
+      <label htmlFor="password">Password:</label>
       <input
         type="password"
         name="first-name"
@@ -42,7 +36,7 @@ const LoginInputs = ({
         }
       />
       {error?.password && (
-        <p className="mb-2 text-red-500 font-bold">{error?.password}</p>
+        <p className="mb-2 text-red-400">{error?.password}</p>
       )}
     </>
   )

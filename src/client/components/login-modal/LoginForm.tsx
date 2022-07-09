@@ -16,7 +16,7 @@ const LoginForm = () => {
   } = useContext(UserContext)
 
   return (
-    <form action="/login" className="h-full p-4 pt-2 pl-0 flex flex-col">
+    <form action="/login" className="h-full pt-2 pl-0 flex flex-col">
       <LoginInputs
         credentials={credentials}
         setCredentials={setCredentials}
@@ -24,7 +24,7 @@ const LoginForm = () => {
       />
       <button
         type="submit"
-        className="bg-blue-600 rounded-lg hover:bg-blue-700 font-bold text-xl text-white h-14 mt-8 flex justify-center items-center"
+        className="bg-emerald-500 rounded-lg hover:bg-emerald-600 font-bold text-xl text-slate-200 h-14 mt-8 flex justify-center items-center"
         onClick={(e) => {
           e.preventDefault()
           login(
@@ -44,7 +44,7 @@ const LoginForm = () => {
           <span>
             <svg
               role="status"
-              className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              className="w-8 h-8 mr-2 text-slate-400 animate-spin  fill-emerald-600"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -64,9 +64,7 @@ const LoginForm = () => {
       {error?.message &&
         setTimeout(() => {
           setError({ ...error, message: "" })
-        }, 5000) && (
-          <p className="mt-2 text-red-500 font-bold">{error?.message}</p>
-        )}
+        }, 5000) && <p className="mt-2 text-red-400">{error?.message}</p>}
     </form>
   )
 }

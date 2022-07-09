@@ -2,6 +2,9 @@ module.exports = {
   content: ["./src/**/*.{html,js,ts,jsx,tsx}", "./template/index.html"],
   theme: {
     extend: {
+      fontFamily: {
+        titillium: ["Titillium Web", "sans-serif"],
+      },
       colors: {
         transparent: "transparent",
         reactGray: "#1F232A",

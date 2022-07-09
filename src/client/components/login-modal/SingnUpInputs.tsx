@@ -11,9 +11,7 @@ const SignUpInputs = ({
 }) => {
   return (
     <>
-      <label htmlFor="first-name" className="font-bold">
-        First Name:
-      </label>
+      <label htmlFor="first-name">First Name:</label>
       <input
         type="text"
         name="first-name"
@@ -25,11 +23,9 @@ const SignUpInputs = ({
         }
       />
       {error?.first_name && (
-        <p className="mb-2 text-red-500 font-bold">{error?.first_name}</p>
+        <p className="mb-2 text-red-400">{error?.first_name}</p>
       )}
-      <label htmlFor="last-name" className="font-bold">
-        Last Name:
-      </label>
+      <label htmlFor="last-name">Last Name:</label>
       <input
         type="text"
         name="last-name"
@@ -41,11 +37,9 @@ const SignUpInputs = ({
         }
       />
       {error?.last_name && (
-        <p className="mb-2 text-red-500 font-bold">{error?.last_name}</p>
+        <p className="mb-2 text-red-400">{error?.last_name}</p>
       )}
-      <label htmlFor="email" className="font-bold">
-        Email:
-      </label>
+      <label htmlFor="email">Email:</label>
       <input
         type="text"
         name="email"
@@ -56,12 +50,8 @@ const SignUpInputs = ({
           setCredentials({ ...credentials, email: e.target.value })
         }
       />
-      {error?.email && (
-        <p className="mb-2 text-red-500 font-bold">{error?.email}</p>
-      )}
-      <label htmlFor="password" className="font-bold">
-        Password:
-      </label>
+      {error?.email && <p className="mb-2 text-red-400">{error?.email}</p>}
+      <label htmlFor="password">Password:</label>
       <input
         type="password"
         name="first-name"
@@ -73,11 +63,9 @@ const SignUpInputs = ({
         }
       />
       {error?.password && (
-        <p className="mb-2 text-red-500 font-bold">{error?.password}</p>
+        <p className="mb-2 text-red-400">{error?.password}</p>
       )}
-      <label htmlFor="confirm-password" className="font-bold">
-        Confirm Password:
-      </label>
+      <label htmlFor="confirm-password">Confirm Password:</label>
       <input
         type="password"
         name="confirm-password"

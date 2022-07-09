@@ -44,7 +44,7 @@ const MemeCreator = () => {
   }
 
   return (
-    <div className="h-screen w-screen">
+    <div className="h-screen font-titillium bg-slate-700 text-slate-400">
       <h1>FabricJS React Sample</h1>
       <fieldset className="border-2 p-2">
         <input
