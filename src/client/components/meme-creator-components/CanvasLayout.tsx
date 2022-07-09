@@ -1,12 +1,18 @@
+import { FabricJSEditor } from "fabricjs-react"
 import React from "react"
 type CanvasLayoutType = "vertical" | "horizontal" | "squared"
+import { onAddBackground } from "../../pages/MemeCreator"
 
 const CanvasLayout = ({
+  editor,
   canvasLayout,
   setCanvasLayout,
+  backgroundUrl,
 }: {
+  editor: FabricJSEditor
   canvasLayout: CanvasLayoutType
   setCanvasLayout: React.Dispatch<React.SetStateAction<CanvasLayoutType>>
+  backgroundUrl: string
 }) => {
   return (
     <>

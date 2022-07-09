@@ -1,13 +1,11 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { fabric } from "fabric" // this also installed on your project
 import {
   FabricJSCanvas,
   FabricJSEditor,
   useFabricJSEditor,
 } from "fabricjs-react"
-import landscape from "../../../static-assets/landscape.png"
-import landscapeStretch from "../../../static-assets/landscape-stretch.png"
-import landscapeFit from "../../../static-assets/landscape-fit.png"
+
 import AspectRatio from "../components/meme-creator-components/AspectRatio"
 import CanvasLayout from "../components/meme-creator-components/CanvasLayout"
 
@@ -46,7 +44,7 @@ const MemeCreator = () => {
   }
 
   return (
-    <div className="h-screen bg-slate-700">
+    <div className="h-screen bg-slate-700 flex flex-col justify-start items-center">
       <div className="font-titillium bg-slate-700 text-slate-400 flex justify-center items-center">
         <h1>FabricJS React Sample</h1>
         <fieldset className="border-2 p-2">
@@ -80,8 +78,10 @@ const MemeCreator = () => {
         </fieldset>
         <label htmlFor="canvas-layout"></label>
         <CanvasLayout
+          editor={editor}
           canvasLayout={canvasLayout}
           setCanvasLayout={setCanvasLayout}
+          backgroundUrl={backgroundUrl}
         />
         <label htmlFor="ratio-layout"></label>
         <AspectRatio
@@ -92,19 +92,16 @@ const MemeCreator = () => {
       </div>
 
       <div
-        className="mt-16 h-full flex justify-center items-center bg-slate-700"
+        className={
+          canvasLayout === "vertical"
+            ? "mt-16 h-[450px] w-[1000px] border border-emerald-500 bg-slate-800"
+            : canvasLayout === "horizontal"
+            ? "mt-8 h-[700px] w-[350px] border border-emerald-500  bg-slate-800"
+            : "mt-16 h-[600px] w-[600px] border border-emerald-500  bg-slate-800"
+        }
         ref={frameRef}
       >
-        <FabricJSCanvas
-          onReady={onReady}
-          className={
-            canvasLayout === "vertical"
-              ? "h-3/5 w-2/3 border border-emerald-500 bg-slate-800"
-              : canvasLayout === "horizontal"
-              ? "h-[95%] w-1/3 border border-emerald-500  bg-slate-800"
-              : "h-4/5 w-1/2 border border-emerald-500  bg-slate-800"
-          }
-        />
+        <FabricJSCanvas onReady={onReady} className="h-full" />
       </div>
     </div>
   )
@@ -116,7 +113,7 @@ export default MemeCreator
  *****************Functions*****************
  *******************************************/
 
-const onAddBackground = (
+export const onAddBackground = (
   e: React.ChangeEvent<HTMLInputElement>,
   setBackground: React.Dispatch<React.SetStateAction<string>>,
   editor: FabricJSEditor,
