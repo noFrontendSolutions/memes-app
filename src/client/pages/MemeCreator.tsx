@@ -8,6 +8,7 @@ import {
 
 import ObjectFit from "../components/meme-creator-components/ObjectFit"
 import BackgroundColor from "../components/meme-creator-components/BackgroundColor"
+import AddText from "../components/meme-creator-components/AddText"
 
 type BackgroundColorType = "white" | "black" | "transparent"
 type ObjectType = "none" | "fill" | "contain" | "cover" | "scale-down"
@@ -97,17 +98,25 @@ const MemeCreator = () => {
         <label htmlFor="ratio-layout"></label>
         <ObjectFit objectType={objectType} setObjectType={setObjectType} />
       </div>
-      <div className="mt-10 flex flex-col items-end">
-        <fieldset
-          title="Choose Background Color"
-          className="flex flex-row border border-emerald-500 border-b-0 w-24 bg-slate-900"
-        >
-          <BackgroundColor
-            backgroundColor={backgroundColor}
-            setBackgroundColor={setBackgroundColor}
-            editor={editor}
-          />
-        </fieldset>
+      <div className="mt-10">
+        <div className="mt-10 flex flex-row justify-between w-full">
+          <fieldset
+            title="Text Editor"
+            className="bg-slate-900 mb-2 w-2/3 rounded"
+          >
+            <AddText text={text} setText={setText} editor={editor} />
+          </fieldset>
+          <fieldset
+            title="Choose Background Color"
+            className="flex flex-row  w-24 bg-slate-900 mb-2 rounded"
+          >
+            <BackgroundColor
+              backgroundColor={backgroundColor}
+              setBackgroundColor={setBackgroundColor}
+              editor={editor}
+            />
+          </fieldset>
+        </div>
         <div className={"border border-emerald-500"}>
           <FabricJSCanvas
             onReady={onReady}
