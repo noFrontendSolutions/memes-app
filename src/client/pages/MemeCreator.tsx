@@ -1,16 +1,11 @@
 import React, { useState, useRef, useEffect } from "react"
 import { fabric } from "fabric" // this also installed on your project
-import {
-  FabricJSCanvas,
-  FabricJSEditor,
-  useFabricJSEditor,
-} from "fabricjs-react"
+import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react"
 
-import AspectRatio from "../components/meme-creator-components/AspectRatio"
-import CanvasLayout from "../components/meme-creator-components/CanvasLayout"
+import ObjectFit from "../components/meme-creator-components/ObjectFit"
 
 type CanvasLayoutType = "vertical" | "horizontal" | "squared"
-type ObjectType = "none" | "stretch" | "fit"
+type ObjectType = "none" | "fill" | "contain" | "cover" | "scale-down"
 
 //***********Main Component********************************
 
@@ -21,6 +16,9 @@ const MemeCreator = () => {
   const [objectType, setObjectType] = useState<ObjectType>("none")
   const [canvasLayout, setCanvasLayout] = useState<CanvasLayoutType>("vertical")
   const [backgroundUrl, setBackgroundUrl] = useState("")
+  const [backgroundFile, setBackgroundFile] = useState<File>(null)
+  const [screenWidth, setScreenWidth] = useState(0)
+  const [screenHeight, setScreenHeight] = useState(0)
 
   const [imgWidth, setImgWidth] = useState(0)
   const [imgHeight, setImgHeight] = useState(0)
@@ -42,6 +40,86 @@ const MemeCreator = () => {
     editor.addText(text)
     setText("")
   }
+
+  useEffect(() => {
+    if (backgroundUrl) {
+      fabric.Image.fromURL(URL.createObjectURL(backgroundFile), (img) => {
+        const widthRatio = editor.canvas.width / img.width
+        const heightRatio = editor.canvas.width / img.height
+        const minRatio = Math.min(widthRatio, heightRatio)
+        const maxRatio = Math.max(widthRatio, heightRatio)
+        const scaleDownRatio = Math.min(1, widthRatio, heightRatio)
+        if (objectType === "contain") {
+          editor.canvas.setBackgroundImage(
+            img,
+            editor.canvas.renderAll.bind(editor.canvas),
+            {
+              crossOrigin: "anonymous",
+              scaleX: minRatio,
+              scaleY: minRatio,
+            }
+          )
+        } else if (objectType === "fill") {
+          editor.canvas.setBackgroundImage(
+            img,
+            editor.canvas.renderAll.bind(editor.canvas),
+            {
+              crossOrigin: "anonymous",
+              scaleX: editor.canvas.width / img.width,
+              scaleY: editor.canvas.height / img.height,
+            }
+          )
+        } else if (objectType === "cover") {
+          editor.canvas.setBackgroundImage(
+            img,
+            editor.canvas.renderAll.bind(editor.canvas),
+            {
+              crossOrigin: "anonymous",
+              scaleX: maxRatio,
+              scaleY: maxRatio,
+            }
+          )
+        } else if (objectType === "scale-down") {
+          editor.canvas.setBackgroundImage(
+            img,
+            editor.canvas.renderAll.bind(editor.canvas),
+            {
+              crossOrigin: "anonymous",
+              scaleX: scaleDownRatio,
+              scaleY: scaleDownRatio,
+            }
+          )
+        } else {
+          editor.canvas.setBackgroundImage(
+            img,
+            editor.canvas.renderAll.bind(editor.canvas),
+            {
+              crossOrigin: "anonymous",
+            }
+          )
+        }
+
+        editor.canvas.centerObject(img)
+        editor.canvas.renderAll()
+      })
+    }
+  }, [backgroundUrl, canvasLayout, objectType])
+
+  useEffect(() => {
+    let screenWidth = window.screen.width
+    let screenHeight = window.screen.height
+    if (screenWidth < 1000) {
+      editor?.canvas.setDimensions({
+        width: screenWidth / 1.3,
+        height: screenHeight / 1.8,
+      })
+    } else {
+      editor?.canvas.setDimensions({
+        width: screenWidth / 2,
+        height: screenHeight / 1.8,
+      })
+    }
+  }, [editor])
 
   return (
     <div className="h-screen bg-slate-700 flex flex-col justify-start items-center">
@@ -69,7 +147,7 @@ const MemeCreator = () => {
             <input
               id="file-upload"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                onAddBackground(e, setBackgroundUrl, editor, objectType)
+                onAddBackground(e, setBackgroundUrl, setBackgroundFile)
               }
               type="file"
               className="hidden"
@@ -77,28 +155,12 @@ const MemeCreator = () => {
           </label>
         </fieldset>
         <label htmlFor="canvas-layout"></label>
-        <CanvasLayout
-          editor={editor}
-          canvasLayout={canvasLayout}
-          setCanvasLayout={setCanvasLayout}
-          backgroundUrl={backgroundUrl}
-        />
         <label htmlFor="ratio-layout"></label>
-        <AspectRatio
-          editor={editor}
-          setObjectType={setObjectType}
-          backgroundUrl={backgroundUrl}
-        />
+        <ObjectFit objectType={objectType} setObjectType={setObjectType} />
       </div>
 
       <div
-        className={
-          canvasLayout === "vertical"
-            ? "mt-16 h-[450px] w-[1000px] border border-emerald-500 bg-slate-800"
-            : canvasLayout === "horizontal"
-            ? "mt-8 h-[700px] w-[350px] border border-emerald-500  bg-slate-800"
-            : "mt-16 h-[600px] w-[600px] border border-emerald-500  bg-slate-800"
-        }
+        className={"mt-16  border border-emerald-500 bg-slate-800"}
         ref={frameRef}
       >
         <FabricJSCanvas onReady={onReady} className="h-full" />
@@ -116,46 +178,9 @@ export default MemeCreator
 export const onAddBackground = (
   e: React.ChangeEvent<HTMLInputElement>,
   setBackground: React.Dispatch<React.SetStateAction<string>>,
-  editor: FabricJSEditor,
-  objectType: ObjectType
+  setBackgroundFile: React.Dispatch<React.SetStateAction<File>>
 ) => {
   const imageFile = e.target.files[0]
   setBackground(URL.createObjectURL(imageFile))
-  fabric.Image.fromURL(URL.createObjectURL(imageFile), (img) => {
-    const widthRatio = editor.canvas.width / img.width
-    const heightRatio = editor.canvas.width / img.height
-    const ratio = Math.min(widthRatio, heightRatio)
-    if (objectType === "fit") {
-      editor.canvas.setBackgroundImage(
-        img,
-        editor.canvas.renderAll.bind(editor.canvas),
-        {
-          crossOrigin: "anonymous",
-          scaleX: ratio,
-          scaleY: ratio,
-        }
-      )
-    } else if (objectType === "stretch") {
-      editor.canvas.setBackgroundImage(
-        img,
-        editor.canvas.renderAll.bind(editor.canvas),
-        {
-          crossOrigin: "anonymous",
-          scaleX: editor.canvas.width / img.width,
-          scaleY: editor.canvas.height / img.height,
-        }
-      )
-    } else {
-      editor.canvas.setBackgroundImage(
-        img,
-        editor.canvas.renderAll.bind(editor.canvas),
-        {
-          crossOrigin: "anonymous",
-        }
-      )
-    }
-
-    editor.canvas.centerObject(img)
-    editor.canvas.renderAll()
-  })
+  setBackgroundFile(imageFile)
 }
