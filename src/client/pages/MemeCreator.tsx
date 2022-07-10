@@ -7,8 +7,9 @@ import {
 } from "fabricjs-react"
 
 import ObjectFit from "../components/meme-creator-components/ObjectFit"
+import BackgroundColor from "../components/meme-creator-components/BackgroundColor"
 
-type BackgroundColor = "white" | "black" | "transparent"
+type BackgroundColorType = "white" | "black" | "transparent"
 type ObjectType = "none" | "fill" | "contain" | "cover" | "scale-down"
 
 //***********Main Component********************************
@@ -17,8 +18,8 @@ const MemeCreator = () => {
   const { editor, onReady } = useFabricJSEditor()
   const [text, setText] = useState("")
   const [objectType, setObjectType] = useState<ObjectType>("none")
-  const [backroundColor, setBackgroundColor] =
-    useState<BackgroundColor>("transparent")
+  const [backgroundColor, setBackgroundColor] =
+    useState<BackgroundColorType>("transparent")
   const [backgroundUrl, setBackgroundUrl] = useState("")
   const [backgroundFile, setBackgroundFile] = useState<File>(null)
 
@@ -101,50 +102,19 @@ const MemeCreator = () => {
           title="Choose Background Color"
           className="flex flex-row border border-emerald-500 border-b-0 w-24 bg-slate-900"
         >
-          <button
-            title="Background Color: Black"
-            className={
-              backroundColor === "black"
-                ? "m-2 w-10 h-10 bg-black rounded-full border-2 border-emerald-500"
-                : "m-2 w-10 h-10 bg-black rounded-full"
-            }
-            onClick={() => {
-              editor?.canvas.setBackgroundColor("black", () => {})
-              setBackgroundColor("black")
-            }}
-          ></button>
-          <button
-            title="Background Color: White"
-            className={
-              backroundColor === "white"
-                ? "m-2 w-10 h-10 bg-white rounded-full border-2 border-emerald-500"
-                : "m-2 w-10 h-10 bg-white rounded-full"
-            }
-            onClick={() => {
-              editor?.canvas.setBackgroundColor("white", () => {})
-              setBackgroundColor("white")
-            }}
-          ></button>
-          <button
-            title="Background Color: Transparent"
-            className={
-              backroundColor === "transparent"
-                ? "m-2 w-10 h-10 bg-slate-800 rounded-full border-2 border-emerald-500"
-                : "m-2 w-10 h-10 bg-slate-800 rounded-full"
-            }
-            onClick={() => {
-              editor?.canvas.setBackgroundColor("Transparent", () => {})
-              setBackgroundColor("transparent")
-            }}
-          ></button>
+          <BackgroundColor
+            backgroundColor={backgroundColor}
+            setBackgroundColor={setBackgroundColor}
+            editor={editor}
+          />
         </fieldset>
         <div className={"border border-emerald-500"}>
           <FabricJSCanvas
             onReady={onReady}
             className={
-              backroundColor === "black"
+              backgroundColor === "black"
                 ? "h-full bg-black"
-                : backroundColor === "white"
+                : backgroundColor === "white"
                 ? "h-full bg-white"
                 : "h-full bg-slate-800"
             }
