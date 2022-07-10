@@ -1,10 +1,14 @@
 import React, { useState, useRef, useEffect } from "react"
 import { fabric } from "fabric" // this also installed on your project
-import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react"
+import {
+  FabricJSCanvas,
+  FabricJSEditor,
+  useFabricJSEditor,
+} from "fabricjs-react"
 
 import ObjectFit from "../components/meme-creator-components/ObjectFit"
 
-type CanvasLayoutType = "vertical" | "horizontal" | "squared"
+type BackgroundColor = "white" | "black" | "transparent"
 type ObjectType = "none" | "fill" | "contain" | "cover" | "scale-down"
 
 //***********Main Component********************************
@@ -12,28 +16,22 @@ type ObjectType = "none" | "fill" | "contain" | "cover" | "scale-down"
 const MemeCreator = () => {
   const { editor, onReady } = useFabricJSEditor()
   const [text, setText] = useState("")
-  const frameRef = useRef<HTMLDivElement>()
   const [objectType, setObjectType] = useState<ObjectType>("none")
-  const [canvasLayout, setCanvasLayout] = useState<CanvasLayoutType>("vertical")
+  const [backroundColor, setBackgroundColor] =
+    useState<BackgroundColor>("transparent")
   const [backgroundUrl, setBackgroundUrl] = useState("")
   const [backgroundFile, setBackgroundFile] = useState<File>(null)
-  const [screenWidth, setScreenWidth] = useState(0)
-  const [screenHeight, setScreenHeight] = useState(0)
 
-  const [imgWidth, setImgWidth] = useState(0)
-  const [imgHeight, setImgHeight] = useState(0)
-
-  const cropCanvas = (e: React.MouseEvent<HTMLButtonElement>) => {
-    frameRef.current.style.height = `${imgHeight}px`
-    frameRef.current.style.width = `${imgWidth}px`
-  }
-
-  const onExport = () => {
-    let image = new Image()
-    image.crossOrigin = "anonymous"
-    image.src = editor.canvas.toDataURL()
-    let w = window.open("")
-    w.document.write(image.outerHTML)
+  const onDownloadImage = () => {
+    const ext = "png"
+    const base64 = editor.canvas.toDataURL({
+      format: ext,
+      enableRetinaScaling: true,
+    })
+    const link = document.createElement("a")
+    link.href = base64
+    link.download = `eraser_example.${ext}`
+    link.click()
   }
 
   const onAddText = () => {
@@ -43,67 +41,9 @@ const MemeCreator = () => {
 
   useEffect(() => {
     if (backgroundUrl) {
-      fabric.Image.fromURL(URL.createObjectURL(backgroundFile), (img) => {
-        const widthRatio = editor.canvas.width / img.width
-        const heightRatio = editor.canvas.width / img.height
-        const minRatio = Math.min(widthRatio, heightRatio)
-        const maxRatio = Math.max(widthRatio, heightRatio)
-        const scaleDownRatio = Math.min(1, widthRatio, heightRatio)
-        if (objectType === "contain") {
-          editor.canvas.setBackgroundImage(
-            img,
-            editor.canvas.renderAll.bind(editor.canvas),
-            {
-              crossOrigin: "anonymous",
-              scaleX: minRatio,
-              scaleY: minRatio,
-            }
-          )
-        } else if (objectType === "fill") {
-          editor.canvas.setBackgroundImage(
-            img,
-            editor.canvas.renderAll.bind(editor.canvas),
-            {
-              crossOrigin: "anonymous",
-              scaleX: editor.canvas.width / img.width,
-              scaleY: editor.canvas.height / img.height,
-            }
-          )
-        } else if (objectType === "cover") {
-          editor.canvas.setBackgroundImage(
-            img,
-            editor.canvas.renderAll.bind(editor.canvas),
-            {
-              crossOrigin: "anonymous",
-              scaleX: maxRatio,
-              scaleY: maxRatio,
-            }
-          )
-        } else if (objectType === "scale-down") {
-          editor.canvas.setBackgroundImage(
-            img,
-            editor.canvas.renderAll.bind(editor.canvas),
-            {
-              crossOrigin: "anonymous",
-              scaleX: scaleDownRatio,
-              scaleY: scaleDownRatio,
-            }
-          )
-        } else {
-          editor.canvas.setBackgroundImage(
-            img,
-            editor.canvas.renderAll.bind(editor.canvas),
-            {
-              crossOrigin: "anonymous",
-            }
-          )
-        }
-
-        editor.canvas.centerObject(img)
-        editor.canvas.renderAll()
-      })
+      onSetObjectFit(backgroundFile, editor, objectType)
     }
-  }, [backgroundUrl, canvasLayout, objectType])
+  }, [backgroundUrl, objectType])
 
   useEffect(() => {
     let screenWidth = window.screen.width
@@ -136,10 +76,8 @@ const MemeCreator = () => {
           <button className="border-2 m-2 p-2" onClick={onAddText}>
             Add Text
           </button>
-          <button className="border-2 m-2 p-2" onClick={cropCanvas}>
-            Crop Canvas
-          </button>
-          <button onClick={onExport} className="border-2 m-2 p-2">
+
+          <button onClick={onDownloadImage} className="border-2 m-2 p-2">
             Export
           </button>
           <label htmlFor="file-upload" className="cursor-pointer border-2">
@@ -158,12 +96,60 @@ const MemeCreator = () => {
         <label htmlFor="ratio-layout"></label>
         <ObjectFit objectType={objectType} setObjectType={setObjectType} />
       </div>
-
-      <div
-        className={"mt-16  border border-emerald-500 bg-slate-800"}
-        ref={frameRef}
-      >
-        <FabricJSCanvas onReady={onReady} className="h-full" />
+      <div className="mt-10 flex flex-col items-end">
+        <fieldset
+          title="Choose Background Color"
+          className="flex flex-row border border-emerald-500 border-b-0 w-24 bg-slate-900"
+        >
+          <button
+            title="Background Color: Black"
+            className={
+              backroundColor === "black"
+                ? "m-2 w-10 h-10 bg-black rounded-full border-2 border-emerald-500"
+                : "m-2 w-10 h-10 bg-black rounded-full"
+            }
+            onClick={() => {
+              editor?.canvas.setBackgroundColor("black", () => {})
+              setBackgroundColor("black")
+            }}
+          ></button>
+          <button
+            title="Background Color: White"
+            className={
+              backroundColor === "white"
+                ? "m-2 w-10 h-10 bg-white rounded-full border-2 border-emerald-500"
+                : "m-2 w-10 h-10 bg-white rounded-full"
+            }
+            onClick={() => {
+              editor?.canvas.setBackgroundColor("white", () => {})
+              setBackgroundColor("white")
+            }}
+          ></button>
+          <button
+            title="Background Color: Transparent"
+            className={
+              backroundColor === "transparent"
+                ? "m-2 w-10 h-10 bg-slate-800 rounded-full border-2 border-emerald-500"
+                : "m-2 w-10 h-10 bg-slate-800 rounded-full"
+            }
+            onClick={() => {
+              editor?.canvas.setBackgroundColor("Transparent", () => {})
+              setBackgroundColor("transparent")
+            }}
+          ></button>
+        </fieldset>
+        <div className={"border border-emerald-500"}>
+          <FabricJSCanvas
+            onReady={onReady}
+            className={
+              backroundColor === "black"
+                ? "h-full bg-black"
+                : backroundColor === "white"
+                ? "h-full bg-white"
+                : "h-full bg-slate-800"
+            }
+          />
+        </div>
       </div>
     </div>
   )
@@ -183,4 +169,69 @@ export const onAddBackground = (
   const imageFile = e.target.files[0]
   setBackground(URL.createObjectURL(imageFile))
   setBackgroundFile(imageFile)
+}
+
+const onSetObjectFit = (
+  backgroundFile: File,
+  editor: FabricJSEditor,
+  objectType: ObjectType
+) => {
+  fabric.Image.fromURL(URL.createObjectURL(backgroundFile), (img) => {
+    const widthRatio = editor.canvas.width / img.width
+    const heightRatio = editor.canvas.width / img.height
+    const minRatio = Math.min(widthRatio, heightRatio)
+    const maxRatio = Math.max(widthRatio, heightRatio)
+    const scaleDownRatio = Math.min(1, widthRatio, heightRatio)
+    if (objectType === "contain") {
+      editor.canvas.setBackgroundImage(
+        img,
+        editor.canvas.renderAll.bind(editor.canvas),
+        {
+          crossOrigin: "anonymous",
+          scaleX: minRatio,
+          scaleY: minRatio,
+        }
+      )
+    } else if (objectType === "fill") {
+      editor.canvas.setBackgroundImage(
+        img,
+        editor.canvas.renderAll.bind(editor.canvas),
+        {
+          crossOrigin: "anonymous",
+          scaleX: editor.canvas.width / img.width,
+          scaleY: editor.canvas.height / img.height,
+        }
+      )
+    } else if (objectType === "cover") {
+      editor.canvas.setBackgroundImage(
+        img,
+        editor.canvas.renderAll.bind(editor.canvas),
+        {
+          crossOrigin: "anonymous",
+          scaleX: maxRatio,
+          scaleY: maxRatio,
+        }
+      )
+    } else if (objectType === "scale-down") {
+      editor.canvas.setBackgroundImage(
+        img,
+        editor.canvas.renderAll.bind(editor.canvas),
+        {
+          crossOrigin: "anonymous",
+          scaleX: scaleDownRatio,
+          scaleY: scaleDownRatio,
+        }
+      )
+    } else {
+      editor.canvas.setBackgroundImage(
+        img,
+        editor.canvas.renderAll.bind(editor.canvas),
+        {
+          crossOrigin: "anonymous",
+        }
+      )
+    }
+    editor.canvas.centerObject(img)
+    editor.canvas.renderAll()
+  })
 }
