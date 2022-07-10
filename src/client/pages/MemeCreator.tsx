@@ -36,11 +36,6 @@ const MemeCreator = () => {
     link.click()
   }
 
-  const onAddText = () => {
-    editor.addText(text)
-    setText("")
-  }
-
   useEffect(() => {
     if (backgroundUrl) {
       onSetObjectFit(backgroundFile, editor, objectType)
@@ -66,19 +61,7 @@ const MemeCreator = () => {
   return (
     <div className="h-screen bg-slate-700 flex flex-col justify-start items-center">
       <div className="font-titillium bg-slate-700 text-slate-400 flex justify-center items-center">
-        <h1>FabricJS React Sample</h1>
         <fieldset className="border-2 p-2">
-          <input
-            className="border m-2"
-            name={`text`}
-            type={`text`}
-            value={text}
-            onChange={(event) => setText(event.target.value)}
-          />
-          <button className="border-2 m-2 p-2" onClick={onAddText}>
-            Add Text
-          </button>
-
           <button onClick={onDownloadImage} className="border-2 m-2 p-2">
             Export
           </button>

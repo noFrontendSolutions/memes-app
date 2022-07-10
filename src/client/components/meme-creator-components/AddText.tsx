@@ -20,6 +20,7 @@ const AddText = ({
       />
       <button
         className="m-2 p-2 w-[20%] text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300"
+        title="Add Text into Meme Container"
         onClick={() => {
           editor.addText(text)
           setText("")

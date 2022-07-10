@@ -27,7 +27,7 @@ const ObjectFit = ({
           className={
             objectType === "none"
               ? "m-2 border-2 border-emerald-500"
-              : "m-2 border-2 border-black"
+              : "m-2 border-2 border-slate-800"
           }
           title="Object None"
           onClick={() => setObjectType("none")}
@@ -38,7 +38,7 @@ const ObjectFit = ({
           className={
             objectType === "contain"
               ? "m-2 border-2 border-emerald-500"
-              : "m-2 border-2 border-black"
+              : "m-2 border-2 border-slate-800"
           }
           title="Object Contain"
           onClick={() => setObjectType("contain")}
@@ -49,7 +49,7 @@ const ObjectFit = ({
           className={
             objectType === "fill"
               ? "m-2 border-2 border-emerald-500"
-              : "m-2 border-2 border-black"
+              : "m-2 border-2 border-slate-800"
           }
           title="Object Fill"
           onClick={() => setObjectType("fill")}
@@ -60,7 +60,7 @@ const ObjectFit = ({
           className={
             objectType === "cover"
               ? "m-2 border-2 border-emerald-500"
-              : "m-2 border-2 border-black"
+              : "m-2 border-2 border-slate-800"
           }
           title="Object Cover"
           onClick={() => setObjectType("cover")}
@@ -71,7 +71,7 @@ const ObjectFit = ({
           className={
             objectType === "scale-down"
               ? "m-2 border-2 border-emerald-500 flex justify-center items-center"
-              : "m-2 border-2 border-black flex justify-center items-center"
+              : "m-2 border-2 border-slate-800 flex justify-center items-center"
           }
           title="Object Scale-Down"
           onClick={() => setObjectType("scale-down")}
