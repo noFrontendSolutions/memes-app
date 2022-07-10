@@ -12,7 +12,10 @@ const BackgroundColor = ({
   editor: FabricJSEditor
 }) => {
   return (
-    <>
+    <fieldset
+      title="Choose Background Color"
+      className="flex flex-row  w-24 bg-slate-900 mb-2 rounded"
+    >
       <button
         title="Background Color: Black"
         className={
@@ -49,7 +52,7 @@ const BackgroundColor = ({
           setBackgroundColor("transparent")
         }}
       ></button>
-    </>
+    </fieldset>
   )
 }
 

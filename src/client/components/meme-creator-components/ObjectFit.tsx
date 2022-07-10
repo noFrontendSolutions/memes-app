@@ -22,7 +22,7 @@ const ObjectFit = ({
   return (
     <>
       <label htmlFor="object-fit"></label>
-      <fieldset id="object-fit" className="m-4 flex">
+      <fieldset id="object-fit" className="m-4 flex bg-slate-900 rounded">
         <button
           className={
             objectType === "none"

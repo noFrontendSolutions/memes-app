@@ -82,23 +82,13 @@ const MemeCreator = () => {
         <ObjectFit objectType={objectType} setObjectType={setObjectType} />
       </div>
       <div className="mt-10">
-        <div className="mt-10 flex flex-row justify-between w-full">
-          <fieldset
-            title="Text Editor"
-            className="bg-slate-900 mb-2 w-2/3 rounded"
-          >
-            <AddText text={text} setText={setText} editor={editor} />
-          </fieldset>
-          <fieldset
-            title="Choose Background Color"
-            className="flex flex-row  w-24 bg-slate-900 mb-2 rounded"
-          >
-            <BackgroundColor
-              backgroundColor={backgroundColor}
-              setBackgroundColor={setBackgroundColor}
-              editor={editor}
-            />
-          </fieldset>
+        <div className="flex flex-row justify-between w-full">
+          <AddText text={text} setText={setText} editor={editor} />
+          <BackgroundColor
+            backgroundColor={backgroundColor}
+            setBackgroundColor={setBackgroundColor}
+            editor={editor}
+          />
         </div>
         <div className={"border border-emerald-500"}>
           <FabricJSCanvas
