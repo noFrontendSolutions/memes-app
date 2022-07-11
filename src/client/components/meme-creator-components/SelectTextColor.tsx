@@ -2,7 +2,7 @@ import { FabricJSEditor } from "fabricjs-react"
 import React from "react"
 type TextColorType = "white" | "black" | "green" | "red" | "yellow" | "blue"
 
-const TextColor = ({
+const SelectTextColor = ({
   textColor,
   setTextColor,
   editor,
@@ -94,4 +94,4 @@ const TextColor = ({
   )
 }
 
-export default TextColor
+export default SelectTextColor

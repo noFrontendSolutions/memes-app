@@ -4,7 +4,7 @@ import miniImg from "../../../../static-assets/mini-image.png"
 import smallerImg from "../../../../static-assets/default-smaller.png"
 type ObjectType = "none" | "fill" | "contain" | "cover" | "scale-down"
 
-const ObjectFit = ({
+const SelectObjectFit = ({
   objectType,
   setObjectType,
 }: {
@@ -26,7 +26,7 @@ const ObjectFit = ({
         id="object-fit"
         className="flex bg-slate-900 rounded justify-center items-center"
       >
-        <dl className="mr-2">Object-Fit:</dl>
+        <dl className="ml-2 mr-2">Object-Fit:</dl>
         <button
           className={
             objectType === "none"
@@ -87,4 +87,4 @@ const ObjectFit = ({
   )
 }
 
-export default ObjectFit
+export default SelectObjectFit

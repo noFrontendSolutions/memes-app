@@ -2,7 +2,7 @@ import { FabricJSEditor } from "fabricjs-react"
 import React from "react"
 type BackgroundColorType = "white" | "black" | "transparent"
 
-const BackgroundColor = ({
+const SelectBackgroundColor = ({
   backgroundColor,
   setBackgroundColor,
   editor,
@@ -56,4 +56,4 @@ const BackgroundColor = ({
   )
 }
 
-export default BackgroundColor
+export default SelectBackgroundColor

@@ -6,11 +6,12 @@ import {
   useFabricJSEditor,
 } from "fabricjs-react"
 
-import ObjectFit from "../components/meme-creator-components/ObjectFit"
-import BackgroundColor from "../components/meme-creator-components/BackgroundColor"
+import SelectObjectFit from "../components/meme-creator-components/SelectObjectFit"
+import SelectBackgroundColor from "../components/meme-creator-components/SelectBackgroundColor"
 import AddText from "../components/meme-creator-components/AddText"
-import TextColor from "../components/meme-creator-components/TextColor"
-import BackgroundImage from "../components/meme-creator-components/BackgroundImage"
+import SelectTextColor from "../components/meme-creator-components/SelectTextColor"
+import SelectBackgroundImage from "../components/meme-creator-components/SelectBackgroundImage"
+import AddImage from "../components/meme-creator-components/AddImage"
 
 type BackgroundColorType = "white" | "black" | "transparent"
 type TextColorType = "white" | "black" | "green" | "red" | "yellow" | "blue"
@@ -26,6 +27,8 @@ const MemeCreator = () => {
     useState<BackgroundColorType>("transparent")
   const [backgroundUrl, setBackgroundUrl] = useState("")
   const [backgroundFile, setBackgroundFile] = useState<File>(null)
+  const [imageUrl, setImageUrl] = useState("")
+  const [imageFile, setImageFile] = useState<File>(null)
   const [textColor, setTextColor] = useState<TextColorType>("black")
 
   const onDownloadImage = () => {
@@ -65,8 +68,8 @@ const MemeCreator = () => {
   return (
     <div className="h-screen bg-slate-700 flex flex-col justify-start items-center">
       <div className="mt-2">
-        <div className="mt-4 mb-2 font-titillium bg-slate-900 text-slate-400 flex justify-between items-center rounded">
-          <BackgroundImage
+        <div className="mt-4 mb-2 font-titillium bg-slate-900 text-slate-400 flex justify-start items-center rounded">
+          <SelectBackgroundImage
             onAddBackground={onAddBackground}
             setBackgroundUrl={setBackgroundUrl}
             setBackgroundFile={setBackgroundFile}
@@ -75,9 +78,18 @@ const MemeCreator = () => {
           <label htmlFor="canvas-layout"></label>
           <label htmlFor="ratio-layout"></label>
 
-          <ObjectFit objectType={objectType} setObjectType={setObjectType} />
+          <SelectObjectFit
+            objectType={objectType}
+            setObjectType={setObjectType}
+          />
+          <div className="h-20  border-slate-400 bg-slate-700 w-20"></div>
+          <AddImage
+            setImageUrl={setImageUrl}
+            setImageFile={setImageFile}
+            editor={editor}
+          />
         </div>
-        <TextColor
+        <SelectTextColor
           textColor={textColor}
           setTextColor={setTextColor}
           editor={editor}
@@ -90,7 +102,7 @@ const MemeCreator = () => {
             editor={editor}
           />
 
-          <BackgroundColor
+          <SelectBackgroundColor
             backgroundColor={backgroundColor}
             setBackgroundColor={setBackgroundColor}
             editor={editor}
@@ -120,18 +132,18 @@ const MemeCreator = () => {
 
 export default MemeCreator
 
-/******************************************
- *****************Functions*****************
- *******************************************/
+/*******************************************************************************************************************************
+ *****************************************************Helper Functions**********************************************************
+ *******************************************************************************************************************************/
 
 export const onAddBackground = (
   e: React.ChangeEvent<HTMLInputElement>,
   setBackground: React.Dispatch<React.SetStateAction<string>>,
   setBackgroundFile: React.Dispatch<React.SetStateAction<File>>
 ) => {
-  const imageFile = e.target.files[0]
-  setBackground(URL.createObjectURL(imageFile))
-  setBackgroundFile(imageFile)
+  const backgroundImageFile = e.target.files[0]
+  setBackground(URL.createObjectURL(backgroundImageFile))
+  setBackgroundFile(backgroundImageFile)
 }
 
 const onSetObjectFit = (

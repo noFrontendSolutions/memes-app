@@ -1,6 +1,6 @@
 import React from "react"
 
-const BackgroundImage = ({
+const SelectBackgroundImage = ({
   onAddBackground,
   setBackgroundUrl,
   setBackgroundFile,
@@ -46,4 +46,4 @@ const BackgroundImage = ({
   )
 }
 
-export default BackgroundImage
+export default SelectBackgroundImage
