@@ -13,15 +13,15 @@ const SelectBackgroundColor = ({
 }) => {
   return (
     <fieldset
-      title="Choose Background Color"
-      className="flex flex-row  w-24 bg-slate-900 mb-2 rounded"
+      title="Chose Background Color"
+      className="flex flex-row  w-24 bg-slate-900 mt-2 mb-2 rounded"
     >
       <button
         title="Background Color: Black"
         className={
           backgroundColor === "black"
-            ? "m-2 w-10 h-10 bg-black rounded-full border-2 border-emerald-500"
-            : "m-2 w-10 h-10 bg-black rounded-full"
+            ? "m-2 w-8 h-8 bg-black rounded-full border-2 border-emerald-500"
+            : "m-2 w-8 h-8 bg-black rounded-full"
         }
         onClick={() => {
           editor?.canvas.setBackgroundColor("black", () => {})
@@ -32,8 +32,8 @@ const SelectBackgroundColor = ({
         title="Background Color: White"
         className={
           backgroundColor === "white"
-            ? "m-2 w-10 h-10 bg-white rounded-full border-2 border-emerald-500"
-            : "m-2 w-10 h-10 bg-white rounded-full"
+            ? "m-2 w-8 h-8 bg-white rounded-full border-2 border-emerald-500"
+            : "m-2 w-8 h-8 bg-white rounded-full"
         }
         onClick={() => {
           editor?.canvas.setBackgroundColor("white", () => {})
@@ -44,8 +44,8 @@ const SelectBackgroundColor = ({
         title="Background Color: Transparent"
         className={
           backgroundColor === "transparent"
-            ? "m-2 w-10 h-10 bg-slate-800 rounded-full border-2 border-emerald-500"
-            : "m-2 w-10 h-10 bg-slate-800 rounded-full"
+            ? "m-2 w-8 h-8 bg-slate-800 rounded-full border-2 border-emerald-500"
+            : "m-2 w-8 h-8 bg-slate-800 rounded-full"
         }
         onClick={() => {
           editor?.canvas.setBackgroundColor("Transparent", () => {})

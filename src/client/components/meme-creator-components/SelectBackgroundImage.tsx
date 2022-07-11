@@ -1,11 +1,9 @@
 import React from "react"
 
 const SelectBackgroundImage = ({
-  onAddBackground,
   setBackgroundUrl,
   setBackgroundFile,
 }: {
-  onAddBackground: Function
   setBackgroundUrl: React.Dispatch<React.SetStateAction<string>>
   setBackgroundFile: React.Dispatch<React.SetStateAction<File>>
 }) => {
@@ -15,10 +13,10 @@ const SelectBackgroundImage = ({
         htmlFor="background-image"
         className="cursor-pointer flex flex-row justify-center items-center m-2 p-2 text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300"
       >
-        Choose Background Image
+        Select Background Image
         <input
           id="background-image"
-          title="Choose Background Image..."
+          title="Chose Background Image..."
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             onAddBackground(e, setBackgroundUrl, setBackgroundFile)
           }
@@ -44,6 +42,16 @@ const SelectBackgroundImage = ({
       </label>
     </>
   )
+}
+
+const onAddBackground = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  setBackground: React.Dispatch<React.SetStateAction<string>>,
+  setBackgroundFile: React.Dispatch<React.SetStateAction<File>>
+) => {
+  const backgroundImageFile = e.target.files[0]
+  setBackground(URL.createObjectURL(backgroundImageFile))
+  setBackgroundFile(backgroundImageFile)
 }
 
 export default SelectBackgroundImage

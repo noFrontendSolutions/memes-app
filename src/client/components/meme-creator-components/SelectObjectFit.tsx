@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react"
+import React, { useState } from "react"
 import defaultImg from "../../../../static-assets/default.png"
 import miniImg from "../../../../static-assets/mini-image.png"
 import smallerImg from "../../../../static-assets/default-smaller.png"
@@ -21,12 +21,11 @@ const SelectObjectFit = ({
 
   return (
     <>
-      <label htmlFor="object-fit"></label>
       <fieldset
         id="object-fit"
-        className="flex bg-slate-900 rounded justify-center items-center"
+        className="flex bg-slate-900 rounded justify-center items-center mb-2"
       >
-        <dl className="ml-2 mr-2">Object-Fit:</dl>
+        <dl className="ml-2 mr-2 hidden lg:block">Object-Fit:</dl>
         <button
           className={
             objectType === "none"

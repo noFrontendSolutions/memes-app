@@ -12,6 +12,8 @@ import AddText from "../components/meme-creator-components/AddText"
 import SelectTextColor from "../components/meme-creator-components/SelectTextColor"
 import SelectBackgroundImage from "../components/meme-creator-components/SelectBackgroundImage"
 import AddImage from "../components/meme-creator-components/AddImage"
+import DownloadMeme from "../components/meme-creator-components/DownloadMeme"
+import RemoveActiveObject from "../components/meme-creator-components/RemoveActiveObject"
 
 type BackgroundColorType = "white" | "black" | "transparent"
 type TextColorType = "white" | "black" | "green" | "red" | "yellow" | "blue"
@@ -31,18 +33,6 @@ const MemeCreator = () => {
   const [imageFile, setImageFile] = useState<File>(null)
   const [textColor, setTextColor] = useState<TextColorType>("black")
 
-  const onDownloadImage = () => {
-    const ext = "png"
-    const base64 = editor.canvas.toDataURL({
-      format: ext,
-      enableRetinaScaling: true,
-    })
-    const link = document.createElement("a")
-    link.href = base64
-    link.download = `eraser_example.${ext}`
-    link.click()
-  }
-
   useEffect(() => {
     if (backgroundUrl) {
       onSetObjectFit(backgroundFile, editor, objectType)
@@ -55,7 +45,7 @@ const MemeCreator = () => {
     if (screenWidth < 1000) {
       editor?.canvas.setDimensions({
         width: screenWidth / 1.3,
-        height: screenHeight / 1.8,
+        height: screenHeight / 1.3,
       })
     } else {
       editor?.canvas.setDimensions({
@@ -66,48 +56,41 @@ const MemeCreator = () => {
   }, [editor])
 
   return (
-    <div className="h-screen bg-slate-700 flex flex-col justify-start items-center">
-      <div className="mt-2">
-        <div className="mt-4 mb-2 font-titillium bg-slate-900 text-slate-400 flex justify-start items-center rounded">
-          <SelectBackgroundImage
-            onAddBackground={onAddBackground}
-            setBackgroundUrl={setBackgroundUrl}
-            setBackgroundFile={setBackgroundFile}
-          />
-
-          <label htmlFor="canvas-layout"></label>
-          <label htmlFor="ratio-layout"></label>
-
-          <SelectObjectFit
-            objectType={objectType}
-            setObjectType={setObjectType}
-          />
-          <div className="h-20  border-slate-400 bg-slate-700 w-20"></div>
+    <div className="min-h-screen p-2 bg-slate-700 flex flex-col justify-start items-center lg:items-center">
+      <div>
+        <div className="mt-2 mb-2 font-titillium bg-slate-900 text-slate-400 flex flex-col lg:flex-row justify-between items-start lg:items-center rounded">
+          <div className="flex justify-start lg:justify-center flex-col lg:flex-row lg:items-center items-start rounded">
+            <SelectBackgroundImage
+              setBackgroundUrl={setBackgroundUrl}
+              setBackgroundFile={setBackgroundFile}
+            />
+            <SelectObjectFit
+              objectType={objectType}
+              setObjectType={setObjectType}
+            />
+          </div>
+          <div className="lg:hidden bg-slate-700 h-2 w-full"></div>
           <AddImage
             setImageUrl={setImageUrl}
             setImageFile={setImageFile}
             editor={editor}
           />
         </div>
-        <SelectTextColor
-          textColor={textColor}
-          setTextColor={setTextColor}
-          editor={editor}
-        />
-        <div className="flex flex-row justify-between w-full">
+        <div className="mb-2 mt-2 lg:mt-0 flex flex-col lg:flex-row justify-between items-start lg:items-center bg-slate-900 h-16 rounded">
+          <SelectTextColor
+            textColor={textColor}
+            setTextColor={setTextColor}
+            editor={editor}
+          />
+
           <AddText
             text={text}
             setText={setText}
             textColor={textColor}
             editor={editor}
           />
-
-          <SelectBackgroundColor
-            backgroundColor={backgroundColor}
-            setBackgroundColor={setBackgroundColor}
-            editor={editor}
-          />
         </div>
+        <div className="w-full bg-slate-700 lg:hidden h-16 sm:h-12"></div>
         <div className={"border border-emerald-500"}>
           <FabricJSCanvas
             onReady={onReady}
@@ -120,12 +103,19 @@ const MemeCreator = () => {
             }
           />
         </div>
+        <div className="mt-2 bg-slate-900 flex flex-col lg:flex-row justify-between items-start lg:items-center rounded">
+          <SelectBackgroundColor
+            backgroundColor={backgroundColor}
+            setBackgroundColor={setBackgroundColor}
+            editor={editor}
+          />
+          <div className="sm:hidden bg-slate-700 h-2 w-full"></div>
+          <div className="flex">
+            <RemoveActiveObject editor={editor} />
+            <DownloadMeme editor={editor} />
+          </div>
+        </div>
       </div>
-      <fieldset className="border-2 p-2">
-        <button onClick={onDownloadImage} className="border-2 m-2 p-2">
-          Export
-        </button>
-      </fieldset>
     </div>
   )
 }
@@ -135,16 +125,6 @@ export default MemeCreator
 /*******************************************************************************************************************************
  *****************************************************Helper Functions**********************************************************
  *******************************************************************************************************************************/
-
-export const onAddBackground = (
-  e: React.ChangeEvent<HTMLInputElement>,
-  setBackground: React.Dispatch<React.SetStateAction<string>>,
-  setBackgroundFile: React.Dispatch<React.SetStateAction<File>>
-) => {
-  const backgroundImageFile = e.target.files[0]
-  setBackground(URL.createObjectURL(backgroundImageFile))
-  setBackgroundFile(backgroundImageFile)
-}
 
 const onSetObjectFit = (
   backgroundFile: File,

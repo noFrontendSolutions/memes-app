@@ -14,15 +14,16 @@ const SelectTextColor = ({
   return (
     <>
       <fieldset
-        title="Choose Background Color"
-        className="flex flex-row  w-24 bg-slate-900 rounded rounded-b-none"
+        id="text-color"
+        title="Chose Text Color"
+        className="ml-2 flex flex-row items-center w-24 bg-slate-900 rounded rounded-b-none h-14"
       >
         <button
           title="Text Color: Black"
           className={
             textColor === "black"
-              ? "m-2 w-10 h-10 bg-black rounded-full border-2 border-emerald-500"
-              : "m-2 w-10 h-10 bg-black rounded-full"
+              ? "m-2 w-8 h-8 bg-black rounded-full border-2 border-emerald-500"
+              : "m-2 w-8 h-8 bg-black rounded-full"
           }
           onClick={() => {
             editor?.setStrokeColor("black")
@@ -33,8 +34,8 @@ const SelectTextColor = ({
           title="Text Color: Red"
           className={
             textColor === "red"
-              ? "m-2 w-10 h-10 bg-red-600 rounded-full border-2 border-emerald-500"
-              : "m-2 w-10 h-10 bg-red-600 rounded-full"
+              ? "m-2 w-8 h-8 bg-red-600 rounded-full border-2 border-emerald-500"
+              : "m-2 w-8 h-8 bg-red-600 rounded-full"
           }
           onClick={() => {
             editor?.setStrokeColor("red")
@@ -45,8 +46,8 @@ const SelectTextColor = ({
           title="Text Color: Blue"
           className={
             textColor === "blue"
-              ? "m-2 w-10 h-10 bg-blue-600 rounded-full border-2 border-emerald-500"
-              : "m-2 w-10 h-10 bg-blue-600 rounded-full"
+              ? "m-2 w-8 h-8 bg-blue-600 rounded-full border-2 border-emerald-500"
+              : "m-2 w-8 h-8 bg-blue-600 rounded-full"
           }
           onClick={() => {
             editor?.setStrokeColor("blue")
@@ -57,8 +58,8 @@ const SelectTextColor = ({
           title="Text Color: Green"
           className={
             textColor === "green"
-              ? "m-2 w-10 h-10 bg-green-600 rounded-full border-2 border-emerald-500"
-              : "m-2 w-10 h-10 bg-green-600 rounded-full"
+              ? "m-2 w-8 h-8 bg-green-600 rounded-full border-2 border-emerald-500"
+              : "m-2 w-8 h-8 bg-green-600 rounded-full"
           }
           onClick={() => {
             editor?.setStrokeColor("green")
@@ -69,8 +70,8 @@ const SelectTextColor = ({
           title="Text Color: Yellow"
           className={
             textColor === "yellow"
-              ? "m-2 w-10 h-10 bg-yellow-600 rounded-full border-2 border-emerald-500"
-              : "m-2 w-10 h-10 bg-yellow-600 rounded-full"
+              ? "m-2 w-8 h-8 bg-yellow-600 rounded-full border-2 border-emerald-500"
+              : "m-2 w-8 h-8 bg-yellow-600 rounded-full"
           }
           onClick={() => {
             editor?.setStrokeColor("yellow")
@@ -81,8 +82,8 @@ const SelectTextColor = ({
           title="Text Color: White"
           className={
             textColor === "white"
-              ? "m-2 w-10 h-10 bg-white rounded-full border-2 border-emerald-500"
-              : "m-2 w-10 h-10 bg-white rounded-full"
+              ? "m-2 w-8 h-8 bg-white rounded-full border-2 border-emerald-500"
+              : "m-2 w-8 h-8 bg-white rounded-full"
           }
           onClick={() => {
             editor?.setStrokeColor("white")

@@ -17,7 +17,7 @@ const AddText = ({
   return (
     <fieldset
       title="Text Editor"
-      className="bg-slate-900 mb-2 w-2/3 rounded rounded-t-none"
+      className="bg-slate-900 lg:w-2/3 w-full rounded rounded-t-none flex flex-row"
     >
       {" "}
       <input
@@ -28,7 +28,7 @@ const AddText = ({
         onChange={(event) => setText(event.target.value)}
       />
       <button
-        className="m-2 p-2 w-[20%] text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300"
+        className="m-2 p-2 lg:w-[20%] text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300"
         title="Add Text into Meme Container"
         onClick={() => {
           let thisText = new fabric.Text(text, {

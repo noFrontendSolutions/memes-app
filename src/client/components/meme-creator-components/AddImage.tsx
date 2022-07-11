@@ -12,10 +12,10 @@ const AddImage = ({
   editor: FabricJSEditor
 }) => {
   return (
-    <>
+    <div className="rounded">
       <label
         htmlFor="image"
-        className="cursor-pointer flex flex-row justify-center items-center m-2 p-2 w-52 text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300"
+        className="cursor-pointer mt-2 flex flex-row justify-center items-center m-2 p-2 w-52 text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300"
       >
         Add Image
         <input
@@ -44,7 +44,7 @@ const AddImage = ({
           </svg>
         </span>
       </label>
-    </>
+    </div>
   )
 }
 
