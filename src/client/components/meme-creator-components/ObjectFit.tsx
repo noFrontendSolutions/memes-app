@@ -22,12 +22,16 @@ const ObjectFit = ({
   return (
     <>
       <label htmlFor="object-fit"></label>
-      <fieldset id="object-fit" className="m-4 flex bg-slate-900 rounded">
+      <fieldset
+        id="object-fit"
+        className="flex bg-slate-900 rounded justify-center items-center"
+      >
+        <dl className="mr-2">Object-Fit:</dl>
         <button
           className={
             objectType === "none"
-              ? "m-2 border-2 border-emerald-500 w-12 h-12 flex items-center justify-center"
-              : "m-2 border-2 border-slate-800 w-12 h-12 flex items-center justify-center"
+              ? "mx-2 border-2 border-emerald-500 w-12 h-12 flex items-center justify-center"
+              : "mx-2 border-2 border-slate-800 w-12 h-12 flex items-center justify-center"
           }
           title="Object None: Display an element's content at its original size ignoring the container size."
           onClick={() => setObjectType("none")}
@@ -37,8 +41,8 @@ const ObjectFit = ({
         <button
           className={
             objectType === "contain"
-              ? "m-2 border-2 border-emerald-500 w-12 h-12 flex items-center justify-center"
-              : "m-2 border-2 border-slate-800 w-12 h-12 flex items-center justify-center"
+              ? "mx-2 border-2 border-emerald-500 w-12 h-12 flex items-center justify-center"
+              : "mx-2 border-2 border-slate-800 w-12 h-12 flex items-center justify-center"
           }
           title="Object Contain: Resize an element’s content to stay contained within its container."
           onClick={() => setObjectType("contain")}
@@ -48,8 +52,8 @@ const ObjectFit = ({
         <button
           className={
             objectType === "fill"
-              ? "m-2 border-2 border-emerald-500 w-12 h-12"
-              : "m-2 border-2 border-slate-800 w-12 h-12"
+              ? "mx-2 border-2 border-emerald-500 w-12 h-12"
+              : "mx-2 border-2 border-slate-800 w-12 h-12"
           }
           title="Object Fill: Stretch an element's content to fit its container."
           onClick={() => setObjectType("fill")}
@@ -59,8 +63,8 @@ const ObjectFit = ({
         <button
           className={
             objectType === "cover"
-              ? "m-2 border-2 border-emerald-500 w-12 h-12"
-              : "m-2 border-2 border-slate-800 w-12 h-12"
+              ? "mx-2 border-2 border-emerald-500 w-12 h-12"
+              : "mx-2 border-2 border-slate-800 w-12 h-12"
           }
           title="Object Cover: Resize an element’s content to cover its container."
           onClick={() => setObjectType("cover")}
@@ -70,8 +74,8 @@ const ObjectFit = ({
         <button
           className={
             objectType === "scale-down"
-              ? "m-2 border-2 border-emerald-500 flex justify-center items-center"
-              : "m-2 border-2 border-slate-800 flex justify-center items-center"
+              ? "mx-2 border-2 border-emerald-500 flex justify-center items-center"
+              : "mx-2 border-2 border-slate-800 flex justify-center items-center"
           }
           title="Object Scale-Down: Display an element’s content at its original size but scale it down to fit its container if necessary."
           onClick={() => setObjectType("scale-down")}

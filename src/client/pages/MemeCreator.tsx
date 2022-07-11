@@ -10,6 +10,7 @@ import ObjectFit from "../components/meme-creator-components/ObjectFit"
 import BackgroundColor from "../components/meme-creator-components/BackgroundColor"
 import AddText from "../components/meme-creator-components/AddText"
 import TextColor from "../components/meme-creator-components/TextColor"
+import BackgroundImage from "../components/meme-creator-components/BackgroundImage"
 
 type BackgroundColorType = "white" | "black" | "transparent"
 type TextColorType = "white" | "black" | "green" | "red" | "yellow" | "blue"
@@ -63,35 +64,31 @@ const MemeCreator = () => {
 
   return (
     <div className="h-screen bg-slate-700 flex flex-col justify-start items-center">
-      <div className="font-titillium bg-slate-700 text-slate-400 flex justify-center items-center">
-        <fieldset className="border-2 p-2">
-          <button onClick={onDownloadImage} className="border-2 m-2 p-2">
-            Export
-          </button>
-          <label htmlFor="file-upload" className="cursor-pointer border-2">
-            Upload File
-            <input
-              id="file-upload"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                onAddBackground(e, setBackgroundUrl, setBackgroundFile)
-              }
-              type="file"
-              className="hidden"
-            />
-          </label>
-        </fieldset>
-        <label htmlFor="canvas-layout"></label>
-        <label htmlFor="ratio-layout"></label>
-        <ObjectFit objectType={objectType} setObjectType={setObjectType} />
-      </div>
-      <div className="mt-10">
+      <div className="mt-2">
+        <div className="mt-4 mb-2 font-titillium bg-slate-900 text-slate-400 flex justify-between items-center rounded">
+          <BackgroundImage
+            onAddBackground={onAddBackground}
+            setBackgroundUrl={setBackgroundUrl}
+            setBackgroundFile={setBackgroundFile}
+          />
+
+          <label htmlFor="canvas-layout"></label>
+          <label htmlFor="ratio-layout"></label>
+
+          <ObjectFit objectType={objectType} setObjectType={setObjectType} />
+        </div>
         <TextColor
           textColor={textColor}
           setTextColor={setTextColor}
           editor={editor}
         />
         <div className="flex flex-row justify-between w-full">
-          <AddText text={text} setText={setText} editor={editor} />
+          <AddText
+            text={text}
+            setText={setText}
+            textColor={textColor}
+            editor={editor}
+          />
 
           <BackgroundColor
             backgroundColor={backgroundColor}
@@ -112,6 +109,11 @@ const MemeCreator = () => {
           />
         </div>
       </div>
+      <fieldset className="border-2 p-2">
+        <button onClick={onDownloadImage} className="border-2 m-2 p-2">
+          Export
+        </button>
+      </fieldset>
     </div>
   )
 }
