@@ -9,8 +9,10 @@ import {
 import ObjectFit from "../components/meme-creator-components/ObjectFit"
 import BackgroundColor from "../components/meme-creator-components/BackgroundColor"
 import AddText from "../components/meme-creator-components/AddText"
+import TextColor from "../components/meme-creator-components/TextColor"
 
 type BackgroundColorType = "white" | "black" | "transparent"
+type TextColorType = "white" | "black" | "green" | "red" | "yellow" | "blue"
 type ObjectType = "none" | "fill" | "contain" | "cover" | "scale-down"
 
 //***********Main Component********************************
@@ -23,6 +25,7 @@ const MemeCreator = () => {
     useState<BackgroundColorType>("transparent")
   const [backgroundUrl, setBackgroundUrl] = useState("")
   const [backgroundFile, setBackgroundFile] = useState<File>(null)
+  const [textColor, setTextColor] = useState<TextColorType>("black")
 
   const onDownloadImage = () => {
     const ext = "png"
@@ -82,8 +85,14 @@ const MemeCreator = () => {
         <ObjectFit objectType={objectType} setObjectType={setObjectType} />
       </div>
       <div className="mt-10">
+        <TextColor
+          textColor={textColor}
+          setTextColor={setTextColor}
+          editor={editor}
+        />
         <div className="flex flex-row justify-between w-full">
           <AddText text={text} setText={setText} editor={editor} />
+
           <BackgroundColor
             backgroundColor={backgroundColor}
             setBackgroundColor={setBackgroundColor}

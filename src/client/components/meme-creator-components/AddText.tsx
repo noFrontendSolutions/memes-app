@@ -11,7 +11,10 @@ const AddText = ({
   editor: FabricJSEditor
 }) => {
   return (
-    <fieldset title="Text Editor" className="bg-slate-900 mb-2 w-2/3 rounded">
+    <fieldset
+      title="Text Editor"
+      className="bg-slate-900 mb-2 w-2/3 rounded rounded-t-none"
+    >
       {" "}
       <input
         className="rounded w-3/4 m-2 py-2 px-3 bg-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-400 text-slate-400"

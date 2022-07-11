@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react"
 import defaultImg from "../../../../static-assets/default.png"
 import miniImg from "../../../../static-assets/mini-image.png"
-
+import smallerImg from "../../../../static-assets/default-smaller.png"
 type ObjectType = "none" | "fill" | "contain" | "cover" | "scale-down"
 
 const ObjectFit = ({
@@ -26,46 +26,46 @@ const ObjectFit = ({
         <button
           className={
             objectType === "none"
-              ? "m-2 border-2 border-emerald-500"
-              : "m-2 border-2 border-slate-800"
+              ? "m-2 border-2 border-emerald-500 w-12 h-12 flex items-center justify-center"
+              : "m-2 border-2 border-slate-800 w-12 h-12 flex items-center justify-center"
           }
-          title="Object None"
+          title="Object None: Display an element's content at its original size ignoring the container size."
           onClick={() => setObjectType("none")}
         >
-          <img src={defaultImg} className=" w-16 h-16 object-none" />
+          <img src={smallerImg} className="w-12 h-12 object-none" />
         </button>
         <button
           className={
             objectType === "contain"
-              ? "m-2 border-2 border-emerald-500"
-              : "m-2 border-2 border-slate-800"
+              ? "m-2 border-2 border-emerald-500 w-12 h-12 flex items-center justify-center"
+              : "m-2 border-2 border-slate-800 w-12 h-12 flex items-center justify-center"
           }
-          title="Object Contain"
+          title="Object Contain: Resize an element’s content to stay contained within its container."
           onClick={() => setObjectType("contain")}
         >
-          <img src={defaultImg} className=" w-16 h-16 object-contain" />
+          <img src={defaultImg} className=" object-contain w-12 h-12" />
         </button>
         <button
           className={
             objectType === "fill"
-              ? "m-2 border-2 border-emerald-500"
-              : "m-2 border-2 border-slate-800"
+              ? "m-2 border-2 border-emerald-500 w-12 h-12"
+              : "m-2 border-2 border-slate-800 w-12 h-12"
           }
-          title="Object Fill"
+          title="Object Fill: Stretch an element's content to fit its container."
           onClick={() => setObjectType("fill")}
         >
-          <img src={defaultImg} className=" w-16 h-16 object-fill" />
+          <img src={defaultImg} className="object-fill w-12 h-12" />
         </button>
         <button
           className={
             objectType === "cover"
-              ? "m-2 border-2 border-emerald-500"
-              : "m-2 border-2 border-slate-800"
+              ? "m-2 border-2 border-emerald-500 w-12 h-12"
+              : "m-2 border-2 border-slate-800 w-12 h-12"
           }
-          title="Object Cover"
+          title="Object Cover: Resize an element’s content to cover its container."
           onClick={() => setObjectType("cover")}
         >
-          <img src={defaultImg} className=" w-16 h-16 object-cover" />
+          <img src={defaultImg} className=" w-12 h-12 object-cover" />
         </button>
         <button
           className={
@@ -73,10 +73,10 @@ const ObjectFit = ({
               ? "m-2 border-2 border-emerald-500 flex justify-center items-center"
               : "m-2 border-2 border-slate-800 flex justify-center items-center"
           }
-          title="Object Scale-Down"
+          title="Object Scale-Down: Display an element’s content at its original size but scale it down to fit its container if necessary."
           onClick={() => setObjectType("scale-down")}
         >
-          <img src={miniImg} className="w-16 h-16 object-none" />
+          <img src={miniImg} className="w-12 h-12 object-none" />
         </button>
       </fieldset>
     </>
