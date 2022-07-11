@@ -2,15 +2,7 @@ import { FabricJSEditor } from "fabricjs-react"
 import React from "react"
 import { fabric } from "fabric"
 
-const AddImage = ({
-  setImageUrl,
-  setImageFile,
-  editor,
-}: {
-  setImageUrl: React.Dispatch<React.SetStateAction<string>>
-  setImageFile: React.Dispatch<React.SetStateAction<File>>
-  editor: FabricJSEditor
-}) => {
+const AddImage = ({ editor }: { editor: FabricJSEditor }) => {
   return (
     <div className="rounded">
       <label
@@ -22,7 +14,7 @@ const AddImage = ({
           id="image"
           title="Choose Image..."
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            onAddImage(e, setImageUrl, setImageFile, editor)
+            onAddImage(e, editor)
           }}
           type="file"
           className="hidden"
@@ -50,13 +42,10 @@ const AddImage = ({
 
 const onAddImage = (
   e: React.ChangeEvent<HTMLInputElement>,
-  setImageUrl: React.Dispatch<React.SetStateAction<string>>,
-  setImageFile: React.Dispatch<React.SetStateAction<File>>,
   editor: FabricJSEditor
 ) => {
   const imageFile = e.target.files[0]
-  setImageUrl(URL.createObjectURL(imageFile))
-  setImageFile(imageFile)
+
   fabric.Image.fromURL(URL.createObjectURL(imageFile), (img) => {
     img.scale(0.5)
     editor.canvas.add(img)

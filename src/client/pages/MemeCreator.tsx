@@ -1,11 +1,10 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { fabric } from "fabric" // this also installed on your project
 import {
   FabricJSCanvas,
   FabricJSEditor,
   useFabricJSEditor,
 } from "fabricjs-react"
-
 import SelectObjectFit from "../components/meme-creator-components/SelectObjectFit"
 import SelectBackgroundColor from "../components/meme-creator-components/SelectBackgroundColor"
 import AddText from "../components/meme-creator-components/AddText"
@@ -14,6 +13,7 @@ import SelectBackgroundImage from "../components/meme-creator-components/SelectB
 import AddImage from "../components/meme-creator-components/AddImage"
 import DownloadMeme from "../components/meme-creator-components/DownloadMeme"
 import RemoveActiveObject from "../components/meme-creator-components/RemoveActiveObject"
+import SelectSpecialFeature from "../components/meme-creator-components/SelectSpecialFeature"
 
 type BackgroundColorType = "white" | "black" | "transparent"
 type TextColorType = "white" | "black" | "green" | "red" | "yellow" | "blue"
@@ -29,8 +29,6 @@ const MemeCreator = () => {
     useState<BackgroundColorType>("transparent")
   const [backgroundUrl, setBackgroundUrl] = useState("")
   const [backgroundFile, setBackgroundFile] = useState<File>(null)
-  const [imageUrl, setImageUrl] = useState("")
-  const [imageFile, setImageFile] = useState<File>(null)
   const [textColor, setTextColor] = useState<TextColorType>("black")
 
   useEffect(() => {
@@ -69,12 +67,8 @@ const MemeCreator = () => {
               setObjectType={setObjectType}
             />
           </div>
-          <div className="lg:hidden bg-slate-700 h-2 w-full"></div>
-          <AddImage
-            setImageUrl={setImageUrl}
-            setImageFile={setImageFile}
-            editor={editor}
-          />
+          <div className="lg:h-[70px] lg:w-2 bg-slate-700 h-2 w-full "></div>
+          <AddImage editor={editor} />
         </div>
         <div className="mb-2 mt-2 lg:mt-0 flex flex-col lg:flex-row justify-between items-start lg:items-center bg-slate-900 h-16 rounded">
           <SelectTextColor
@@ -104,13 +98,18 @@ const MemeCreator = () => {
           />
         </div>
         <div className="mt-2 bg-slate-900 flex flex-col lg:flex-row justify-between items-start lg:items-center rounded">
-          <SelectBackgroundColor
-            backgroundColor={backgroundColor}
-            setBackgroundColor={setBackgroundColor}
-            editor={editor}
-          />
+          <div className="w-full lg:w-fit flex justify-between items-center">
+            <SelectBackgroundColor
+              backgroundColor={backgroundColor}
+              setBackgroundColor={setBackgroundColor}
+              editor={editor}
+            />
+            <div className="lg:h-16 lg:w-2 lg:bg-slate-700"></div>
+            <SelectSpecialFeature textColor={textColor} editor={editor} />
+          </div>
+          <div className="lg:h-16 lg:w-2 lg:bg-slate-700"></div>
           <div className="sm:hidden bg-slate-700 h-2 w-full"></div>
-          <div className="flex">
+          <div className="flex justify-between items-center w-full lg:w-fit">
             <RemoveActiveObject editor={editor} />
             <DownloadMeme editor={editor} />
           </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import defaultImg from "../../../../static-assets/default.png"
 import miniImg from "../../../../static-assets/mini-image.png"
 import smallerImg from "../../../../static-assets/default-smaller.png"
@@ -11,19 +11,11 @@ const SelectObjectFit = ({
   objectType: ObjectType
   setObjectType: React.Dispatch<React.SetStateAction<ObjectType>>
 }) => {
-  const [isActiveField, setIsActiveField] = useState({
-    none: true,
-    contain: false,
-    fill: false,
-    cover: false,
-    scaleDown: false,
-  })
-
   return (
     <>
       <fieldset
         id="object-fit"
-        className="flex bg-slate-900 rounded justify-center items-center mb-2"
+        className="mb-2 lg:mb-0 flex bg-slate-900 rounded justify-center items-center "
       >
         <dl className="ml-2 mr-2 hidden lg:block">Object-Fit:</dl>
         <button

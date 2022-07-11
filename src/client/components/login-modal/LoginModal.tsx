@@ -12,7 +12,7 @@ const LoginModal = () => {
     <>
       <div
         onClick={() => setLoginModalIsOpen(false)}
-        className="fixed z-20 h-screen w-screen opacity-25 bg-pink-300"
+        className="fixed z-20 h-screen w-screen opacity-25 bg-slate-300"
       ></div>
       <div className="fixed z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/4 bg-white text-gray-700">
         <div className="h-full border-2 border-blue-700 rounded p-4 flex flex-col">

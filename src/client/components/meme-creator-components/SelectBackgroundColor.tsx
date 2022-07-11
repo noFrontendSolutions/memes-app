@@ -14,7 +14,7 @@ const SelectBackgroundColor = ({
   return (
     <fieldset
       title="Chose Background Color"
-      className="flex flex-row  w-24 bg-slate-900 mt-2 mb-2 rounded"
+      className="flex justify-center items-center bg-slate-900 mt-2 mb-2 rounded"
     >
       <button
         title="Background Color: Black"

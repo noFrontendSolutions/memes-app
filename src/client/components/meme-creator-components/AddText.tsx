@@ -32,7 +32,7 @@ const AddText = ({
         title="Add Text into Meme Container"
         onClick={() => {
           let thisText = new fabric.Text(text, {
-            fontSize: 50,
+            fontSize: 35,
             fill: textColor,
           })
           editor?.canvas.add(thisText)
