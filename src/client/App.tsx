@@ -5,6 +5,7 @@ import Home from "./pages/Home"
 import NavBar from "./components/NavBar"
 import UserContextProvider from "./context/UserContext"
 import MemeCreator from "./pages/MemeCreator"
+import PostMeme from "./pages/PostMeme"
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="meme-creator" element={<MemeCreator />} />
+            <Route path="post-meme" element={<PostMeme />} />
           </Routes>
         </NavBar>
       </BrowserRouter>

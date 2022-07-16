@@ -30,6 +30,7 @@ const MemeCreator = () => {
   const [backgroundUrl, setBackgroundUrl] = useState("")
   const [backgroundFile, setBackgroundFile] = useState<File>(null)
   const [textColor, setTextColor] = useState<TextColorType>("black")
+  const [fillColor, setFillColor] = useState<TextColorType>("black")
 
   useEffect(() => {
     if (backgroundUrl) {
@@ -47,7 +48,7 @@ const MemeCreator = () => {
       })
     } else {
       editor?.canvas.setDimensions({
-        width: screenWidth / 2,
+        width: screenWidth / 1.8,
         height: screenHeight / 1.8,
       })
     }
@@ -74,6 +75,8 @@ const MemeCreator = () => {
           <SelectTextColor
             textColor={textColor}
             setTextColor={setTextColor}
+            fillColor={fillColor}
+            setFillColor={setFillColor}
             editor={editor}
           />
 
@@ -105,7 +108,11 @@ const MemeCreator = () => {
               editor={editor}
             />
             <div className="lg:h-16 lg:w-2 lg:bg-slate-700"></div>
-            <SelectSpecialFeature textColor={textColor} editor={editor} />
+            <SelectSpecialFeature
+              textColor={textColor}
+              fillColor={fillColor}
+              editor={editor}
+            />
           </div>
           <div className="lg:h-16 lg:w-2 lg:bg-slate-700"></div>
           <div className="sm:hidden bg-slate-700 h-2 w-full"></div>

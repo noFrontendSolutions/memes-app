@@ -29,7 +29,7 @@ const SignUpForm = () => {
         onClick={async (e) => {
           e.preventDefault()
           signUp(
-            "http://127.0.0.1:8000/api/sign-up",
+            "http://localhost:3000/auth/sign-up",
             setLoggedIn,
             setBearerToken,
             credentials,
@@ -79,6 +79,8 @@ interface Credentials {
   email: string
   password: string
   password_confirmation: string
+  avatarUrl?: string
+  avatar?: File | null
 }
 
 const signUp = async (
@@ -92,14 +94,20 @@ const signUp = async (
   setLoginModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setIsLoading(true)
+  let formData = new FormData()
+  formData.append("first_name", credentials.first_name)
+  formData.append("last_name", credentials.last_name)
+  formData.append("email", credentials.email)
+  formData.append("password", credentials.password)
+  formData.append("avatar", credentials.avatar)
   try {
     const response = await fetch(url, {
-      headers: {
+      /* headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-      },
+      }, */
       method: "POST",
-      body: JSON.stringify(credentials),
+      body: formData,
     })
     const data = await response.json()
     if (response.ok) {
@@ -111,6 +119,14 @@ const signUp = async (
       localStorage.setItem("first_name", data.user.first_name)
       localStorage.setItem("last_name", data.user.last_name)
       localStorage.setItem("email", data.user.email)
+      if (data.user.avatarUrl) {
+        localStorage.setItem("avatarUrl", data.user.avatarUrl)
+        const avatarBase64: any = await convertToBase64(data.user.avatar)
+        localStorage.setItem("avatar", avatarBase64)
+        /* convertToBase64(data.user.avatar).then((res: string) =>
+          localStorage.setItem("avatar", res)
+        ) */
+      }
       setLoggedIn(true)
       setLoginModalIsOpen(false)
     } else {
@@ -130,3 +146,12 @@ const signUp = async (
 }
 
 export default SignUpForm
+
+const convertToBase64 = (file: File): Promise<string | ArrayBuffer> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = (error) => reject(error)
+  })
+}

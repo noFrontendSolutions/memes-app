@@ -5,9 +5,11 @@ type TextColorType = "white" | "black" | "green" | "red" | "yellow" | "blue"
 
 const SelectSpecialFeature = ({
   textColor,
+  fillColor,
   editor,
 }: {
   textColor: TextColorType
+  fillColor: TextColorType
   editor: FabricJSEditor
 }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -24,7 +26,7 @@ const SelectSpecialFeature = ({
               className="w-[97%] flex flex-row justify-center items-center m-2 p-2 text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300"
               onClick={() => {
                 setModalIsOpen(false)
-                drawArrow(textColor, editor)
+                drawArrow(textColor, fillColor, editor)
               }}
             >
               Create Arrow
@@ -95,11 +97,15 @@ const SelectSpecialFeature = ({
 
 export default SelectSpecialFeature
 
-const drawArrow = (textColor: TextColorType, editor: FabricJSEditor) => {
+const drawArrow = (
+  textColor: TextColorType,
+  fillColor: TextColorType,
+  editor: FabricJSEditor
+) => {
   const triangle = new fabric.Triangle({
     width: 10,
     height: 15,
-    fill: textColor,
+    fill: fillColor,
     left: 235,
     top: 65,
     angle: 90,
@@ -108,7 +114,7 @@ const drawArrow = (textColor: TextColorType, editor: FabricJSEditor) => {
   const line = new fabric.Line([50, 100, 200, 100], {
     left: 75,
     top: 70,
-    stroke: textColor,
+    stroke: fillColor,
   })
 
   const objs = [line, triangle]

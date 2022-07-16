@@ -16,7 +16,6 @@ const LoginInputs = ({
       <input
         type="text"
         name="email"
-        placeholder="Email..."
         value={credentials?.email ? credentials?.email : ""}
         className="custom-input"
         onChange={(e) =>
@@ -28,7 +27,6 @@ const LoginInputs = ({
       <input
         type="password"
         name="first-name"
-        placeholder="Password..."
         value={credentials?.password ? credentials?.password : ""}
         className="custom-input"
         onChange={(e) =>
@@ -51,4 +49,6 @@ interface Credentials {
   email: string
   password: string
   password_confirmation: string
+  avatarUrl?: string
+  avatar?: File | null
 }

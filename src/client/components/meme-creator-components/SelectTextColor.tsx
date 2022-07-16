@@ -5,10 +5,14 @@ type TextColorType = "white" | "black" | "green" | "red" | "yellow" | "blue"
 const SelectTextColor = ({
   textColor,
   setTextColor,
+  fillColor,
+  setFillColor,
   editor,
 }: {
   textColor: TextColorType
   setTextColor: React.Dispatch<React.SetStateAction<TextColorType>>
+  fillColor: TextColorType
+  setFillColor: React.Dispatch<React.SetStateAction<TextColorType>>
   editor: FabricJSEditor
 }) => {
   return (
@@ -27,7 +31,9 @@ const SelectTextColor = ({
           }
           onClick={() => {
             editor?.setStrokeColor("black")
+            editor?.setFillColor("black")
             setTextColor("black")
+            setFillColor("black")
           }}
         ></button>
         <button
@@ -39,7 +45,9 @@ const SelectTextColor = ({
           }
           onClick={() => {
             editor?.setStrokeColor("red")
+            editor?.setFillColor("red")
             setTextColor("red")
+            setFillColor("red")
           }}
         ></button>
         <button
@@ -51,7 +59,9 @@ const SelectTextColor = ({
           }
           onClick={() => {
             editor?.setStrokeColor("blue")
+            editor?.setFillColor("blue")
             setTextColor("blue")
+            setFillColor("blue")
           }}
         ></button>
         <button
@@ -63,7 +73,9 @@ const SelectTextColor = ({
           }
           onClick={() => {
             editor?.setStrokeColor("green")
+            editor?.setFillColor("green")
             setTextColor("green")
+            setFillColor("green")
           }}
         ></button>
         <button
@@ -75,7 +87,9 @@ const SelectTextColor = ({
           }
           onClick={() => {
             editor?.setStrokeColor("yellow")
+            editor?.setFillColor("yellow")
             setTextColor("yellow")
+            setFillColor("yellow")
           }}
         ></button>
         <button
@@ -87,7 +101,9 @@ const SelectTextColor = ({
           }
           onClick={() => {
             editor?.setStrokeColor("white")
+            editor?.setFillColor("white")
             setTextColor("white")
+            setFillColor("white")
           }}
         ></button>
       </fieldset>

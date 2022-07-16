@@ -32,13 +32,34 @@ const UserContextProvider = ({ children }: ChildrenProps) => {
   useEffect(() => {
     if (localStorage.getItem("bearerToken")) {
       setBearerToken(localStorage.getItem("bearerToken"))
-      setCredentials({
-        ...credentials,
-        id: localStorage.getItem("id"),
-        first_name: localStorage.getItem("first_name"),
-        last_name: localStorage.getItem("last_name"),
-        email: localStorage.getItem("email"),
-      })
+      if (localStorage.getItem("avatarUrl")) {
+        let imageBase64 = localStorage.getItem("avatar")
+        let avatarUrl = localStorage.getItem("avatarUrl")
+        const buffer = Buffer.from(imageBase64, "base64")
+        const fileExtension = avatarUrl.slice(
+          (Math.max(0, avatarUrl.lastIndexOf(".")) || Infinity) + 1
+        )
+        const avatar = new File([buffer], avatarUrl, {
+          type: `image/${fileExtension}`,
+        })
+        setCredentials({
+          ...credentials,
+          id: localStorage.getItem("id"),
+          first_name: localStorage.getItem("first_name"),
+          last_name: localStorage.getItem("last_name"),
+          email: localStorage.getItem("email"),
+          avatarUrl: localStorage.getItem("avatarUrl"),
+          avatar: avatar,
+        })
+      } else {
+        setCredentials({
+          ...credentials,
+          id: localStorage.getItem("id"),
+          first_name: localStorage.getItem("first_name"),
+          last_name: localStorage.getItem("last_name"),
+          email: localStorage.getItem("email"),
+        })
+      }
       setLoggedIn(true)
     }
   }, [])
@@ -93,4 +114,6 @@ interface Credentials {
   email: string
   password: string
   password_confirmation: string
+  avatarUrl?: string
+  avatar?: File | null
 }

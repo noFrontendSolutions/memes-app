@@ -53,6 +53,16 @@ const NavBar = ({ children }: NavBarProps) => {
           >
             Create Meme
           </Link>
+          <Link
+            to="/post-meme"
+            className={
+              location.pathname === "/post-meme"
+                ? "mr-14 border-b-2 border-slate-400 transition transform hover:translate-x-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
+                : "mr-14 text-slate-400 font-semibold transition transform hover:translate-x-1 motion-reduce:transition-none motion-reduce:hover:transform-none"
+            }
+          >
+            Post Meme
+          </Link>
         </div>
         {loggedIn && (
           <>
@@ -141,7 +151,7 @@ const logout = async (
   setError: React.Dispatch<React.SetStateAction<any>>,
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  setIsLoading(true)
+  /*  setIsLoading(true)
   const token = window.localStorage.getItem("bearerToken")
   try {
     const response = await fetch(url, {
@@ -158,12 +168,12 @@ const logout = async (
     }
   } catch (error) {
     setError(error)
-  } finally {
-    window.localStorage.clear()
-    setCredentials(null)
-    setIsLoading(false)
-    setLoggedIn(false)
-  }
+  } finally { */
+  window.localStorage.clear()
+  setCredentials(null)
+  setIsLoading(false)
+  setLoggedIn(false)
+  //}
 }
 
 interface Credentials {
@@ -173,6 +183,8 @@ interface Credentials {
   email: string
   password: string
   password_confirmation: string
+  avatarUrl?: string
+  avatar?: File | null
 }
 
 export default NavBar

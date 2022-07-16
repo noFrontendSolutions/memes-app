@@ -28,7 +28,7 @@ const LoginForm = () => {
         onClick={(e) => {
           e.preventDefault()
           login(
-            "http://127.0.0.1:8000/api/login",
+            "http://localhost:3000/auth/login",
             setLoggedIn,
             setBearerToken,
             credentials,
@@ -76,6 +76,8 @@ interface Credentials {
   email: string
   password: string
   password_confirmation: string
+  avatarUrl?: string
+  avatar?: File | null
 }
 
 const login = async (
@@ -89,10 +91,13 @@ const login = async (
   setLoginModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setIsLoading(true)
+  const body = {
+    email: credentials.email,
+    password: credentials.password,
+  }
   try {
     const response = await fetch(url, {
       headers: {
-        Accept: "application/json",
         "Content-Type": "application/json",
       },
       method: "POST",
@@ -110,6 +115,11 @@ const login = async (
       localStorage.setItem("first_name", data.user.first_name)
       localStorage.setItem("last_name", data.user.last_name)
       localStorage.setItem("email", data.user.email)
+      if (data.user.avatarUrl) {
+        localStorage.setItem("avatarUrl", data.user.avatarUrl)
+        const avatarBase64: any = await convertToBase64(data.user.avatar)
+        localStorage.setItem("avatar", avatarBase64)
+      }
       setLoggedIn(true)
       setLoginModalIsOpen(false)
     } else {
@@ -127,3 +137,12 @@ const login = async (
 }
 
 export default LoginForm
+
+const convertToBase64 = (file: File): Promise<string | ArrayBuffer> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = (error) => reject(error)
+  })
+}
