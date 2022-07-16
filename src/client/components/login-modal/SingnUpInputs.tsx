@@ -23,8 +23,8 @@ const SignUpInputs = ({
           setCredentials({ ...credentials, first_name: e.target.value })
         }
       />
-      {error?.first_name && (
-        <p className="mb-2 text-red-400">{error?.first_name}</p>
+      {error?.firstName && (
+        <p className="mb-2 text-red-400">{error?.firstName}</p>
       )}
       <label htmlFor="last-name">Last Name:</label>
       <input
@@ -36,8 +36,8 @@ const SignUpInputs = ({
           setCredentials({ ...credentials, last_name: e.target.value })
         }
       />
-      {error?.last_name && (
-        <p className="mb-2 text-red-400">{error?.last_name}</p>
+      {error?.lastName && (
+        <p className="mb-2 text-red-400">{error?.lastName}</p>
       )}
       <label htmlFor="email">Email:</label>
       <input
@@ -53,7 +53,7 @@ const SignUpInputs = ({
       <div className="flex items-center my-2">
         <label
           htmlFor="avatar-image"
-          className="w-48 cursor-pointer flex flex-row justify-center items-center p-2 text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300"
+          className="w-[60%] cursor-pointer flex flex-row justify-center items-center p-2 text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300"
         >
           Select Avatar
           <input
@@ -63,7 +63,7 @@ const SignUpInputs = ({
               setCredentials({
                 ...credentials,
                 avatar: e.target.files[0],
-                avatarUrl: e.target.files[0].name,
+                avatar_url: e.target.files[0].name,
               })
               setAvatarFileName(e.target.files[0].name)
               //console.log(credentials)
@@ -89,11 +89,11 @@ const SignUpInputs = ({
           </span>
         </label>
         {avatarFileName ? (
-          <span className="ml-2 p-2 w-64 text-center bg-slate-900 rounded">
+          <span className="ml-2 p-2 w-[40%] text-center bg-slate-900 rounded">
             {avatarFileName}
           </span>
         ) : (
-          <span className="ml-2 p-2 w-64 text-center bg-slate-900 rounded">
+          <span className="ml-2 p-2 w-[40%] text-center bg-slate-900 rounded">
             Choose Avatar Image (opt.)
           </span>
         )}
@@ -128,6 +128,9 @@ const SignUpInputs = ({
           })
         }
       />
+      {error?.confirmation && (
+        <p className="mb-2 text-red-400">{error?.confirmation}</p>
+      )}
     </>
   )
 }
@@ -141,6 +144,6 @@ interface Credentials {
   email: string
   password: string
   password_confirmation: string
-  avatarUrl?: string
+  avatar_url?: string
   avatar?: File | null
 }

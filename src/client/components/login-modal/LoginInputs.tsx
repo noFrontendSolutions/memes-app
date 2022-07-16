@@ -49,6 +49,6 @@ interface Credentials {
   email: string
   password: string
   password_confirmation: string
-  avatarUrl?: string
+  avatar_url?: string
   avatar?: File | null
 }

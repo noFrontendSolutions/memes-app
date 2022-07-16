@@ -13,6 +13,7 @@ const LoginForm = () => {
     error,
     setError,
     isLoading,
+    urls,
   } = useContext(UserContext)
 
   return (
@@ -28,12 +29,13 @@ const LoginForm = () => {
         onClick={(e) => {
           e.preventDefault()
           login(
-            "http://localhost:3000/auth/login",
+            urls.login,
             setLoggedIn,
             setBearerToken,
             credentials,
             setCredentials,
             setIsLoading,
+            error,
             setError,
             setLoginModalIsOpen
           )
@@ -64,7 +66,9 @@ const LoginForm = () => {
       {error?.message &&
         setTimeout(() => {
           setError({ ...error, message: "" })
-        }, 5000) && <p className="mt-2 text-red-400">{error?.message}</p>}
+        }, 5000) && (
+          <p className="mt-2 text-red-400">Error: {error?.message}</p>
+        )}
     </form>
   )
 }
@@ -76,7 +80,7 @@ interface Credentials {
   email: string
   password: string
   password_confirmation: string
-  avatarUrl?: string
+  avatar_url?: string
   avatar?: File | null
 }
 
@@ -87,14 +91,16 @@ const login = async (
   credentials: Credentials,
   setCredentials: React.Dispatch<React.SetStateAction<Credentials>>,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  error: any,
   setError: React.Dispatch<React.SetStateAction<any>>,
   setLoginModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setIsLoading(true)
-  const body = {
-    email: credentials.email,
-    password: credentials.password,
+  if (validateLogin(credentials, error, setError) === false) {
+    setIsLoading(false)
+    return
   }
+
   try {
     const response = await fetch(url, {
       headers: {
@@ -115,18 +121,14 @@ const login = async (
       localStorage.setItem("first_name", data.user.first_name)
       localStorage.setItem("last_name", data.user.last_name)
       localStorage.setItem("email", data.user.email)
-      if (data.user.avatarUrl) {
-        localStorage.setItem("avatarUrl", data.user.avatarUrl)
-        const avatarBase64: any = await convertToBase64(data.user.avatar)
-        localStorage.setItem("avatar", avatarBase64)
-      }
+      localStorage.setItem("avatar_url", data.user.avatar_url)
       setLoggedIn(true)
       setLoginModalIsOpen(false)
     } else {
-      if (data.errors) {
-        setError({ ...data.errors, message: data.message })
+      if (data.error) {
+        setError({ message: data.message })
       } else {
-        throw new Error("Access denied! Bad Credentials!")
+        throw new Error("Oops! Something went wrong...")
       }
     }
   } catch (error) {
@@ -136,13 +138,26 @@ const login = async (
   }
 }
 
-export default LoginForm
+const validateLogin = (
+  credentials: Credentials,
+  error: any,
+  setError: React.Dispatch<React.SetStateAction<any>>
+) => {
+  let everythingCorrect = true
 
-const convertToBase64 = (file: File): Promise<string | ArrayBuffer> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = (error) => reject(error)
-  })
+  let emailError = ""
+  let passwordError = ""
+
+  if (!credentials?.email) {
+    emailError = "Error: Email field is mandatory!"
+    everythingCorrect = false
+  }
+  if (!credentials?.password) {
+    passwordError = "Error: Password field is mandatory!"
+    everythingCorrect = false
+  }
+  setError({ email: emailError, password: passwordError })
+  return everythingCorrect
 }
+
+export default LoginForm

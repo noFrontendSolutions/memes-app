@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react"
-import internal from "stream"
 import { UserContext } from "../../context/UserContext"
 import SignUpInputs from "./SingnUpInputs"
 
@@ -14,6 +13,7 @@ const SignUpForm = () => {
     setIsLoading,
     error,
     setError,
+    urls,
   } = useContext(UserContext)
 
   return (
@@ -29,12 +29,13 @@ const SignUpForm = () => {
         onClick={async (e) => {
           e.preventDefault()
           signUp(
-            "http://localhost:3000/auth/sign-up",
+            urls.signUp,
             setLoggedIn,
             setBearerToken,
             credentials,
             setCredentials,
             setIsLoading,
+            error,
             setError,
             setLoginModalIsOpen
           )
@@ -72,16 +73,11 @@ const SignUpForm = () => {
   )
 }
 
-interface Credentials {
-  id: string
-  first_name: string
-  last_name: string
-  email: string
-  password: string
-  password_confirmation: string
-  avatarUrl?: string
-  avatar?: File | null
-}
+export default SignUpForm
+
+//******************************************************************* */
+//**************************Helper Functions************************** */
+//******************************************************************* */
 
 const signUp = async (
   url: string,
@@ -90,22 +86,32 @@ const signUp = async (
   credentials: Credentials,
   setCredentials: React.Dispatch<React.SetStateAction<Credentials>>,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  error: any,
   setError: React.Dispatch<React.SetStateAction<any>>,
   setLoginModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setIsLoading(true)
+  setIsLoading(true)
+  if (validateSignUp(credentials, error, setError) === false) {
+    setIsLoading(false)
+    return
+  }
   let formData = new FormData()
-  formData.append("first_name", credentials.first_name)
-  formData.append("last_name", credentials.last_name)
-  formData.append("email", credentials.email)
-  formData.append("password", credentials.password)
-  formData.append("avatar", credentials.avatar)
+  if (credentials.avatar) {
+    formData.append("first_name", credentials.first_name)
+    formData.append("last_name", credentials.last_name)
+    formData.append("email", credentials.email)
+    formData.append("password", credentials.password)
+    formData.append("avatar", credentials.avatar)
+  } else {
+    formData.append("first_name", credentials.first_name)
+    formData.append("last_name", credentials.last_name)
+    formData.append("email", credentials.email)
+    formData.append("password", credentials.password)
+  }
+
   try {
     const response = await fetch(url, {
-      /* headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      }, */
       method: "POST",
       body: formData,
     })
@@ -119,19 +125,12 @@ const signUp = async (
       localStorage.setItem("first_name", data.user.first_name)
       localStorage.setItem("last_name", data.user.last_name)
       localStorage.setItem("email", data.user.email)
-      if (data.user.avatarUrl) {
-        localStorage.setItem("avatarUrl", data.user.avatarUrl)
-        const avatarBase64: any = await convertToBase64(data.user.avatar)
-        localStorage.setItem("avatar", avatarBase64)
-        /* convertToBase64(data.user.avatar).then((res: string) =>
-          localStorage.setItem("avatar", res)
-        ) */
-      }
+      localStorage.setItem("avatar_url", data.user.avatar_url)
       setLoggedIn(true)
       setLoginModalIsOpen(false)
     } else {
-      if (data.errors) {
-        setError({ ...data.errors })
+      if (data.error) {
+        setError({ message: data.message })
       } else {
         throw new Error(
           "Ooops! Something went wrong. Please try again later..."
@@ -145,13 +144,54 @@ const signUp = async (
   }
 }
 
-export default SignUpForm
+const validateSignUp = (
+  credentials: Credentials,
+  error: any,
+  setError: React.Dispatch<React.SetStateAction<any>>
+) => {
+  let everythingCorrect = true
+  let emailError = ""
+  let passwordError = ""
+  let firstNameError = ""
+  let lastNameError = ""
+  let confirmationError = ""
+  if (!credentials?.first_name) {
+    firstNameError = "Error: First Name field is mandatory!"
+    everythingCorrect = false
+  }
+  if (!credentials?.last_name) {
+    lastNameError = "Error: Last Name field is mandatory!"
+    everythingCorrect = false
+  }
 
-const convertToBase64 = (file: File): Promise<string | ArrayBuffer> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = (error) => reject(error)
+  if (!credentials?.email) {
+    emailError = "Error: Email field is mandatory!"
+    everythingCorrect = false
+  }
+  if (!credentials?.password) {
+    passwordError = "Error: Password field is mandatory!"
+    everythingCorrect = false
+  }
+  if (credentials?.password !== credentials?.password_confirmation) {
+    confirmationError = "Error: Confirmed Password does not match Password!"
+  }
+  setError({
+    firstName: firstNameError,
+    lastName: lastNameError,
+    email: emailError,
+    password: passwordError,
+    confirmation: confirmationError,
   })
+  return everythingCorrect
+}
+
+interface Credentials {
+  id: string
+  first_name: string
+  last_name: string
+  email: string
+  password: string
+  password_confirmation: string
+  avatar_url?: string
+  avatar?: File | null
 }

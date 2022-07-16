@@ -6,6 +6,12 @@ import React, {
   useState,
 } from "react"
 
+const urls = {
+  login: "http://localhost:3000/auth/login",
+  signUp: "http://localhost:3000/auth/sign-up",
+  avatar: "http://localhost:3000/auth/avatars",
+}
+
 export const UserContext = createContext<UserContextState>({
   loggedIn: false,
   bearerToken: "",
@@ -19,6 +25,7 @@ export const UserContext = createContext<UserContextState>({
   setIsLoading: null,
   error: null,
   setError: null,
+  urls: urls,
 })
 
 const UserContextProvider = ({ children }: ChildrenProps) => {
@@ -32,34 +39,16 @@ const UserContextProvider = ({ children }: ChildrenProps) => {
   useEffect(() => {
     if (localStorage.getItem("bearerToken")) {
       setBearerToken(localStorage.getItem("bearerToken"))
-      if (localStorage.getItem("avatarUrl")) {
-        let imageBase64 = localStorage.getItem("avatar")
-        let avatarUrl = localStorage.getItem("avatarUrl")
-        const buffer = Buffer.from(imageBase64, "base64")
-        const fileExtension = avatarUrl.slice(
-          (Math.max(0, avatarUrl.lastIndexOf(".")) || Infinity) + 1
-        )
-        const avatar = new File([buffer], avatarUrl, {
-          type: `image/${fileExtension}`,
-        })
-        setCredentials({
-          ...credentials,
-          id: localStorage.getItem("id"),
-          first_name: localStorage.getItem("first_name"),
-          last_name: localStorage.getItem("last_name"),
-          email: localStorage.getItem("email"),
-          avatarUrl: localStorage.getItem("avatarUrl"),
-          avatar: avatar,
-        })
-      } else {
-        setCredentials({
-          ...credentials,
-          id: localStorage.getItem("id"),
-          first_name: localStorage.getItem("first_name"),
-          last_name: localStorage.getItem("last_name"),
-          email: localStorage.getItem("email"),
-        })
-      }
+
+      setCredentials({
+        ...credentials,
+        id: localStorage.getItem("id"),
+        first_name: localStorage.getItem("first_name"),
+        last_name: localStorage.getItem("last_name"),
+        email: localStorage.getItem("email"),
+        avatar_url: localStorage.getItem("avatar_url"),
+      })
+
       setLoggedIn(true)
     }
   }, [])
@@ -79,6 +68,7 @@ const UserContextProvider = ({ children }: ChildrenProps) => {
         setIsLoading,
         error,
         setError,
+        urls,
       }}
     >
       {children}
@@ -105,6 +95,7 @@ interface UserContextState {
   setError: React.Dispatch<React.SetStateAction<any>> | null
   bearerToken: string | null
   setBearerToken: React.Dispatch<React.SetStateAction<string>> | null
+  urls: { login: string; signUp: string; avatar: string }
 }
 
 interface Credentials {
@@ -114,6 +105,6 @@ interface Credentials {
   email: string
   password: string
   password_confirmation: string
-  avatarUrl?: string
+  avatar_url?: string
   avatar?: File | null
 }

@@ -14,7 +14,7 @@ const Modal = () => {
         onClick={() => setLoginModalIsOpen(false)}
         className="fixed z-20 h-screen w-screen opacity-25 bg-slate-400 font-titillium"
       ></div>
-      <div className="fixed z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-1/2 xl:w-1/4 bg-slate-800 text-slate-400">
+      <div className="fixed z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[70%] lg:w-[60%] xl:w-[50%] 2xl:w-[35%] bg-slate-800 text-slate-400">
         <div className="h-full border border-emerald-400 rounded p-4 flex flex-col">
           <div className="w-full flex flex-row justify-between items-center">
             <button
