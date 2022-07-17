@@ -1,18 +1,25 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
+
+import { UserContext } from "../context/UserContext"
 
 const PostMeme = () => {
   const [memeTitle, setMemeTitle] = useState("")
   const [memeFile, setMemeFile] = useState(null)
+  const { credentials, bearerToken } = useContext(UserContext)
 
   const onSubmit = async () => {
     let formData = new FormData()
+    formData.append("user_id", credentials.id)
     formData.append("title", memeTitle)
     formData.append("meme", memeFile)
-    const response = await fetch("http://127.0.0.1:8000/api/post-meme", {
+    formData.append(
+      "user_name",
+      `${credentials.first_name} ${credentials.last_name}`
+    )
+    const response = await fetch("http://localhost:3000/users/post-meme", {
       headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "*",
-        Accept: "*",
+        Authorization: `Bearer ${bearerToken}`,
+        Accept: "application/json",
       },
       method: "POST",
       body: formData,

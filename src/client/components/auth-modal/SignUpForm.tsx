@@ -37,7 +37,8 @@ const SignUpForm = () => {
             setIsLoading,
             error,
             setError,
-            setLoginModalIsOpen
+            setLoginModalIsOpen,
+            urls
           )
         }}
       >
@@ -88,7 +89,8 @@ const signUp = async (
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
   error: any,
   setError: React.Dispatch<React.SetStateAction<any>>,
-  setLoginModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setLoginModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  urls: any
 ) => {
   setIsLoading(true)
   setIsLoading(true)
@@ -125,7 +127,11 @@ const signUp = async (
       localStorage.setItem("first_name", data.user.first_name)
       localStorage.setItem("last_name", data.user.last_name)
       localStorage.setItem("email", data.user.email)
-      localStorage.setItem("avatar_url", data.user.avatar_url)
+      if (credentials.avatar) {
+        localStorage.setItem("avatar_url", `${urls.avatar}/${data.user.id}`)
+      } else {
+        localStorage.setItem("avatar_url", "default")
+      }
       setLoggedIn(true)
       setLoginModalIsOpen(false)
     } else {

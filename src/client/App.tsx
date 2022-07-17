@@ -23,14 +23,6 @@ const App = () => {
   )
 }
 
-const LoadingSpinner = () => {
-  return (
-    <div className="fixed inset-0 flex justify-center items-center z-0 bg-opacity-0">
-      <div className="z-10 h-36 w-36 border-4 border-reactBlue border-t-transparent rounded-full animate-spin"></div>
-    </div>
-  )
-}
-
 //Notice the "hot" export of the App component. The "hot"-function is provided by the webpack "react-hot-loader plugin". It guarantees hot-module replacement in dev-mode throughout your app.
 
 export default hot(App)

@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../context/UserContext"
 import LoginForm from "./LoginForm"
 import SignUpForm from "./SignUpForm"
 
-const Modal = () => {
+const FormContainer = () => {
   const { setLoginModalIsOpen, setCredentials, setError } =
     useContext(UserContext)
   const [chooseLogin, setChooseLogin] = useState(true)
@@ -56,4 +56,4 @@ const Modal = () => {
   )
 }
 
-export default Modal
+export default FormContainer
