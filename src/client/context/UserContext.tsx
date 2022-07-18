@@ -10,6 +10,10 @@ const urls = {
   login: "http://localhost:3000/auth/login",
   signUp: "http://localhost:3000/auth/sign-up",
   avatar: "http://localhost:3000/auth/avatars",
+  postMeme: "http://localhost:3000/users/post-meme",
+  postComment: "http://localhost:3000/users/post-comment",
+  memeInfo: "http://localhost:3000/public/meme-info",
+  memeImage: "http://localhost:3000/public/meme-image",
 }
 
 export const UserContext = createContext<UserContextState>({
@@ -19,6 +23,10 @@ export const UserContext = createContext<UserContextState>({
   setLoggedIn: null,
   loginModalIsOpen: false,
   setLoginModalIsOpen: null,
+  userModalIsOpen: false,
+  setUserModalIsOpen: null,
+  postMemeModalIsOpen: false,
+  setPostMemeModalIsOpen: null,
   credentials: null,
   setCredentials: null,
   isLoading: false,
@@ -32,6 +40,8 @@ const UserContextProvider = ({ children }: ChildrenProps) => {
   const [loggedIn, setLoggedIn] = useState(false)
   const [bearerToken, setBearerToken] = useState("")
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false)
+  const [userModalIsOpen, setUserModalIsOpen] = useState(false)
+  const [postMemeModalIsOpen, setPostMemeModalIsOpen] = useState(false)
   const [credentials, setCredentials] = useState<Credentials | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<any>(null)
@@ -62,6 +72,10 @@ const UserContextProvider = ({ children }: ChildrenProps) => {
         setLoggedIn,
         loginModalIsOpen,
         setLoginModalIsOpen,
+        userModalIsOpen,
+        setUserModalIsOpen,
+        postMemeModalIsOpen,
+        setPostMemeModalIsOpen,
         credentials,
         setCredentials,
         isLoading,
@@ -87,6 +101,10 @@ interface UserContextState {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>> | null
   loginModalIsOpen: boolean | null
   setLoginModalIsOpen: React.Dispatch<React.SetStateAction<boolean>> | null
+  userModalIsOpen: boolean | null
+  setUserModalIsOpen: React.Dispatch<React.SetStateAction<boolean>> | null
+  postMemeModalIsOpen: boolean | null
+  setPostMemeModalIsOpen: React.Dispatch<React.SetStateAction<boolean>> | null
   credentials: Credentials
   setCredentials: React.Dispatch<React.SetStateAction<Credentials>> | null
   isLoading: boolean
@@ -95,7 +113,15 @@ interface UserContextState {
   setError: React.Dispatch<React.SetStateAction<any>> | null
   bearerToken: string | null
   setBearerToken: React.Dispatch<React.SetStateAction<string>> | null
-  urls: { login: string; signUp: string; avatar: string }
+  urls: {
+    login: string
+    signUp: string
+    avatar: string
+    postMeme: string
+    postComment: string
+    memeInfo: string
+    memeImage: string
+  }
 }
 
 interface Credentials {

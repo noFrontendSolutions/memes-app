@@ -30,6 +30,7 @@ const LoginForm = () => {
           e.preventDefault()
           login(
             urls.login,
+            urls.avatar,
             setLoggedIn,
             setBearerToken,
             credentials,
@@ -66,9 +67,7 @@ const LoginForm = () => {
       {error?.message &&
         setTimeout(() => {
           setError({ ...error, message: "" })
-        }, 5000) && (
-          <p className="mt-2 text-red-400">Error: {error?.message}</p>
-        )}
+        }, 5000) && <p className="mt-2 text-red-400">{error?.message}</p>}
     </form>
   )
 }
@@ -85,7 +84,8 @@ interface Credentials {
 }
 
 const login = async (
-  url: string,
+  loginUrl: string,
+  avatarUrl: string,
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>,
   setBearerToken: React.Dispatch<React.SetStateAction<string>>,
   credentials: Credentials,
@@ -102,7 +102,7 @@ const login = async (
   }
 
   try {
-    const response = await fetch(url, {
+    const response = await fetch(loginUrl, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -121,7 +121,11 @@ const login = async (
       localStorage.setItem("first_name", data.user.first_name)
       localStorage.setItem("last_name", data.user.last_name)
       localStorage.setItem("email", data.user.email)
-      localStorage.setItem("avatar_url", data.user.avatar_url)
+      if (data.user.avatar_url) {
+        localStorage.setItem("avatar_url", `${avatarUrl}/${data.user.id}`)
+      } else {
+        localStorage.setItem("avatar_url", "default")
+      }
       setLoggedIn(true)
       setLoginModalIsOpen(false)
     } else {

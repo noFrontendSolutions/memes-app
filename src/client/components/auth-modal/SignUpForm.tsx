@@ -15,6 +15,7 @@ const SignUpForm = () => {
     setError,
     urls,
   } = useContext(UserContext)
+  const [fileError, setFileError] = useState("")
 
   return (
     <form action="/login" className="h-full pt-2 pl-0 flex flex-col">
@@ -28,6 +29,15 @@ const SignUpForm = () => {
         className="bg-emerald-500 rounded-lg hover:bg-emerald-600 font-bold text-slate-200 text-xl h-14 mt-8 flex justify-center items-center"
         onClick={async (e) => {
           e.preventDefault()
+          if (
+            validateFileFormat(
+              credentials.avatar,
+              setFileError,
+              setIsLoading
+            ) === false
+          ) {
+            return
+          }
           signUp(
             urls.signUp,
             setLoggedIn,
@@ -70,6 +80,12 @@ const SignUpForm = () => {
         }, 5000) && (
           <p className="mt-2 text-red-500 font-bold">{error?.message}</p>
         )}
+      {fileError &&
+        setTimeout(() => {
+          setFileError("")
+        }, 5000) && (
+          <p className="mt-2 text-red-500 font-bold text-center">{fileError}</p>
+        )}
     </form>
   )
 }
@@ -87,7 +103,7 @@ const signUp = async (
   credentials: Credentials,
   setCredentials: React.Dispatch<React.SetStateAction<Credentials>>,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  error: any,
+  error: React.Dispatch<React.SetStateAction<string>>,
   setError: React.Dispatch<React.SetStateAction<any>>,
   setLoginModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
   urls: any
@@ -98,6 +114,7 @@ const signUp = async (
     setIsLoading(false)
     return
   }
+
   let formData = new FormData()
   if (credentials.avatar) {
     formData.append("first_name", credentials.first_name)
@@ -200,4 +217,24 @@ interface Credentials {
   password_confirmation: string
   avatar_url?: string
   avatar?: File | null
+}
+
+function validateFileFormat(file: File, setFileError: any, setIsLoading: any) {
+  if (!file) {
+    setIsLoading(false)
+    return true
+  }
+  const fileExtension = file.name.split(".").pop()
+  const allowedExtensions = /jpg|jpeg|png|svg/
+  if (!allowedExtensions.test(fileExtension)) {
+    setFileError("Error: Wrong File extension. Use either JPG, PNG, or SVG.")
+    setIsLoading(false)
+    return false
+  } else if (file?.size >= 100000) {
+    setFileError("Error: File size too big. File should be no more than 100kb.")
+    setIsLoading(false)
+    return false
+  }
+  setIsLoading(false)
+  return true
 }
