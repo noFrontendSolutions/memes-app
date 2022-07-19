@@ -1,20 +1,22 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
+import { ModalContext } from "../../context/ModalContext"
 import { UserContext } from "../../context/UserContext"
+import ErrorDisplay from "../ErrorDisplay"
 import LoginInputs from "./LoginInputs"
 
 const LoginForm = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const {
     setLoggedIn,
     setBearerToken,
-    setLoginModalIsOpen,
     credentials,
     setCredentials,
-    setIsLoading,
     error,
     setError,
-    isLoading,
     urls,
   } = useContext(UserContext)
+
+  const { setLoginModalIsOpen } = useContext(ModalContext)
 
   return (
     <form action="/login" className="h-full pt-2 pl-0 flex flex-col">
@@ -22,12 +24,14 @@ const LoginForm = () => {
         credentials={credentials}
         setCredentials={setCredentials}
         error={error}
+        setError={setError}
       />
       <button
         type="submit"
         className="bg-emerald-500 rounded-lg hover:bg-emerald-600 font-bold text-xl text-slate-200 h-14 mt-8 flex justify-center items-center"
         onClick={(e) => {
           e.preventDefault()
+          if (validateLogin(credentials, setError) === false) return
           login(
             urls.login,
             urls.avatar,
@@ -36,7 +40,6 @@ const LoginForm = () => {
             credentials,
             setCredentials,
             setIsLoading,
-            error,
             setError,
             setLoginModalIsOpen
           )
@@ -64,10 +67,9 @@ const LoginForm = () => {
           </span>
         )}
       </button>
-      {error?.message &&
-        setTimeout(() => {
-          setError({ ...error, message: "" })
-        }, 5000) && <p className="mt-2 text-red-400">{error?.message}</p>}
+      {error?.message && (
+        <ErrorDisplay errorMessage={error.message} setError={setError} />
+      )}
     </form>
   )
 }
@@ -91,16 +93,10 @@ const login = async (
   credentials: Credentials,
   setCredentials: React.Dispatch<React.SetStateAction<Credentials>>,
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
-  error: any,
   setError: React.Dispatch<React.SetStateAction<any>>,
   setLoginModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   setIsLoading(true)
-  if (validateLogin(credentials, error, setError) === false) {
-    setIsLoading(false)
-    return
-  }
-
   try {
     const response = await fetch(loginUrl, {
       headers: {
@@ -144,14 +140,11 @@ const login = async (
 
 const validateLogin = (
   credentials: Credentials,
-  error: any,
   setError: React.Dispatch<React.SetStateAction<any>>
 ) => {
   let everythingCorrect = true
-
   let emailError = ""
   let passwordError = ""
-
   if (!credentials?.email) {
     emailError = "Error: Email field is mandatory!"
     everythingCorrect = false

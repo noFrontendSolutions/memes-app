@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react"
+import { ModalContext } from "../../context/ModalContext"
 import { UserContext } from "../../context/UserContext"
 
 const PostMeme = () => {
@@ -7,18 +8,11 @@ const PostMeme = () => {
   const [success, setSuccess] = useState(false)
   const [fileError, setFileError] = useState("")
   const [titleError, setTitleError] = useState("")
-  const {
-    isLoading,
-    setIsLoading,
-    postMemeModalIsOpen,
-    setPostMemeModalIsOpen,
-    setCredentials,
-    credentials,
-    bearerToken,
-    error,
-    setError,
-    urls,
-  } = useContext(UserContext)
+  const [isLoading, setIsLoading] = useState(false)
+  const { postMemeModalIsOpen, setPostMemeModalIsOpen } =
+    useContext(ModalContext)
+  const { credentials, bearerToken, error, setError, urls } =
+    useContext(UserContext)
 
   const onSubmit = async () => {
     setError(null)

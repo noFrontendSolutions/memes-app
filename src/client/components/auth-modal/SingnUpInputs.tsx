@@ -1,13 +1,16 @@
 import React, { useState } from "react"
+import ErrorDisplay from "../ErrorDisplay"
 
 const SignUpInputs = ({
   credentials,
   setCredentials,
   error,
+  setError,
 }: {
   credentials: Credentials
   setCredentials: React.Dispatch<React.SetStateAction<Credentials>>
   error: any
+  setError: React.Dispatch<React.SetStateAction<any>>
 }) => {
   const [avatarFileName, setAvatarFileName] = useState("")
 
@@ -24,7 +27,7 @@ const SignUpInputs = ({
         }
       />
       {error?.firstName && (
-        <p className="mb-2 text-red-400">{error?.firstName}</p>
+        <ErrorDisplay errorMessage={error.firstName} setError={setError} />
       )}
       <label htmlFor="last-name">Last Name:</label>
       <input
@@ -37,7 +40,7 @@ const SignUpInputs = ({
         }
       />
       {error?.lastName && (
-        <p className="mb-2 text-red-400">{error?.lastName}</p>
+        <ErrorDisplay errorMessage={error.lastName} setError={setError} />
       )}
       <label htmlFor="email">Email:</label>
       <input
@@ -49,7 +52,9 @@ const SignUpInputs = ({
           setCredentials({ ...credentials, email: e.target.value })
         }
       />
-      {error?.email && <p className="mb-2 text-red-400">{error?.email}</p>}
+      {error?.email && (
+        <ErrorDisplay errorMessage={error.email} setError={setError} />
+      )}
       <div className="flex items-center my-2">
         <label
           htmlFor="avatar-image"
@@ -109,7 +114,7 @@ const SignUpInputs = ({
         }
       />
       {error?.password && (
-        <p className="mb-2 text-red-400">{error?.password}</p>
+        <ErrorDisplay errorMessage={error.password} setError={setError} />
       )}
       <label htmlFor="confirm-password">Confirm Password:</label>
       <input
@@ -129,7 +134,7 @@ const SignUpInputs = ({
         }
       />
       {error?.confirmation && (
-        <p className="mb-2 text-red-400">{error?.confirmation}</p>
+        <ErrorDisplay errorMessage={error.confirmation} setError={setError} />
       )}
     </>
   )

@@ -21,29 +21,21 @@ export const UserContext = createContext<UserContextState>({
   bearerToken: "",
   setBearerToken: null,
   setLoggedIn: null,
-  loginModalIsOpen: false,
-  setLoginModalIsOpen: null,
-  userModalIsOpen: false,
-  setUserModalIsOpen: null,
-  postMemeModalIsOpen: false,
-  setPostMemeModalIsOpen: null,
   credentials: null,
   setCredentials: null,
-  isLoading: false,
-  setIsLoading: null,
   error: null,
   setError: null,
   urls: urls,
 })
 
-const UserContextProvider = ({ children }: ChildrenProps) => {
+const UserContextProvider = ({
+  children,
+}: {
+  children: ReactChild | ReactChildren
+}) => {
   const [loggedIn, setLoggedIn] = useState(false)
   const [bearerToken, setBearerToken] = useState("")
-  const [loginModalIsOpen, setLoginModalIsOpen] = useState(false)
-  const [userModalIsOpen, setUserModalIsOpen] = useState(false)
-  const [postMemeModalIsOpen, setPostMemeModalIsOpen] = useState(false)
   const [credentials, setCredentials] = useState<Credentials | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<any>(null)
 
   useEffect(() => {
@@ -70,16 +62,8 @@ const UserContextProvider = ({ children }: ChildrenProps) => {
         bearerToken,
         setBearerToken,
         setLoggedIn,
-        loginModalIsOpen,
-        setLoginModalIsOpen,
-        userModalIsOpen,
-        setUserModalIsOpen,
-        postMemeModalIsOpen,
-        setPostMemeModalIsOpen,
         credentials,
         setCredentials,
-        isLoading,
-        setIsLoading,
         error,
         setError,
         urls,
@@ -92,23 +76,11 @@ const UserContextProvider = ({ children }: ChildrenProps) => {
 
 export default UserContextProvider
 
-interface ChildrenProps {
-  children: ReactChild | ReactChildren
-}
-
 interface UserContextState {
   loggedIn: boolean
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>> | null
-  loginModalIsOpen: boolean | null
-  setLoginModalIsOpen: React.Dispatch<React.SetStateAction<boolean>> | null
-  userModalIsOpen: boolean | null
-  setUserModalIsOpen: React.Dispatch<React.SetStateAction<boolean>> | null
-  postMemeModalIsOpen: boolean | null
-  setPostMemeModalIsOpen: React.Dispatch<React.SetStateAction<boolean>> | null
   credentials: Credentials
   setCredentials: React.Dispatch<React.SetStateAction<Credentials>> | null
-  isLoading: boolean
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>> | null
   error: any
   setError: React.Dispatch<React.SetStateAction<any>> | null
   bearerToken: string | null

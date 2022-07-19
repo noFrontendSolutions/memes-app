@@ -1,13 +1,16 @@
 import React from "react"
+import ErrorDisplay from "../ErrorDisplay"
 
 const LoginInputs = ({
   credentials,
   setCredentials,
   error,
+  setError,
 }: {
   credentials: Credentials
   setCredentials: React.Dispatch<React.SetStateAction<Credentials>>
   error: any
+  setError: React.Dispatch<React.SetStateAction<any>>
 }) => {
   return (
     <>
@@ -22,7 +25,9 @@ const LoginInputs = ({
           setCredentials({ ...credentials, email: e.target.value })
         }
       />
-      {error?.email && <p className="mb-2 text-red-400">{error?.email}</p>}
+      {error?.email && (
+        <ErrorDisplay errorMessage={error.email} setError={setError} />
+      )}
       <label htmlFor="password">Password:</label>
       <input
         type="password"
@@ -34,7 +39,7 @@ const LoginInputs = ({
         }
       />
       {error?.password && (
-        <p className="mb-2 text-red-400">{error?.password}</p>
+        <ErrorDisplay errorMessage={error.password} setError={setError} />
       )}
     </>
   )

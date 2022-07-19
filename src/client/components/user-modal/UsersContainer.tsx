@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react"
+import { ModalContext } from "../../context/ModalContext"
 import { UserContext } from "../../context/UserContext"
 
 const UsersContainer = () => {
-  const { userModalIsOpen, setUserModalIsOpen, setCredentials, setLoggedIn } =
-    useContext(UserContext)
+  const { setCredentials, setLoggedIn } = useContext(UserContext)
+  const { userModalIsOpen, setUserModalIsOpen } = useContext(ModalContext)
 
   return (
     <>

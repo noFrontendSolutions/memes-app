@@ -1,21 +1,22 @@
 import React, { useEffect, useState, useContext } from "react"
+import { ModalContext } from "../../context/ModalContext"
 import { UserContext } from "../../context/UserContext"
+import ErrorDisplay from "../ErrorDisplay"
 import SignUpInputs from "./SingnUpInputs"
 
 const SignUpForm = () => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [fileError, setFileError] = useState("")
   const {
     setLoggedIn,
     setBearerToken,
-    setLoginModalIsOpen,
     credentials,
     setCredentials,
-    isLoading,
-    setIsLoading,
     error,
     setError,
     urls,
   } = useContext(UserContext)
-  const [fileError, setFileError] = useState("")
+  const { setLoginModalIsOpen } = useContext(ModalContext)
 
   return (
     <form action="/login" className="h-full pt-2 pl-0 flex flex-col">
@@ -23,21 +24,16 @@ const SignUpForm = () => {
         credentials={credentials}
         setCredentials={setCredentials}
         error={error}
+        setError={setError}
       />
       <button
         type="submit"
         className="bg-emerald-500 rounded-lg hover:bg-emerald-600 font-bold text-slate-200 text-xl h-14 mt-8 flex justify-center items-center"
         onClick={async (e) => {
           e.preventDefault()
-          if (
-            validateFileFormat(
-              credentials.avatar,
-              setFileError,
-              setIsLoading
-            ) === false
-          ) {
+          if (validateSignUp(credentials, setError) === false) return
+          if (validateFileFormat(credentials.avatar, setFileError) === false)
             return
-          }
           signUp(
             urls.signUp,
             setLoggedIn,
@@ -74,18 +70,12 @@ const SignUpForm = () => {
           </span>
         )}
       </button>
-      {error?.message &&
-        setTimeout(() => {
-          setError({ ...error, message: "" })
-        }, 5000) && (
-          <p className="mt-2 text-red-500 font-bold">{error?.message}</p>
-        )}
-      {fileError &&
-        setTimeout(() => {
-          setFileError("")
-        }, 5000) && (
-          <p className="mt-2 text-red-500 font-bold text-center">{fileError}</p>
-        )}
+      {error?.message && (
+        <ErrorDisplay errorMessage={error.message} setError={setError} />
+      )}
+      {fileError && (
+        <ErrorDisplay errorMessage={fileError} setError={setFileError} />
+      )}
     </form>
   )
 }
@@ -109,12 +99,6 @@ const signUp = async (
   urls: any
 ) => {
   setIsLoading(true)
-  setIsLoading(true)
-  if (validateSignUp(credentials, error, setError) === false) {
-    setIsLoading(false)
-    return
-  }
-
   let formData = new FormData()
   if (credentials.avatar) {
     formData.append("first_name", credentials.first_name)
@@ -136,7 +120,6 @@ const signUp = async (
     })
     const data = await response.json()
     if (response.ok) {
-      console.log(data)
       setCredentials({ ...data.user })
       setBearerToken(data.token)
       localStorage.setItem("bearerToken", data.token)
@@ -169,7 +152,6 @@ const signUp = async (
 
 const validateSignUp = (
   credentials: Credentials,
-  error: any,
   setError: React.Dispatch<React.SetStateAction<any>>
 ) => {
   let everythingCorrect = true
@@ -197,6 +179,7 @@ const validateSignUp = (
   }
   if (credentials?.password !== credentials?.password_confirmation) {
     confirmationError = "Error: Confirmed Password does not match Password!"
+    everythingCorrect = false
   }
   setError({
     firstName: firstNameError,
@@ -205,7 +188,24 @@ const validateSignUp = (
     password: passwordError,
     confirmation: confirmationError,
   })
+
   return everythingCorrect
+}
+
+function validateFileFormat(file: File, setFileError: any) {
+  if (!file) {
+    return true
+  }
+  const fileExtension = file.name.split(".").pop()
+  const allowedExtensions = /jpg|jpeg|png|svg/
+  if (!allowedExtensions.test(fileExtension)) {
+    setFileError("Error: Wrong File extension. Use either JPG, PNG, or SVG.")
+    return false
+  } else if (file?.size >= 100000) {
+    setFileError("Error: File size too big. File should be no more than 100kb.")
+    return false
+  }
+  return true
 }
 
 interface Credentials {
@@ -217,24 +217,4 @@ interface Credentials {
   password_confirmation: string
   avatar_url?: string
   avatar?: File | null
-}
-
-function validateFileFormat(file: File, setFileError: any, setIsLoading: any) {
-  if (!file) {
-    setIsLoading(false)
-    return true
-  }
-  const fileExtension = file.name.split(".").pop()
-  const allowedExtensions = /jpg|jpeg|png|svg/
-  if (!allowedExtensions.test(fileExtension)) {
-    setFileError("Error: Wrong File extension. Use either JPG, PNG, or SVG.")
-    setIsLoading(false)
-    return false
-  } else if (file?.size >= 100000) {
-    setFileError("Error: File size too big. File should be no more than 100kb.")
-    setIsLoading(false)
-    return false
-  }
-  setIsLoading(false)
-  return true
 }

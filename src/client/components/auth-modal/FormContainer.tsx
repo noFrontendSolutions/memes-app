@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useState } from "react"
+import { ModalContext } from "../../context/ModalContext"
 import { UserContext } from "../../context/UserContext"
 import LoginForm from "./LoginForm"
 import SignUpForm from "./SignUpForm"
 
 const FormContainer = () => {
-  const { setLoginModalIsOpen, setCredentials, setError } =
-    useContext(UserContext)
+  const { setCredentials, setError } = useContext(UserContext)
+  const { setLoginModalIsOpen } = useContext(ModalContext)
   const [chooseLogin, setChooseLogin] = useState(true)
 
   return (
