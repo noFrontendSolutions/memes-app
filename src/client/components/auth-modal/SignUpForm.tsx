@@ -28,7 +28,7 @@ const SignUpForm = () => {
       />
       <button
         type="submit"
-        className="bg-emerald-500 rounded-lg hover:bg-emerald-600 font-bold text-slate-200 text-xl h-14 mt-8 flex justify-center items-center"
+        className="bg-emerald-500 rounded-lg hover:bg-emerald-600 font-bold text-slate-200 text-xl h-14 mt-4 flex justify-center items-center"
         onClick={async (e) => {
           e.preventDefault()
           if (validateSignUp(credentials, setError) === false) return

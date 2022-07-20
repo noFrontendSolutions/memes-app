@@ -28,7 +28,7 @@ const LoginForm = () => {
       />
       <button
         type="submit"
-        className="bg-emerald-500 rounded-lg hover:bg-emerald-600 font-bold text-xl text-slate-200 h-14 mt-8 flex justify-center items-center"
+        className="bg-emerald-500 rounded-lg hover:bg-emerald-600 font-bold text-xl text-slate-200 h-14 mt-4 flex justify-center items-center"
         onClick={(e) => {
           e.preventDefault()
           if (validateLogin(credentials, setError) === false) return

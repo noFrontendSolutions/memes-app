@@ -14,6 +14,7 @@ const urls = {
   postComment: "http://localhost:3000/users/post-comment",
   memeInfo: "http://localhost:3000/public/meme-info",
   memeImage: "http://localhost:3000/public/meme-image",
+  memeStats: "http://localhost:3000/public/meme-stats", // params meme_id as param
 }
 
 export const UserContext = createContext<UserContextState>({
@@ -93,6 +94,7 @@ interface UserContextState {
     postComment: string
     memeInfo: string
     memeImage: string
+    memeStats: string
   }
 }
 

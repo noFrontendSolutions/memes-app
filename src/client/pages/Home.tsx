@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { UserContext } from "../context/UserContext"
+import MemeDetails from "../components/meme-modal/MemeDetails"
+import MemePreview from "../components/MemePreview"
 
 interface MemeInfo {
   id: number
@@ -14,13 +16,18 @@ interface MemeInfo {
 function Home() {
   const { urls } = useContext(UserContext)
   const [isLoading, setIsLoading] = useState(false)
-  const [memeInfoList, setMemeInfoList] = useState<MemeInfo[]>(null)
+  const [memeInfoList, setMemeInfoList] = useState<MemeInfo[]>([])
   const [error, setError] = useState(null)
+  const [showMemeDetailsComponent, setShowMemeDetailsComponent] =
+    useState(false)
+  const [chosenMemeId, setChosenMemeId] = useState<number | null>(null)
+
+  const [memeStats, setMemeStats] = useState(null)
 
   const fetchMemeData = async () => {
     setIsLoading(true)
     let error: any = null
-    let data: MemeInfo[]
+    let data: MemeInfo[] = []
     try {
       const response = await fetch(urls.memeInfo)
       data = await response.json()
@@ -34,28 +41,48 @@ function Home() {
   }
 
   useEffect(() => {
+    let isMounted = true
     ;(async () => {
       const { data, error } = await fetchMemeData()
       setMemeInfoList(data)
       setError(error)
     })()
+    return () => {
+      isMounted = false
+    }
   }, [])
 
   return (
-    <div className="min-h-screen font-titillium bg-slate-900 flex flex-wrap p-4">
-      {memeInfoList?.map((field) => {
-        return (
+    <div className="min-h-screen font-titillium bg-slate-900 flex flex-wrap sm:p-4">
+      {showMemeDetailsComponent && (
+        <>
           <div
-            key={field.id}
-            className="transition ease-in-out delay-150 h-64 w-64 hover:-translate-y-1 hover:scale-125 bg-slate-900 cursor-pointer"
-          >
-            <img
-              src={`${urls.memeImage}/${field.id}`}
-              className="h-full w-full object-contain border-2"
+            onClick={() => {
+              setChosenMemeId(null)
+              setShowMemeDetailsComponent(false)
+            }}
+            className="fixed z-20 inset-0 h-screen w-screen opacity-25 bg-slate-400 font-titillium"
+          ></div>
+          <MemeDetails id={chosenMemeId} memeStats={memeStats} />
+        </>
+      )}
+      {memeInfoList.length > 0 ? (
+        memeInfoList?.map((field) => {
+          return (
+            <MemePreview
+              key={field.id}
+              id={field.id}
+              setShowMemeDetailsPage={setShowMemeDetailsComponent}
+              setChosenMemeId={setChosenMemeId}
+              setMemeStats={setMemeStats}
             />
-          </div>
-        )
-      })}
+          )
+        })
+      ) : (
+        <div className="fixed h-full w-full flex justify-center items-center">
+          <p className="text-red-400">Oopps! Something went wrong...</p>
+        </div>
+      )}
       {isLoading && (
         <div className="fixed inset-0 flex justify-center items-center">
           <svg
