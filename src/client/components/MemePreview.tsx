@@ -1,20 +1,22 @@
 import React, { useContext, useState } from "react"
 import { UserContext } from "../context/UserContext"
+import MemeContainer from "./meme-modal/MemeContainer"
 
 const MemePreview = ({
   id,
   setShowMemeDetailsPage,
   setChosenMemeId,
   setMemeStats,
+  memeInfo,
 }: {
   id: number
   setShowMemeDetailsPage: React.Dispatch<React.SetStateAction<boolean>>
   setChosenMemeId: React.Dispatch<React.SetStateAction<number>>
   setMemeStats: React.Dispatch<React.SetStateAction<any>>
+  memeInfo: MemeInfo
 }) => {
   const { urls } = useContext(UserContext)
 
-  //const [memeStats, setMemeStats] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -28,6 +30,7 @@ const MemePreview = ({
       if (!response.ok) throw new Error("Ooops! Something went wrong!")
     } catch (error) {
       error = error
+      setError(error)
     } finally {
       setIsLoading(false)
     }
@@ -44,14 +47,28 @@ const MemePreview = ({
         setIsLoading(false)
         setMemeStats(data)
       }}
-      className="transition ease-in-out delay-150 h-64 w-64 hover:-translate-y-1 hover:scale-125 bg-slate-900 cursor-pointer"
+      className="transition ease-in-out hover:-translate-y-1 hover:scale-125 bg-slate-900 cursor-pointer flex flex-col hover:border hover:border-emerald-400 rounded-lg"
     >
+      <div className="bg-slate-900 p-2 text-center text-lg text-emerald-400 rounded-lg">
+        {memeInfo.title}
+      </div>
+
       <img
         src={`${urls.memeImage}/${id}`}
-        className="h-full w-full object-contain border-2"
+        className="object-contain h-[433px] w-full"
       />
     </div>
   )
 }
 
 export default MemePreview
+
+interface MemeInfo {
+  id: number
+  title: string
+  likes: number
+  dislikes: number
+  meme_url: string
+  user_id: string
+  user_name: string
+}

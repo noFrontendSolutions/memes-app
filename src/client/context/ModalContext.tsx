@@ -14,6 +14,8 @@ export const ModalContext = createContext<ModalState>({
   setMemeModalIsOpen: null,
   postMemeModalIsOpen: false,
   setPostMemeModalIsOpen: null,
+  showMemeDetailsComponent: false,
+  setShowMemeDetailsComponent: null,
 })
 
 export const ModalContextProvider = ({
@@ -25,6 +27,8 @@ export const ModalContextProvider = ({
   const [userModalIsOpen, setUserModalIsOpen] = useState(false)
   const [postMemeModalIsOpen, setPostMemeModalIsOpen] = useState(false)
   const [memeModalIsOpen, setMemeModalIsOpen] = useState(false)
+  const [showMemeDetailsComponent, setShowMemeDetailsComponent] =
+    useState(false)
 
   return (
     <ModalContext.Provider
@@ -37,6 +41,8 @@ export const ModalContextProvider = ({
         setMemeModalIsOpen,
         postMemeModalIsOpen,
         setPostMemeModalIsOpen,
+        showMemeDetailsComponent,
+        setShowMemeDetailsComponent,
       }}
     >
       {children}
@@ -53,4 +59,6 @@ interface ModalState {
   setMemeModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   postMemeModalIsOpen: boolean
   setPostMemeModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  showMemeDetailsComponent: boolean
+  setShowMemeDetailsComponent: React.Dispatch<React.SetStateAction<boolean>>
 }

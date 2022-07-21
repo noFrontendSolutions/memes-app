@@ -55,7 +55,7 @@ const MemeCreator = () => {
   }, [editor])
 
   return (
-    <div className="min-h-screen p-2 bg-slate-700 flex flex-col justify-start items-center lg:items-center">
+    <div className="min-h-screen p-2 bg-black flex flex-col justify-start items-center lg:items-center">
       <div>
         <div className="mt-2 mb-2 font-titillium bg-slate-900 text-slate-400 flex flex-col lg:flex-row justify-between items-start lg:items-center rounded">
           <div className="flex justify-start lg:justify-center flex-col lg:flex-row lg:items-center items-start rounded">

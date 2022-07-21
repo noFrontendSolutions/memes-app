@@ -26,7 +26,7 @@ const NavBar = ({ children }: { children: ReactChild | ReactChildren }) => {
       {postMemeModalIsOpen && <PostMeme />}
       {userModalIsOpen && <UsersContainer />}
       {loginModalIsOpen && <FormContainer />}
-      <div className="h-20 px-2 sm:px8 flex flex-row justify-end items-center bg-slate-800 font-titillium text-slate-400 font-semibold">
+      <div className="w-full z-30 h-20 px-2 sm:px8 flex flex-row justify-end items-center bg-slate-800 font-titillium text-slate-400 font-semibold">
         <div className="flex flex-row items-center justify-around sm:justify-start h-full w-full mr-4 sm:mr-8">
           <Link
             to="/"

@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react"
 import { UserContext } from "../context/UserContext"
-import MemeDetails from "../components/meme-modal/MemeDetails"
+import DetailsContainer from "../components/meme-modal/DetailsContainer"
 import MemePreview from "../components/MemePreview"
+import { ModalContext } from "../context/ModalContext"
 
 interface MemeInfo {
   id: number
@@ -15,11 +16,12 @@ interface MemeInfo {
 
 function Home() {
   const { urls } = useContext(UserContext)
+  const { showMemeDetailsComponent, setShowMemeDetailsComponent } =
+    useContext(ModalContext)
   const [isLoading, setIsLoading] = useState(false)
   const [memeInfoList, setMemeInfoList] = useState<MemeInfo[]>([])
   const [error, setError] = useState(null)
-  const [showMemeDetailsComponent, setShowMemeDetailsComponent] =
-    useState(false)
+
   const [chosenMemeId, setChosenMemeId] = useState<number | null>(null)
 
   const [memeStats, setMemeStats] = useState(null)
@@ -53,7 +55,7 @@ function Home() {
   }, [])
 
   return (
-    <div className="min-h-screen font-titillium bg-slate-900 flex flex-wrap sm:p-4">
+    <div className="min-h-screen font-titillium bg-black flex flex-col lg:grid lg:grid-cols-2  2xl:grid-cols-3 gap-20 sm:p-4">
       {showMemeDetailsComponent && (
         <>
           <div
@@ -63,18 +65,24 @@ function Home() {
             }}
             className="fixed z-20 inset-0 h-screen w-screen opacity-25 bg-slate-400 font-titillium"
           ></div>
-          <MemeDetails id={chosenMemeId} memeStats={memeStats} />
+          <DetailsContainer
+            id={chosenMemeId}
+            memeStats={memeStats}
+            setShowMemeDetailsComponent={setShowMemeDetailsComponent}
+            setMemeStats={setMemeStats}
+          />
         </>
       )}
       {memeInfoList.length > 0 ? (
-        memeInfoList?.map((field) => {
+        memeInfoList?.map((memeInfo) => {
           return (
             <MemePreview
-              key={field.id}
-              id={field.id}
+              key={memeInfo.id}
+              id={memeInfo.id}
               setShowMemeDetailsPage={setShowMemeDetailsComponent}
               setChosenMemeId={setChosenMemeId}
               setMemeStats={setMemeStats}
+              memeInfo={memeInfo}
             />
           )
         })
