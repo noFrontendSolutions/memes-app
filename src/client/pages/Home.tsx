@@ -1,58 +1,17 @@
-import React, { useContext, useEffect, useState } from "react"
-import { UserContext } from "../context/UserContext"
+import React, { useContext, useState } from "react"
 import DetailsContainer from "../components/meme-modal/DetailsContainer"
 import MemePreview from "../components/MemePreview"
 import { ModalContext } from "../context/ModalContext"
-
-interface MemeInfo {
-  id: number
-  title: string
-  likes: number
-  dislikes: number
-  meme_url: string
-  user_id: string
-  user_name: string
-}
+import { DynamicContext } from "../context/DynamicState"
 
 function Home() {
-  const { urls } = useContext(UserContext)
   const { showMemeDetailsComponent, setShowMemeDetailsComponent } =
     useContext(ModalContext)
-  const [isLoading, setIsLoading] = useState(false)
-  const [memeInfoList, setMemeInfoList] = useState<MemeInfo[]>([])
-  const [error, setError] = useState(null)
+  const { isLoading, memeList } = useContext(DynamicContext)
 
   const [chosenMemeId, setChosenMemeId] = useState<number | null>(null)
 
   const [memeStats, setMemeStats] = useState(null)
-
-  const fetchMemeData = async () => {
-    setIsLoading(true)
-    let error: any = null
-    let data: MemeInfo[] = []
-    try {
-      const response = await fetch(urls.memeInfo)
-      data = await response.json()
-      if (!response.ok) throw new Error("Ooops! Something went wrong!")
-    } catch (error) {
-      error = error
-    } finally {
-      setIsLoading(false)
-    }
-    return { data, error }
-  }
-
-  useEffect(() => {
-    let isMounted = true
-    ;(async () => {
-      const { data, error } = await fetchMemeData()
-      setMemeInfoList(data)
-      setError(error)
-    })()
-    return () => {
-      isMounted = false
-    }
-  }, [])
 
   return (
     <div className="min-h-screen font-titillium bg-black flex flex-col lg:grid lg:grid-cols-2  2xl:grid-cols-3 gap-20 sm:p-4">
@@ -73,8 +32,8 @@ function Home() {
           />
         </>
       )}
-      {memeInfoList.length > 0 ? (
-        memeInfoList?.map((memeInfo) => {
+      {memeList.length > 0 ? (
+        memeList?.map((memeInfo) => {
           return (
             <MemePreview
               key={memeInfo.id}

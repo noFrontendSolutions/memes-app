@@ -201,8 +201,8 @@ function validateFileFormat(file: File, setFileError: any) {
   if (!allowedExtensions.test(fileExtension)) {
     setFileError("Error: Wrong File extension. Use either JPG, PNG, or SVG.")
     return false
-  } else if (file?.size >= 100000) {
-    setFileError("Error: File size too big. File should be no more than 100kb.")
+  } else if (file?.size >= 500000) {
+    setFileError("Error: File size too big. File should be no more than 500kb.")
     return false
   }
   return true

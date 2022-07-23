@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react"
+import { DynamicContext } from "../../context/DynamicState"
 import { ModalContext } from "../../context/ModalContext"
 import { UserContext } from "../../context/UserContext"
 
@@ -13,7 +14,7 @@ const PostMeme = () => {
     useContext(ModalContext)
   const { credentials, bearerToken, error, setError, urls } =
     useContext(UserContext)
-
+  const { reload, setReload } = useContext(DynamicContext)
   const onSubmit = async () => {
     setError(null)
     setIsLoading(true)
@@ -57,6 +58,7 @@ const PostMeme = () => {
       setSuccess(true)
       setIsLoading(false)
       setTitleError("")
+      setReload(!reload)
     }
   }
 
@@ -203,8 +205,8 @@ function validateFileFormat(file: File, setFileError: any, setIsLoading: any) {
     setFileError("Error: Wrong File extension. Use either JPG, PNG, or SVG.")
     setIsLoading(false)
     return false
-  } else if (file?.size >= 100000) {
-    setFileError("Error: File size too big. File should be no more than 100kb.")
+  } else if (file?.size >= 500000) {
+    setFileError("Error: File size too big. File should be no more than 500kb.")
     setIsLoading(false)
     return false
   }

@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react"
 
+//Attention in case of changes: there of the urls object in the DynamicContext file too.
 const urls = {
   login: "http://localhost:3000/auth/login",
   signUp: "http://localhost:3000/auth/sign-up",

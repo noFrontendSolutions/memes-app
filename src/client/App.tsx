@@ -6,21 +6,24 @@ import NavBar from "./components/NavBar"
 import UserContextProvider from "./context/UserContext"
 import MemeCreator from "./pages/MemeCreator"
 import { ModalContextProvider } from "./context/ModalContext"
+import DynamicContextProvider from "./context/DynamicState"
 
 const App = () => {
   return (
-    <UserContextProvider>
-      <ModalContextProvider>
-        <BrowserRouter>
-          <NavBar>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="meme-creator" element={<MemeCreator />} />
-            </Routes>
-          </NavBar>
-        </BrowserRouter>
-      </ModalContextProvider>
-    </UserContextProvider>
+    <DynamicContextProvider>
+      <UserContextProvider>
+        <ModalContextProvider>
+          <BrowserRouter>
+            <NavBar>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="meme-creator" element={<MemeCreator />} />
+              </Routes>
+            </NavBar>
+          </BrowserRouter>
+        </ModalContextProvider>
+      </UserContextProvider>
+    </DynamicContextProvider>
   )
 }
 
