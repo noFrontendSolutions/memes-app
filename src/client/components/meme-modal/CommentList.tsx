@@ -1,40 +1,8 @@
 import React, { useContext, useEffect } from "react"
 import { UserContext } from "../../context/UserContext"
 
-const CommentList = ({
-  memeStats,
-  commentUpdate,
-  setMemeStats,
-  id,
-}: {
-  memeStats: any
-  commentUpdate: any
-  setMemeStats: any
-  id: number
-}) => {
+const CommentList = ({ memeStats }: { memeStats: any }) => {
   const { urls } = useContext(UserContext)
-
-  const fetchMemeData = async () => {
-    let error: any = null
-    let data = []
-    try {
-      const response = await fetch(`${urls.memeStats}/${id}`)
-      data = await response.json()
-      if (!response.ok) throw new Error("Ooops! Something went wrong!")
-    } catch (error) {
-      error = error
-    } finally {
-    }
-    return { data, error }
-  }
-
-  useEffect(() => {
-    ;(async () => {
-      const { data, error } = await fetchMemeData()
-      setMemeStats(data)
-    })()
-    0
-  }, [commentUpdate])
 
   return (
     <div className="bg-black flex flex-col">

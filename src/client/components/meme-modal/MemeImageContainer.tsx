@@ -2,7 +2,13 @@ import React, { useContext } from "react"
 import { ModalContext } from "../../context/ModalContext"
 import { UserContext } from "../../context/UserContext"
 
-const MemeContainer = ({ memeStats, id }: { memeStats: any; id: number }) => {
+const MemeImageContainer = ({
+  memeStats,
+  id,
+}: {
+  memeStats: any
+  id: number
+}) => {
   const { urls } = useContext(UserContext)
   const { setShowMemeDetailsComponent } = useContext(ModalContext)
   return (
@@ -34,4 +40,4 @@ const MemeContainer = ({ memeStats, id }: { memeStats: any; id: number }) => {
   )
 }
 
-export default MemeContainer
+export default MemeImageContainer

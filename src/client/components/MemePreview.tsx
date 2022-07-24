@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
 import { UserContext } from "../context/UserContext"
-import MemeContainer from "./meme-modal/MemeContainer"
+import MemeContainer from "./meme-modal/MemeImageContainer"
 
 const MemePreview = ({
   id,
