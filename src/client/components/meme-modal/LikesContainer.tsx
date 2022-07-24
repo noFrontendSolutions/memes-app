@@ -32,46 +32,45 @@ const LikesContainer = ({
       return
     }
     setIsLoading(true)
-    let dto: Dto = {
-      user_id: credentials.id,
-      meme_id: id,
-      is_lover: 0,
-      is_hater: 0,
-      likes_increment: 0,
-      dislikes_increment: 0,
-    }
-    if (!userPreferences.is_lover && !userPreferences.is_hater) {
-      dto.is_lover = 1
-      dto.is_hater = 0
-      dto.likes_increment = 1
-      dto.dislikes_increment = 0
-    }
-    if (userPreferences.is_hater && !userPreferences.is_lover) {
-      dto.is_lover = 1
-      dto.is_hater = 0
-      dto.likes_increment = 1
-      dto.dislikes_increment = -1
-    }
-    if (userPreferences.is_lover && !userPreferences.is_hater) {
-      dto.is_lover = 0
-      dto.is_hater = 0
-      dto.likes_increment = -1
-      dto.dislikes_increment = 0
+    const dto = computeDto(
+      "lover",
+      {
+        user_id: credentials.id,
+        meme_id: id,
+        is_lover: 0,
+        is_hater: 0,
+        likes_increment: 0,
+        dislikes_increment: 0,
+      },
+      userPreferences
+    )
+    let url = ""
+    let method = ""
+    if (userPreferences) {
+      url = `${urls.setPreferences}/${userPreferences.id}`
+      method = "PUT"
+    } else {
+      url = `${urls.setPreferences}`
+      method = "POST"
     }
     try {
-      const response = await fetch(`${urls.likeMeme}/${userPreferences.id}`, {
+      const response = await fetch(url, {
         headers: {
           Authorization: `bearer ${bearerToken}`,
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        method: "PUT",
+        method: method,
         body: JSON.stringify(dto),
       })
-      if (!response.ok) throw new Error("Ooops! Something went wrong!")
+      if (!response.ok) {
+        setError({
+          message: "Ooops! Something went wrong. Please try again later...",
+        })
+      }
       const data = await response.json()
     } catch (error) {
-      setError(error)
+      setError({ message: error })
     } finally {
       setRefetch(!refetch)
 
@@ -85,53 +84,50 @@ const LikesContainer = ({
       return
     }
     setIsLoading(true)
-    let dto: Dto = {
-      user_id: credentials.id,
-      meme_id: id,
-      is_lover: 0,
-      is_hater: 0,
-      likes_increment: 0,
-      dislikes_increment: 0,
-    }
-    if (!userPreferences.is_lover && !userPreferences.is_hater) {
-      dto.is_lover = 0
-      dto.is_hater = 1
-      dto.likes_increment = 0
-      dto.dislikes_increment = 1
-    }
-    if (userPreferences.is_lover && !userPreferences.is_hater) {
-      dto.is_lover = 0
-      dto.is_hater = 1
-      dto.likes_increment = -1
-      dto.dislikes_increment = 1
-    }
-    if (userPreferences.is_hater && !userPreferences.is_lover) {
-      dto.is_lover = 0
-      dto.is_hater = 0
-      dto.likes_increment = 0
-      dto.dislikes_increment = -1
+    const dto = computeDto(
+      "hater",
+      {
+        user_id: credentials.id,
+        meme_id: id,
+        is_lover: 0,
+        is_hater: 0,
+        likes_increment: 0,
+        dislikes_increment: 0,
+      },
+      userPreferences
+    )
+    let url = ""
+    let method = ""
+    if (userPreferences) {
+      url = `${urls.setPreferences}/${userPreferences.id}`
+      method = "PUT"
+    } else {
+      url = `${urls.setPreferences}`
+      method = "POST"
     }
     try {
-      const response = await fetch(`${urls.likeMeme}/${userPreferences.id}`, {
+      const response = await fetch(url, {
         headers: {
           Authorization: `bearer ${bearerToken}`,
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        method: "PUT",
+        method: method,
         body: JSON.stringify(dto),
       })
-      if (!response.ok) throw new Error("Ooops! Something went wrong!")
+      if (!response.ok) {
+        setError({
+          message: "Ooops! Something went wrong. Please try again later...",
+        })
+      }
       const data = await response.json()
     } catch (error) {
-      setError(error)
+      setError({ message: error })
     } finally {
       setIsLoading(false)
       setRefetch(!refetch)
     }
   }
-
-  useEffect(() => {}, [])
 
   return (
     <div className="bg-slate-800 p-2 text-center text-lg flex items-center justify-center">
@@ -166,8 +162,8 @@ const LikesContainer = ({
         </p>
         <p className="text-slate-300">
           {memeStats.stats.length > 0
-            ? memeStats.likes + memeStats.dislikes
-            : 0}
+            ? `(${memeStats.likes + memeStats.dislikes})`
+            : `(0)`}
         </p>
       </span>
       <p className="text-sm text-emerald-400 mr-2">Hate It</p>
@@ -196,7 +192,63 @@ const LikesContainer = ({
 
 export default LikesContainer
 
-const setDto = (id: string, dto: Dto) => {}
+const computeDto = (type: string, dto: Dto, currentPreferences: any) => {
+  if (type === "lover") {
+    if (!currentPreferences) {
+      dto.is_lover = 1
+      dto.is_hater = 0
+      dto.likes_increment = 1
+      dto.dislikes_increment = 0
+      return dto
+    }
+    if (!currentPreferences.is_lover && !currentPreferences.is_hater) {
+      dto.is_lover = 1
+      dto.is_hater = 0
+      dto.likes_increment = 1
+      dto.dislikes_increment = 0
+    }
+    if (currentPreferences.is_lover && !currentPreferences.is_hater) {
+      dto.is_lover = 0
+      dto.is_hater = 0
+      dto.likes_increment = -1
+      dto.dislikes_increment = 0
+    }
+    if (currentPreferences.is_hater && !currentPreferences.is_lover) {
+      dto.is_lover = 1
+      dto.is_hater = 0
+      dto.likes_increment = 1
+      dto.dislikes_increment = -1
+    }
+  }
+  if (type === "hater") {
+    if (!currentPreferences) {
+      dto.is_lover = 0
+      dto.is_hater = 1
+      dto.likes_increment = 0
+      dto.dislikes_increment = 1
+      return dto
+    }
+    if (!currentPreferences.is_lover && !currentPreferences.is_hater) {
+      dto.is_lover = 0
+      dto.is_hater = 1
+      dto.likes_increment = 0
+      dto.dislikes_increment = 1
+    }
+    if (currentPreferences.is_lover && !currentPreferences.is_hater) {
+      dto.is_lover = 0
+      dto.is_hater = 1
+      dto.likes_increment = -1
+      dto.dislikes_increment = 1
+    }
+    if (currentPreferences.is_hater && !currentPreferences.is_lover) {
+      dto.is_lover = 0
+      dto.is_hater = 0
+      dto.likes_increment = 0
+      dto.dislikes_increment = -1
+    }
+  }
+  return dto
+}
 
 interface Dto {
   user_id: string

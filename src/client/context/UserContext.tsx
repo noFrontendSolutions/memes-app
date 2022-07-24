@@ -12,7 +12,7 @@ const urls = {
   signUp: "http://localhost:3000/auth/sign-up",
   avatar: "http://localhost:3000/auth/avatars",
   postMeme: "http://localhost:3000/users/post-meme",
-  likeMeme: "http://localhost:3000/users/like-meme", //params meme_id
+  setPreferences: "http://localhost:3000/users/set-preferences", //with optional param if a user has already voted
   postComment: "http://localhost:3000/users/post-comment",
   memeInfo: "http://localhost:3000/public/meme-info",
   memeImage: "http://localhost:3000/public/meme-image",
@@ -93,7 +93,7 @@ interface UserContextState {
     signUp: string
     avatar: string
     postMeme: string
-    likeMeme: string
+    setPreferences: string
     postComment: string
     memeInfo: string
     memeImage: string
