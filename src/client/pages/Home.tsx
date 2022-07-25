@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react"
-import DetailsContainer from "../components/meme-modal/DetailsContainer"
+import Container from "../components/meme-modal/Container"
 import MemePreview from "../components/MemePreview"
 import { ModalContext } from "../context/ModalContext"
 import { DynamicContext } from "../context/DynamicState"
@@ -24,7 +24,7 @@ function Home() {
             }}
             className="fixed z-20 inset-0 h-screen w-screen opacity-25 bg-slate-400 font-titillium"
           ></div>
-          <DetailsContainer
+          <Container
             id={chosenMemeId}
             memeStats={memeStats}
             setShowMemeDetailsComponent={setShowMemeDetailsComponent}

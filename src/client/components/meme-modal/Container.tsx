@@ -7,7 +7,7 @@ import CommentList from "./CommentList"
 import LikesContainer from "./LikesContainer"
 import MemeImageContainer from "./MemeImageContainer"
 
-const DetailsContainer = ({
+const Container = ({
   id,
   memeStats,
   setShowMemeDetailsComponent,
@@ -158,4 +158,4 @@ const DetailsContainer = ({
   )
 }
 
-export default DetailsContainer
+export default Container
