@@ -1,4 +1,4 @@
-import { hot } from "react-hot-loader/root"
+//import { hot } from "react-hot-loader/root"
 import { Route, Routes } from "react-router-dom"
 import { BrowserRouter } from "react-router-dom"
 import Home from "./pages/Home"
@@ -31,4 +31,5 @@ const App = () => {
 
 //Notice the "hot" export of the App component. The "hot"-function is provided by the webpack "react-hot-loader plugin". It guarantees hot-module replacement in dev-mode throughout your app.
 
-export default hot(App)
+//export default hot(App)
+export default App
