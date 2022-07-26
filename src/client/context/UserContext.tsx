@@ -7,7 +7,7 @@ import React, {
 } from "react"
 
 //Attention in case of changes: there of the urls object in the DynamicContext file too.
-const urls = {
+/* const urls = {
   login: "http://localhost:3000/auth/login",
   signUp: "http://localhost:3000/auth/sign-up",
   avatar: "http://localhost:3000/auth/avatars",
@@ -18,6 +18,21 @@ const urls = {
   memeInfo: "http://localhost:3000/public/meme-info",
   memeImage: "http://localhost:3000/public/meme-image",
   memeStats: "http://localhost:3000/public/meme-stats", // params meme_id as param
+} */
+
+const urls = {
+  login: "https://memes-app-react-api.herokuapp.com/auth/login",
+  signUp: "https://memes-app-react-api.herokuapp.com/auth/sign-up",
+  avatar: "https://memes-app-react-api.herokuapp.com/auth/avatars",
+  defaultAvatar:
+    "https://memes-app-react-api.herokuapp.com/auth/avatars/default-avatar",
+  postMeme: "https://memes-app-react-api.herokuapp.com/users/post-meme",
+  setPreferences:
+    "https://memes-app-react-api.herokuapp.com/users/set-preferences", //with optional param if a user has already voted
+  postComment: "https://memes-app-react-api.herokuapp.com/users/post-comment",
+  memeInfo: "https://memes-app-react-api.herokuapp.com/public/meme-info",
+  memeImage: "https://memes-app-react-api.herokuapp.com/public/meme-image",
+  memeStats: "https://memes-app-react-api.herokuapp.com/meme-stats", // params meme_id as param
 }
 
 export const UserContext = createContext<UserContextState>({
