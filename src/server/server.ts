@@ -11,13 +11,8 @@ app.use(express.json())
 app.use(express.static(path.resolve(__dirname, `../../${outputRootClient}`)))
 
 //The route below simulates a fetch call to an API from the frontend.
-app.get("/heavy-load", async (req, res) => {
-  await sleep(1000)
-  const randomNumber = createRandomIntegerNotZero(20)
-  res.json({ randomNumber: randomNumber })
-})
 
-app.get("/", (req, res) => {
+app.get("/*", (req, res) => {
   const indexHtml = getIndexHtmlFile()
   res.send(indexHtml)
 })

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react"
 import { UserContext } from "../../context/UserContext"
+import { defaultAvatar } from "../../../../static-assets/default-avatar.png"
 
 const CommentList = ({ memeStats }: { memeStats: any }) => {
   const { urls } = useContext(UserContext)

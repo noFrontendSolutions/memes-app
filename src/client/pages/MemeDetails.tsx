@@ -1,23 +1,17 @@
 import React, { useContext, useEffect, useState } from "react"
-import { ModalContext } from "../../context/ModalContext"
-import { UserContext } from "../../context/UserContext"
-import ErrorDisplay from "../ErrorDisplay"
-import CommentInput from "./CommentInput"
-import CommentList from "./CommentList"
-import LikesContainer from "./LikesContainer"
-import MemeImageContainer from "./MemeImageContainer"
+import { useParams } from "react-router-dom"
+import ErrorDisplay from "../components/ErrorDisplay"
+import CommentInput from "../components/meme-details/CommentInput"
+import CommentList from "../components/meme-details/CommentList"
+import LikesContainer from "../components/meme-details/LikesContainer"
+import MemeImageContainer from "../components/meme-details/MemeImageContainer"
+import { ModalContext } from "../context/ModalContext"
+import { UserContext } from "../context/UserContext"
 
-const Container = ({
-  id,
-  memeStats,
-  setShowMemeDetailsComponent,
-  setMemeStats,
-}: {
-  id: number
-  memeStats: any
-  setShowMemeDetailsComponent: React.Dispatch<React.SetStateAction<boolean>>
-  setMemeStats: React.Dispatch<React.SetStateAction<any>>
-}) => {
+const MemeDetails = () => {
+  const [memeStats, setMemeStats] = useState(null)
+  const { id } = useParams()
+
   const { urls, loggedIn, credentials, error, setError } =
     useContext(UserContext)
   const { setLoginModalIsOpen } = useContext(ModalContext)
@@ -29,11 +23,6 @@ const Container = ({
   const sendComment = async () => {
     if (!memeComment) return
     setIsLoading(true)
-    if (!loggedIn) {
-      setShowMemeDetailsComponent(false)
-      setLoginModalIsOpen(true)
-      return
-    }
     try {
       const response = await fetch(urls.postComment, {
         method: "POST",
@@ -80,6 +69,7 @@ const Container = ({
   }
 
   useEffect(() => {
+    //let isMounted = true
     setIsLoading(true)
     if (loggedIn) {
       ;(async () => {
@@ -103,10 +93,10 @@ const Container = ({
   }, [refetch, loggedIn])
 
   return (
-    <div className="fixed z-30 top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/4 w-full lg:w-1/2  bg-black text-slate-300 max-h-[100vh] overflow-y-auto rounded-lg">
+    <div className=" bg-black text-slate-300 min-h-screen flex justify-center pt-4">
       {memeStats && (
         <div className="bg-black text-slate-300 flex flex-col ">
-          <MemeImageContainer id={id} memeStats={memeStats} />
+          <MemeImageContainer id={parseInt(id)} memeStats={memeStats} />
           <LikesContainer
             memeStats={memeStats}
             userPreferences={userPreferences}
@@ -115,7 +105,7 @@ const Container = ({
             setRefetch={setRefetch}
             setMemeStats={setMemeStats}
             setError={setError}
-            id={id}
+            id={parseInt(id)}
           />
           <div className="h-4 bg-black"></div>
           <CommentInput
@@ -158,4 +148,4 @@ const Container = ({
   )
 }
 
-export default Container
+export default MemeDetails

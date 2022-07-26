@@ -1,4 +1,6 @@
-import React from "react"
+import React, { useContext } from "react"
+import { ModalContext } from "../../context/ModalContext"
+import { UserContext } from "../../context/UserContext"
 
 const CommentInput = ({
   memeComment,
@@ -11,6 +13,8 @@ const CommentInput = ({
   sendComment: any
   isLoading: boolean
 }) => {
+  const { loggedIn } = useContext(UserContext)
+  const { setLoginModalIsOpen } = useContext(ModalContext)
   return (
     <div className="flex">
       <input
@@ -19,10 +23,16 @@ const CommentInput = ({
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setMemeComment(e.target.value)
         }}
-        className="p-2 bg-slate-200 h-16 focus:outline-none  focus:bg-slate-800 w-[80%]"
+        className="p-2 bg-white h-16 focus:outline-none  focus:bg-slate-800 w-[80%]"
       />
       <button
-        onClick={() => sendComment()}
+        onClick={() => {
+          if (!loggedIn) {
+            setLoginModalIsOpen(true)
+            return
+          }
+          sendComment()
+        }}
         className=" py-x w-[20%] bg-emerald-400 hover:bg-emerald-500 text-white flex justify-center items-center"
       >
         {!isLoading && <span>Send</span>}

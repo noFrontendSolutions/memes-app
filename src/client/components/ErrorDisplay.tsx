@@ -11,9 +11,7 @@ const ErrorDisplay = ({
     <>
       {setTimeout(() => {
         setError(null)
-      }, 5000) && (
-        <p className="p-2 mt-2 text-red-500 font-bold">{errorMessage}</p>
-      )}
+      }, 5000) && <p className="p-2 text-red-500 font-bold">{errorMessage}</p>}
     </>
   )
 }

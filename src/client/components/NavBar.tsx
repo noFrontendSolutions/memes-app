@@ -78,7 +78,7 @@ const NavBar = ({ children }: { children: ReactChild | ReactChildren }) => {
               <span className="mr-4 w-36 text-right text-slate-400">
                 Logged in as:
               </span>
-              <div className="mr-4 p-4 h-10 bg-slate-900 rounded-lg text-emerald-400 flex justify-center items-center">
+              <div className="mr-4 p-4 h-10 bg-black rounded-lg text-emerald-400 flex justify-center items-center">
                 {credentials?.email}
               </div>
             </div>

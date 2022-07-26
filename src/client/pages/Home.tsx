@@ -1,48 +1,30 @@
 import React, { useContext, useState } from "react"
-import Container from "../components/meme-modal/Container"
 import MemePreview from "../components/MemePreview"
 import { ModalContext } from "../context/ModalContext"
 import { DynamicContext } from "../context/DynamicState"
+import { Link } from "react-router-dom"
 
 function Home() {
   const { showMemeDetailsComponent, setShowMemeDetailsComponent } =
     useContext(ModalContext)
   const { isLoading, memeList } = useContext(DynamicContext)
-
   const [chosenMemeId, setChosenMemeId] = useState<number | null>(null)
-
   const [memeStats, setMemeStats] = useState(null)
 
   return (
-    <div className="min-h-screen font-titillium bg-black flex flex-col lg:grid lg:grid-cols-2  2xl:grid-cols-3 gap-20 sm:p-4">
-      {showMemeDetailsComponent && (
-        <>
-          <div
-            onClick={() => {
-              setChosenMemeId(null)
-              setShowMemeDetailsComponent(false)
-            }}
-            className="fixed z-20 inset-0 h-screen w-screen opacity-25 bg-slate-400 font-titillium"
-          ></div>
-          <Container
-            id={chosenMemeId}
-            memeStats={memeStats}
-            setShowMemeDetailsComponent={setShowMemeDetailsComponent}
-            setMemeStats={setMemeStats}
-          />
-        </>
-      )}
+    <div className="pt-2 min-h-screen font-titillium bg-black flex flex-col lg:grid lg:grid-cols-2  2xl:grid-cols-3 gap-20 sm:p-4">
       {memeList.length > 0 ? (
         memeList?.map((memeInfo) => {
           return (
-            <MemePreview
-              key={memeInfo.id}
-              id={memeInfo.id}
-              setShowMemeDetailsPage={setShowMemeDetailsComponent}
-              setChosenMemeId={setChosenMemeId}
-              setMemeStats={setMemeStats}
-              memeInfo={memeInfo}
-            />
+            <Link to={`meme-details/${memeInfo.id}`} key={memeInfo.id}>
+              <MemePreview
+                id={memeInfo.id}
+                setShowMemeDetailsPage={setShowMemeDetailsComponent}
+                setChosenMemeId={setChosenMemeId}
+                setMemeStats={setMemeStats}
+                memeInfo={memeInfo}
+              />
+            </Link>
           )
         })
       ) : (

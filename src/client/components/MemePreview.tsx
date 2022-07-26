@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
 import { UserContext } from "../context/UserContext"
-import MemeContainer from "./meme-modal/MemeImageContainer"
+import MemeContainer from "./meme-details/MemeImageContainer"
 
 const MemePreview = ({
   id,
@@ -47,12 +47,11 @@ const MemePreview = ({
         setIsLoading(false)
         setMemeStats(data)
       }}
-      className="transition ease-in-out hover:-translate-y-1 hover:scale-125 bg-slate-900 cursor-pointer flex flex-col hover:border hover:border-emerald-400 rounded-lg"
+      className="transition ease-in-out hover:-translate-y-1 hover:scale-110 bg-black cursor-pointer flex flex-col hover:border hover:border-emerald-400 rounded-lg"
     >
-      <div className="bg-slate-900 p-2 text-center text-lg text-emerald-400 rounded-lg">
+      <div className="bg-slate-800 p-2 text-center text-lg text-emerald-400 rounded-t-lg">
         {memeInfo.title}
       </div>
-
       <img
         src={`${urls.memeImage}/${id}`}
         className="object-contain h-[433px] w-full"

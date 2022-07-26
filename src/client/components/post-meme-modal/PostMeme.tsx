@@ -59,6 +59,7 @@ const PostMeme = () => {
       setIsLoading(false)
       setTitleError("")
       setReload(!reload)
+      setPostMemeModalIsOpen(false)
     }
   }
 

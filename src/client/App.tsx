@@ -7,6 +7,7 @@ import UserContextProvider from "./context/UserContext"
 import MemeCreator from "./pages/MemeCreator"
 import { ModalContextProvider } from "./context/ModalContext"
 import DynamicContextProvider from "./context/DynamicState"
+import MemeDetails from "./pages/MemeDetails"
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="meme-creator" element={<MemeCreator />} />
+                <Route path="meme-details/:id" element={<MemeDetails />} />
               </Routes>
             </NavBar>
           </BrowserRouter>

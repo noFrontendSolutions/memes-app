@@ -8,7 +8,7 @@ const DownloadMeme = ({ editor }: { editor: FabricJSEditor }) => {
         id="download-meme"
         title="Download your meme..."
         onClick={() => onDownloadImage(editor)}
-        className="cursor-pointer flex flex-row justify-center items-center m-2 p-2 text-blue-400 border border-blue-400 rounded hover:text-blue-300 hover:border-blue-300"
+        className="cursor-pointer flex flex-row justify-center items-center m-2 p-2 text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300"
       >
         {" "}
         Download Meme
