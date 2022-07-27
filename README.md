@@ -6,7 +6,7 @@
 
 ---
 
-Similar to websites like **Giphy**, **Tenor**, or **Memedroid**, this is an app that lets you see, rate, and share memes (on the most basic level). It also features a simple editor to let your create your own memes. The **Frontend** was build with **React** and the **API** with **Nest Js**.
+Similar to websites like **Giphy**, **Tenor**, or **Memedroid**, this is an app that lets you see, rate, and share memes (on the most basic level). It also features a simple editor to let your create your own memes.
 
 The link below leads to the repo with the source code for the **API**:
 
