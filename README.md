@@ -6,7 +6,7 @@
 
 ---
 
-Similar to websites like **Giphy**, **Tenor** **Memedroid**, this is an app lets you see, rate, and share memes (on the most basic level). It also features a simple editor to let your create your own memes. The **Frontend** was build with **React** and the **API** with **Nest Js**.
+Similar to websites like **Giphy**, **Tenor** **Memedroid**, this is an app that lets you see, rate, and share memes (on the most basic level). It also features a simple editor to let your create your own memes. The **Frontend** was build with **React** and the **API** with **Nest Js**.
 
 The link below leads to the repo with the source code for the **API**:
 
@@ -19,11 +19,13 @@ The link below leads to the repo with the source code for the **API**:
 | :-------------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
 | ![](https://www.dropbox.com/s/ni40z8bmzj96djy/memes-home.jpg?raw=1) | ![](https://www.dropbox.com/s/9rhb4mfzp7bcvl2/memes-creator-wide.jpg?raw=1) |
 <br>
+
+|                       Vote on Memes and leave  Comments                     |                     JWT Authentication                     |
+| :-------------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
+| ![](https://www.dropbox.com/s/ni40z8bmzj96djy/memes-home.jpg?raw=1) | ![](https://www.dropbox.com/s/ypwzw2b9017asn8/login.jpg?raw=1) |
+<br>
 ---
-|                        Vote on Memes and leave  Comments                       |                    Responsive Design          |                   JWT Authentication           |
-| :-----------------------------------------------------------------: | :------------------------------------------------------------: | :------------------------------------------------------------: |
-| ![](https://www.dropbox.com/s/y15yv3g0jpneb22/meme-details.jpg?raw=1) | ![](https://www.dropbox.com/s/nru49nqn7ht16ei/memes-creator-small.jpeg?raw=1) | ![](https://www.dropbox.com/s/ypwzw2b9017asn8/login.jpg?raw=1)
----
+
 
 ## Tech Stack:
 
