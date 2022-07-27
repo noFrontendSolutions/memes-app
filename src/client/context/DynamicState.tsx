@@ -122,5 +122,5 @@ const urls = {
   postComment: "https://memes-app-react-api.herokuapp.com/users/post-comment",
   memeInfo: "https://memes-app-react-api.herokuapp.com/public/meme-info",
   memeImage: "https://memes-app-react-api.herokuapp.com/public/meme-image",
-  memeStats: "https://memes-app-react-api.herokuapp.com/meme-stats", // params meme_id as param
+  memeStats: "https://memes-app-react-api.herokuapp.com/public/meme-stats", // params meme_id as param
 }
