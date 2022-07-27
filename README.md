@@ -45,4 +45,4 @@ Theoretically there are still a gazillion features I could and should implement,
 
 Here is a preview of to the prototype (deployed on Heroku):
 
-[https://dashboard.heroku.com/apps/memes-app-react](https://dashboard.heroku.com/apps/memes-app-react)
+[https://memes-app-react.herokuapp.com/](https://memes-app-react.herokuapp.com/)
