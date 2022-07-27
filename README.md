@@ -2,7 +2,7 @@
   <a  target="blank"><img src="https://www.dropbox.com/s/je9q398fafqnhys/react-logo.png?raw=1" alt="Nest Logo" /></a>
 </p>
 
-# Memes
+# Memes App
 
 ---
 
