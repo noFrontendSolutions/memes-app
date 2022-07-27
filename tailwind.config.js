@@ -4,6 +4,7 @@ module.exports = {
     extend: {
       fontFamily: {
         titillium: ["Titillium Web", "sans-serif"],
+        creepster: ["Creepster", "cursive"],
       },
       colors: {
         transparent: "transparent",

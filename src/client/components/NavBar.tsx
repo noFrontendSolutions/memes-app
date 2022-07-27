@@ -7,6 +7,7 @@ import UsersContainer from "./user-modal/UsersContainer"
 import defaultAvatar from "../../../static-assets/default-avatar.png"
 import PostMeme from "./post-meme-modal/PostMeme"
 import { ModalContext } from "../context/ModalContext"
+import trollFace from "../../../static-assets/trollface.png"
 
 const NavBar = ({ children }: { children: ReactChild | ReactChildren }) => {
   const location = useLocation()
@@ -26,8 +27,17 @@ const NavBar = ({ children }: { children: ReactChild | ReactChildren }) => {
       {postMemeModalIsOpen && <PostMeme />}
       {userModalIsOpen && <UsersContainer />}
       {loginModalIsOpen && <FormContainer />}
-      <div className="w-full z-30 h-20 px-2 sm:px8 flex flex-row justify-end items-center bg-slate-800 font-titillium text-slate-400 font-semibold">
-        <div className="flex flex-row items-center justify-around sm:justify-start h-full w-full mr-4 sm:mr-8">
+      <div className="relative w-full z-30 h-20 px-2 sm:px8 flex flex-row justify-end items-center bg-slate-800 font-titillium text-slate-400 font-semibold">
+        <div className="absolute left-1/2 top-6 sm:top-4">
+          <h2 className="absolute font-creepster text-slate-400 text-3xl sm:text-5xl">
+            memes
+          </h2>
+          <img
+            src={trollFace}
+            className="relative left-1/2 w-12 h-12 sm:w-16 sm:h-16"
+          />
+        </div>
+        <div className="flex flex-row items-center sm:justify-start h-full w-full mr-4 sm:mr-8">
           <Link
             to="/"
             className={
@@ -48,9 +58,10 @@ const NavBar = ({ children }: { children: ReactChild | ReactChildren }) => {
           >
             Create Meme
           </Link>
+
           {loggedIn && (
             <button
-              className="cursor-pointer flex flex-row justify-center items-center ml-2 sm:ml-10 xl:ml-20 p-2 w-32 sm:w-52 text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300"
+              className="hidden xl:visible cursor-pointer xl:flex xl:flex-row xl:justify-center xl:items-center ml-2 lg:ml-20 p-2 w-32 sm:w-52 text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300"
               onClick={() => setPostMemeModalIsOpen(!postMemeModalIsOpen)}
             >
               Post Meme
@@ -74,8 +85,8 @@ const NavBar = ({ children }: { children: ReactChild | ReactChildren }) => {
 
         {loggedIn && (
           <>
-            <div className="hidden sm:visible sm:flex sm:items-center">
-              <span className="mr-4 w-36 text-right text-slate-400">
+            <div className="hidden xl:visible xl:flex xl: justify-center xl:items-center">
+              <span className="mr-4 w-24 text-right text-slate-400">
                 Logged in as:
               </span>
               <div className="mr-4 p-4 h-10 bg-black rounded-lg text-emerald-400 flex justify-center items-center">
@@ -91,7 +102,7 @@ const NavBar = ({ children }: { children: ReactChild | ReactChildren }) => {
               setLoginModalIsOpen(!loginModalIsOpen)
               setCredentials(null)
             }}
-            className="h-14 w-44 text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300 flex justify-center items-center"
+            className="h-14 w-30 sm:w-44 text-emerald-400 border border-emerald-400 rounded hover:text-emerald-300 hover:border-emerald-300 flex justify-center items-center"
           >
             <span>Login / Sign Up</span>
           </button>

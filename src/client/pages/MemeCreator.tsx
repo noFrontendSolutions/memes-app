@@ -5,15 +5,15 @@ import {
   FabricJSEditor,
   useFabricJSEditor,
 } from "fabricjs-react"
-import SelectObjectFit from "../components/meme-creator-components/SelectObjectFit"
-import SelectBackgroundColor from "../components/meme-creator-components/SelectBackgroundColor"
-import AddText from "../components/meme-creator-components/AddText"
-import SelectTextColor from "../components/meme-creator-components/SelectTextColor"
-import SelectBackgroundImage from "../components/meme-creator-components/SelectBackgroundImage"
-import AddImage from "../components/meme-creator-components/AddImage"
-import DownloadMeme from "../components/meme-creator-components/DownloadMeme"
-import RemoveActiveObject from "../components/meme-creator-components/RemoveActiveObject"
-import SelectSpecialFeature from "../components/meme-creator-components/SelectSpecialFeature"
+import SelectObjectFit from "../components/meme-creator/SelectObjectFit"
+import SelectBackgroundColor from "../components/meme-creator/SelectBackgroundColor"
+import AddText from "../components/meme-creator/AddText"
+import SelectTextColor from "../components/meme-creator/SelectTextColor"
+import SelectBackgroundImage from "../components/meme-creator/SelectBackgroundImage"
+import AddImage from "../components/meme-creator/AddImage"
+import DownloadMeme from "../components/meme-creator/DownloadMeme"
+import RemoveActiveObject from "../components/meme-creator/RemoveActiveObject"
+import SelectSpecialFeature from "../components/meme-creator/SelectSpecialFeature"
 
 type BackgroundColorType = "white" | "black" | "transparent"
 type TextColorType = "white" | "black" | "green" | "red" | "yellow" | "blue"
@@ -43,8 +43,8 @@ const MemeCreator = () => {
     let screenHeight = window.screen.height
     if (screenWidth < 1000) {
       editor?.canvas.setDimensions({
-        width: screenWidth / 1.3,
-        height: screenHeight / 1.3,
+        width: screenWidth,
+        height: screenHeight,
       })
     } else {
       editor?.canvas.setDimensions({

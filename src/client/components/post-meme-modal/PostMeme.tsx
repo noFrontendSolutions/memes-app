@@ -71,7 +71,7 @@ const PostMeme = () => {
             onClick={() => {
               setPostMemeModalIsOpen(!postMemeModalIsOpen)
             }}
-            className="fixed z-20 inset-x-0 inset-y-0 h-screen w-screen opacity-25 bg-slate-300"
+            className="fixed z-20 inset-x-0 inset-y-0 opacity-25 bg-slate-300"
           ></div>
           <div className="px-4 py-4 fixed z-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-1/2 xl:w-1/4 bg-slate-800 text-slate-400 rounded-lg">
             <label htmlFor="meme-title">Meme Title:</label>
