@@ -22,7 +22,7 @@ The link below leads to the repo with the source code for the **API**:
 
 |                       Vote on Memes and leave  Comments                     |                     JWT Authentication                     |
 | :-------------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
-| ![](https://www.dropbox.com/s/ni40z8bmzj96djy/memes-home.jpg?raw=1) | ![](https://www.dropbox.com/s/ypwzw2b9017asn8/login.jpg?raw=1) |
+| ![](https://www.dropbox.com/s/y15yv3g0jpneb22/meme-details.jpg?raw=1) | ![](https://www.dropbox.com/s/ypwzw2b9017asn8/login.jpg?raw=1) |
 <br>
 ---
 
