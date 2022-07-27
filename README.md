@@ -8,6 +8,10 @@
 
 Similar to websites like **Giphy**, **Tenor**, or **Memedroid**, this is an app that lets you see, rate, and share memes (on the most basic level). It also features a simple editor to let your create your own memes.
 
+Here is a preview of to the prototype (deployed on Heroku):
+
+[https://memes-app-react.herokuapp.com/](https://memes-app-react.herokuapp.com/)
+
 The link below leads to the repo with the source code for the **API**:
 
 [https://github.com/noFrontendSolutions/memes-app-api](https://github.com/noFrontendSolutions/memes-app-api)
@@ -41,8 +45,3 @@ The link below leads to the repo with the source code for the **API**:
 - Responsive design
 
 Theoretically there are still a gazillion features I could and should implement, but I'll probably move on to another project.
-
-
-Here is a preview of to the prototype (deployed on Heroku):
-
-[https://memes-app-react.herokuapp.com/](https://memes-app-react.herokuapp.com/)
