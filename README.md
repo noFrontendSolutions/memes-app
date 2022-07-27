@@ -12,10 +12,6 @@ Here is a preview of to the prototype (deployed on Heroku):
 
 [https://memes-app-react.herokuapp.com/](https://memes-app-react.herokuapp.com/)
 
-The link below leads to the repo with the source code for the **API**:
-
-[https://github.com/noFrontendSolutions/memes-app-api](https://github.com/noFrontendSolutions/memes-app-api)
-
 ---
 
 
@@ -43,5 +39,9 @@ The link below leads to the repo with the source code for the **API**:
 - Data validation of inputs and files on both frontend and backend
 - Extensive error handling
 - Responsive design
+
+The link below leads to the repo with the source code for the **API**:
+
+[https://github.com/noFrontendSolutions/memes-app-api](https://github.com/noFrontendSolutions/memes-app-api)
 
 Theoretically there are still a gazillion features I could and should implement, but I'll probably move on to another project.
