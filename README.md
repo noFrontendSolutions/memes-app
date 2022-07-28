@@ -8,10 +8,10 @@
 
 Similar to websites like **Giphy**, **Tenor**, or **Memedroid**, this is an app that lets you see, rate, and share memes (on the most basic level). It also features a simple editor to let your create your own memes.
 
-Here is a preview of to the prototype (deployed on Heroku):
+<!-- Here is a preview of to the prototype (deployed on Heroku):
 
 [https://memes-app-react.herokuapp.com/](https://memes-app-react.herokuapp.com/)
-
+-->
 ---
 
 
