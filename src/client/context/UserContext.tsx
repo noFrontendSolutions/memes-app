@@ -7,6 +7,7 @@ import React, {
 } from "react"
 
 //Attention in case of changes: there of the urls object in the DynamicContext file too.
+
 /* const urls = {
   login: "http://localhost:3000/auth/login",
   signUp: "http://localhost:3000/auth/sign-up",
@@ -21,18 +22,16 @@ import React, {
 } */
 
 const urls = {
-  login: "https://memes-app-react-api.herokuapp.com/auth/login",
-  signUp: "https://memes-app-react-api.herokuapp.com/auth/sign-up",
-  avatar: "https://memes-app-react-api.herokuapp.com/auth/avatars",
-  defaultAvatar:
-    "https://memes-app-react-api.herokuapp.com/auth/avatars/default-avatar",
-  postMeme: "https://memes-app-react-api.herokuapp.com/users/post-meme",
-  setPreferences:
-    "https://memes-app-react-api.herokuapp.com/users/set-preferences", //with optional param if a user has already voted
-  postComment: "https://memes-app-react-api.herokuapp.com/users/post-comment",
-  memeInfo: "https://memes-app-react-api.herokuapp.com/public/meme-info",
-  memeImage: "https://memes-app-react-api.herokuapp.com/public/meme-image",
-  memeStats: "https://memes-app-react-api.herokuapp.com/public/meme-stats", // params meme_id as param
+  login: "https://46.101.193.133:3000/auth/login",
+  signUp: "https://46.101.193.133:3000/auth/sign-up",
+  avatar: "https://46.101.193.133:3000/auth/avatars",
+  defaultAvatar: "https://46.101.193.133:3000/auth/avatars/default-avatar",
+  postMeme: "https://46.101.193.133:3000/users/post-meme",
+  setPreferences: "https://46.101.193.133:3000/users/set-preferences", //with optional param if a user has already voted
+  postComment: "https://46.101.193.133:3000/users/post-comment",
+  memeInfo: "https://46.101.193.133:3000/public/meme-info",
+  memeImage: "https://46.101.193.133:3000/public/meme-image",
+  memeStats: "https://46.101.193.133:3000/public/meme-stats", // params meme_id as param
 }
 
 export const UserContext = createContext<UserContextState>({
@@ -104,18 +103,7 @@ interface UserContextState {
   setError: React.Dispatch<React.SetStateAction<any>> | null
   bearerToken: string | null
   setBearerToken: React.Dispatch<React.SetStateAction<string>> | null
-  urls: {
-    login: string
-    signUp: string
-    avatar: string
-    defaultAvatar: string
-    postMeme: string
-    setPreferences: string
-    postComment: string
-    memeInfo: string
-    memeImage: string
-    memeStats: string
-  }
+  urls: Urls
 }
 
 interface Credentials {
@@ -127,4 +115,17 @@ interface Credentials {
   password_confirmation: string
   avatar_url?: string
   avatar?: File | null
+}
+
+interface Urls {
+  login: string
+  signUp: string
+  avatar: string
+  defaultAvatar: string
+  postMeme: string
+  setPreferences: string
+  postComment: string
+  memeInfo: string
+  memeImage: string
+  memeStats: string
 }
