@@ -4,8 +4,8 @@
     "description": "",
     "module": "CommonJS",
     "scripts": {
+        "start": "pm2 start node dist/server/server.js",
         "build": "webpack --config webpack/client/webpack.build-client.js && webpack --config webpack/server/webpack.build-server.js",
-        "start": "node dist/server/server.js",
         "build-client": "webpack --config webpack/client/webpack.build-client.js",
         "build-server": "webpack --config webpack/server/webpack.build-server.js",
         "build-ssr": "webpack --config webpack/ssr/webpack.build-ssr.js",
