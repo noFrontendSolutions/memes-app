@@ -31,7 +31,8 @@ Here is a link to a preview of to the prototype (deployed on Digital Ocean):
 - Frontend: **React JS**, **Canvas JS**<br>
 - API: **Nest JS**, **Prisma**, **Postgres** 
 - Deploy: **Digital Ocean**, **Ubuntu**
-   
+
+Remark: I didn't use either **Create React App** or **Vite** to build the app, but I used my own cracker-jack React development environment to build the app: [CRASSR](https://github.com/noFrontendSolutions/crassr) (explaining the sizeable JS bundle of ~500kb :)
 
 ## Features:
 
