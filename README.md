@@ -30,6 +30,7 @@ Here is a link to a preview of to the prototype (deployed on Digital Ocean):
 
 - Frontend: **React JS**, **Canvas JS**<br>
 - API: **Nest JS**, **Prisma**, **Postgres** 
+- Deploy: **Digital Ocean**, **Ubuntu**
    
 
 ## Features:
@@ -38,7 +39,7 @@ Here is a link to a preview of to the prototype (deployed on Digital Ocean):
 - Data validation of inputs and files on both frontend and backend
 - Extensive error handling
 - Responsive design
-- Deployed on Digital Ocean using Nginx as Webserver 
+- Uses Nginx as Webserver 
 
 The link below leads to the repo with the source code for the **API**:
 
