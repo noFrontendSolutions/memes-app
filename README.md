@@ -38,7 +38,6 @@ Remark: I didn't use either **Create React App** or **Vite** to build the app, b
 
 - JWT authentication
 - Data validation of inputs and files on both frontend and backend
-- Extensive error handling
 - Responsive design
 - Uses Nginx as Webserver 
 
