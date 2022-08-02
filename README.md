@@ -10,7 +10,7 @@ Similar to websites like **Giphy**, **Tenor**, or **Memedroid**, this is an app 
 
 Here is a link to a preview of to the prototype (deployed on Digital Ocean):
 
-[To the App](http://http://46.101.193.133/)
+[To the App](http://46.101.193.133)
 
 ---
 
