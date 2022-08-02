@@ -8,10 +8,10 @@
 
 Similar to websites like **Giphy**, **Tenor**, or **Memedroid**, this is an app that lets you see, rate, and share memes (on the most basic level). It also features a simple editor to let your create your own memes.
 
-<!-- Here is a preview of to the prototype (deployed on Heroku):
+Here is a link to a preview of to the prototype (deployed on Digital Ocean):
 
-[https://memes-app-react.herokuapp.com/](https://memes-app-react.herokuapp.com/)
--->
+[To the App](http://http://46.101.193.133/)
+
 ---
 
 
@@ -38,6 +38,7 @@ Similar to websites like **Giphy**, **Tenor**, or **Memedroid**, this is an app 
 - Data validation of inputs and files on both frontend and backend
 - Extensive error handling
 - Responsive design
+- Deployed on Digital Ocean using Nginx as Webserver 
 
 The link below leads to the repo with the source code for the **API**:
 
