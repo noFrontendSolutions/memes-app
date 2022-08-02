@@ -117,7 +117,7 @@ const urls = {
   avatar: "https://46.101.193.133/api/auth/avatars",
   defaultAvatar: "https://46.101.193.133/api/auth/avatars/default-avatar",
   postMeme: "https://46.101.193.133/api/users/post-meme",
-  setPreferences: "https://46.101.193/api/users/set-preferences", //with optional param if a user has already voted
+  setPreferences: "https://46.101.193.133/api/users/set-preferences", //with optional param if a user has already voted
   postComment: "https://46.101.193.133/api/users/post-comment",
   memeInfo: "https://46.101.193.133/api/public/meme-info",
   memeImage: "https://46.101.193.133/api/public/meme-image",
