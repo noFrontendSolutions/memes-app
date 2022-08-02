@@ -112,14 +112,14 @@ export default DynamicContextPrivder
 } */
 
 const urls = {
-  login: "https://46.101.193.133:3000/auth/login",
-  signUp: "https://46.101.193.133:3000/auth/sign-up",
-  avatar: "https://46.101.193.133:3000/auth/avatars",
-  defaultAvatar: "https://46.101.193.133:3000/auth/avatars/default-avatar",
-  postMeme: "https://46.101.193.133:3000/users/post-meme",
-  setPreferences: "https://46.101.193.133:3000/users/set-preferences", //with optional param if a user has already voted
-  postComment: "https://46.101.193.133:3000/users/post-comment",
-  memeInfo: "https://46.101.193.133:3000/public/meme-info",
-  memeImage: "https://46.101.193.133:3000/public/meme-image",
-  memeStats: "https://46.101.193.133:3000/public/meme-stats", // params meme_id as param
+  login: "https://46.101.193.133/api/auth/login",
+  signUp: "https://46.101.193.133/api/auth/sign-up",
+  avatar: "https://46.101.193.133/api/auth/avatars",
+  defaultAvatar: "https://46.101.193.133/api/auth/avatars/default-avatar",
+  postMeme: "https://46.101.193.133/api/users/post-meme",
+  setPreferences: "https://46.101.193/api/users/set-preferences", //with optional param if a user has already voted
+  postComment: "https://46.101.193.133/api/users/post-comment",
+  memeInfo: "https://46.101.193.133/api/public/meme-info",
+  memeImage: "https://46.101.193.133/api/public/meme-image",
+  memeStats: "https://46.101.193.133/api/public/meme-stats", // params meme_id as param
 }
